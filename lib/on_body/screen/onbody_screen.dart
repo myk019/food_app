@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/commons/images.dart';
 import 'package:food_app/on_body/screen/onbody_content.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../main.dart';
 
@@ -44,10 +45,21 @@ class _OnBodyScreenState extends State<OnBodyScreen> {
             Container(
               height: w*0.8,
               width: w*1,
-              child: Image(image: AssetImage(ImageConst.onBodyImg1)),
-              ),
+              child: Image(image: AssetImage(contents[index].image)),
+            ),
+            AnimatedSmoothIndicator(
+              activeIndex: onPageIndex,
+                count:  contents.length,
+                effect:  ScrollingDotsEffect(
+                    activeDotColor:Colors.black,
+                    dotColor: Colors.grey,
+                    dotHeight: w*0.02,
+                    dotWidth: w*0.02
+                )
+            )
           ],
         );
+
       },
       ),
     );
