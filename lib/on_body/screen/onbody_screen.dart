@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/commons/images.dart';
 import 'package:food_app/on_body/screen/onbody_content.dart';
@@ -24,16 +25,39 @@ class _OnBodyScreenState extends State<OnBodyScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
-        title: SvgPicture.asset(IconConst.SplashIcon,height: w*0.1,width: w*0.1,),
+        backgroundColor: Colors.transparent,
+        title: SvgPicture.asset(IconConst.SplashIcon,height: w*0.07,width: w*0.07,),
         centerTitle: true,
+        actions: [
+          GestureDetector(
+            onTap: () {
+              onPageController.jumpToPage(2);
+            },
+            child: Container(
+              color: Colors.transparent,
+              child: Center(
+                widthFactor: w*0.007,
+                child: Text("Skip",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: w*0.045,
+                  color: colors.Red
+                ),),
+              ),
+            ),
+          )
+        ],
       ),
       body: PageView.builder(
+        physics: BouncingScrollPhysics(),
+        controller: onPageController,
         padEnds: false,
         itemCount: contents.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
+          onPageIndex=index;
         return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
               contents[index].text,
@@ -43,20 +67,68 @@ class _OnBodyScreenState extends State<OnBodyScreen> {
                   fontSize: w*0.07
               ),),
             Container(
-              height: w*0.8,
+              // color: Colors.blue,
+              height: h*0.45,
               width: w*1,
               child: Image(image: AssetImage(contents[index].image)),
             ),
+            // SizedBox(height: w*0.02,),
             AnimatedSmoothIndicator(
               activeIndex: onPageIndex,
                 count:  contents.length,
                 effect:  ScrollingDotsEffect(
-                    activeDotColor:Colors.black,
-                    dotColor: Colors.grey,
+                    activeDotColor:colors.Green,
+                    dotColor: colors.Grey,
                     dotHeight: w*0.02,
                     dotWidth: w*0.02
                 )
-            )
+            ),
+            SizedBox(height: w*0.05,),
+            Column(
+              children: [
+                Container(
+                  height: h*0.065,
+                  width: w*0.93,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        stops: [0.3,0.7],
+                        colors:[
+                          Color(0xffF9881F),
+                          Color(0xffFF774C)
+                        ]),
+                    borderRadius: BorderRadius.circular(w*0.06)
+                  ),
+                  child: Center(
+                      child: Text("Create an account",
+                        style: TextStyle(
+                        fontSize: w*0.045,
+                          fontWeight: FontWeight.w600,
+                          color: colors.Whight
+                      ),)),
+                ),
+                SizedBox(height: w*0.05,),
+                Container(
+                  height: h*0.065,
+                  width: w*0.93,
+                  decoration: BoxDecoration(
+                   color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(w*0.06)
+                  ),
+                  child: Center(
+                    child: Text("login",
+                    style: TextStyle(
+                      fontSize: w*0.045,
+                      fontWeight: FontWeight.w600,
+                      color: colors.Red
+                    ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: w*0.1,)
           ],
         );
 

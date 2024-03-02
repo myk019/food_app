@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/auth/screen/login_account.dart';
 import 'package:food_app/on_body/screen/onbody_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme:GoogleFonts.dmSansTextTheme()
       ),
-      home:  OnBodyScreen(),
+      home:  LoginPage(),
     );
   }
 }
