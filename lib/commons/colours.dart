@@ -6,4 +6,5 @@ class colors{
   static const Green=Color(0xff0B735F);
   static const Grey=Color(0xffC4C4C4);
   static const Whight=Color(0xffFFFFFF);
+  static const Black=Color(0xff3D3D3D);
 }
