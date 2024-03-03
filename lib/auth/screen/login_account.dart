@@ -43,17 +43,17 @@ class _LoginPageState extends State<LoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Create an account",
+                      Text("Login to your account",
                         style: TextStyle(
-                            fontSize: w*0.08,
+                            fontSize: w*0.076,
                             fontWeight: FontWeight.w800,
                             color: colors.Black
                         ),
                       ),
-                      Text("Welcome friend, enter your details so lets get\nstarted in ordering food.",
+                      Text("Good to see you again, enter your details\nbelow to continue ordering.",
                         style: TextStyle(
-                            fontSize: w*0.042,
-                            fontWeight: FontWeight.w800,
+                            fontSize: w*0.045,
+                            fontWeight: FontWeight.w500,
                             color: colors.Black
                         ),
                       ),

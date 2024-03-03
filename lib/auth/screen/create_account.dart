@@ -21,6 +21,7 @@ class _CreatePageState extends State<CreatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colors.Community,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -46,15 +47,15 @@ class _CreatePageState extends State<CreatePage> {
                     children: [
                       Text("Create an account",
                         style: TextStyle(
-                            fontSize: w*0.08,
+                            fontSize: w*0.076,
                             fontWeight: FontWeight.w800,
                             color: colors.Black
                         ),
                       ),
                       Text("Welcome friend, enter your details so lets get\nstarted in ordering food.",
                         style: TextStyle(
-                            fontSize: w*0.042,
-                            fontWeight: FontWeight.w800,
+                            fontSize: w*0.04,
+                            fontWeight: FontWeight.w500,
                             color: colors.Black
                         ),
                       ),
