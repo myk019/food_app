@@ -29,6 +29,7 @@ class _OnBodyScreenState extends State<OnBodyScreen> {
         title: SvgPicture.asset(IconConst.SplashIcon,height: w*0.07,width: w*0.07,),
         centerTitle: true,
         actions: [
+          onPageIndex==2?SizedBox():
           GestureDetector(
             onTap: () {
               onPageController.jumpToPage(2);
@@ -78,7 +79,7 @@ class _OnBodyScreenState extends State<OnBodyScreen> {
                 count:  contents.length,
                 effect:  ScrollingDotsEffect(
                     activeDotColor:colors.Green,
-                    dotColor: colors.Grey,
+                    dotColor: colors.Grey2,
                     dotHeight: w*0.02,
                     dotWidth: w*0.02
                 )
@@ -105,7 +106,7 @@ class _OnBodyScreenState extends State<OnBodyScreen> {
                         style: TextStyle(
                         fontSize: w*0.045,
                           fontWeight: FontWeight.w600,
-                          color: colors.Whight
+                          color: colors.White
                       ),)),
                 ),
                 SizedBox(height: w*0.05,),
