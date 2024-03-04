@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "976316591387",
+    "project_id": "burger-tik",
+    "storage_bucket": "burger-tik.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976316591387:android:38eb75eee590fe1b1cf7be",
+        "android_client_info": {
+          "package_name": "com.example.food_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnyLKNVXmg1YFQ26oMhceHu3LJIb9OCqI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
