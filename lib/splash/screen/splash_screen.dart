@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/homePage.dart';
-import 'package:food_app/on_body/screen/onbody_screen.dart';
+import 'package:food_app/on_body/screen/onbord_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

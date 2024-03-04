@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/commons/images.dart';
-import 'package:food_app/on_body/screen/onbody_content.dart';
+import 'package:food_app/on_body/screen/onbord_content.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../main.dart';
@@ -89,7 +89,7 @@ class _OnBodyScreenState extends State<OnBodyScreen> {
                     children: [
                       Positioned(
                         bottom: w*0.001,
-              right: w*0.14,
+                        right: w*0.14,
                         child: Center(
                           child: Container(
                             height: h*0.44,
