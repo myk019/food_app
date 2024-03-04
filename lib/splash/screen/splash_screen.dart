@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/homePage.dart';
 import 'package:food_app/on_body/screen/onbord_screen.dart';
@@ -27,6 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colors.Background,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

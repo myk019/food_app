@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme:GoogleFonts.dmSansTextTheme(),
       ),
-      home:  OnBodyScreen(),
+      home:  CreatePage(),
     );
   }
 }

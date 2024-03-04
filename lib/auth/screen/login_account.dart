@@ -20,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colors.Background,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -28,14 +29,14 @@ class _LoginPageState extends State<LoginPage> {
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
-        child: Container(
+        child: SizedBox(
           height: h*0.9,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Center(
-                child: Container(
+                child: SizedBox(
                   height: w*0.23,
                   width: w*0.8,
                   // color: Colors.blue,
@@ -61,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: h*0.26,
                 // color: Colors.blue,
                 child: Column(
@@ -247,7 +248,7 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(w*0.06)
                     ),
                     child: Center(
-                      child: Text("Login to my account",
+                      child: Text("Forgot password",
                         style: TextStyle(
                             fontSize: w*0.045,
                             fontWeight: FontWeight.w600,

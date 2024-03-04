@@ -10,6 +10,6 @@ class colors{
   static const Grey2=Color(0xffC4C4C4);
   static const White=Color(0xffFFFFFF);
   static const Black=Color(0xff3D3D3D);
-  static const Community=Color(0xffF8FBFF);
+  static const Background=Color(0xffF8FBFF);
   static const Red2=Color(0xffD5111B);
 }

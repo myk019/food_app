@@ -23,6 +23,7 @@ class _OnBodyScreenState extends State<OnBodyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colors.Background,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,

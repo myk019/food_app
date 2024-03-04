@@ -21,23 +21,23 @@ class _CreatePageState extends State<CreatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colors.Community,
+      backgroundColor: colors.Background,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: colors.Community,
+        backgroundColor: colors.Background,
         title: SvgPicture.asset(IconConst.SplashIcon,height: w*0.07,width: w*0.07,),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
-        child: Container(
+        child: SizedBox(
           height: h*0.9,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Center(
-                child: Container(
+                child: SizedBox(
                   height: w*0.23,
                   width: w*0.8,
                   // color: Colors.blue,
@@ -63,7 +63,7 @@ class _CreatePageState extends State<CreatePage> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: h*0.4,
                 // color: Colors.blue,
                 child: Column(
