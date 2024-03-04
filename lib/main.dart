@@ -30,11 +30,12 @@ class MyApp extends StatelessWidget {
     h=MediaQuery.of(context).size.height;
 
     return MaterialApp(
+      color: Colors.red,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme:GoogleFonts.dmSansTextTheme(),
       ),
-      home:  CreatePage(),
+      home:  OnBodyScreen(),
     );
   }
 }

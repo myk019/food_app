@@ -24,7 +24,7 @@ class _CreatePageState extends State<CreatePage> {
       backgroundColor: colors.Community,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: colors.Community,
         title: SvgPicture.asset(IconConst.SplashIcon,height: w*0.07,width: w*0.07,),
         centerTitle: true,
       ),
