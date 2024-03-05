@@ -12,4 +12,5 @@ class colors{
   static const Black=Color(0xff3D3D3D);
   static const Background=Color(0xffF8FBFF);
   static const Red2=Color(0xffD5111B);
+  static const lightgrey=Color(0xffC1DAF0);
 }

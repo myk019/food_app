@@ -8,6 +8,7 @@ import 'package:food_app/splash/screen/splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'firebase_options.dart';
+import 'on_body/screen/home_page.dart';
 
 var w;
 var h;
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme:GoogleFonts.dmSansTextTheme(),
       ),
-      home:  CreatePage(),
+      home:  HomePage(),
     );
   }
 }
