@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_app/auth/screen/create_account.dart';
+import 'package:food_app/auth/screen/login_account.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/commons/images.dart';
@@ -133,42 +136,52 @@ class _OnBodyScreenState extends State<OnBodyScreen> {
           SizedBox(height: h*0.055,),
           Column(
             children: [
-              Container(
-                height: h*0.065,
-                width: w*0.93,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        stops: [0.3,0.7],
-                        colors:[
-                          Color(0xffF9881F),
-                          Color(0xffFF774C)
-                        ]),
-                    borderRadius: BorderRadius.circular(w*0.06)
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, CupertinoDialogRoute(builder: (context) => CreatePage(), context: context));
+                },
+                child: Container(
+                  height: h*0.065,
+                  width: w*0.93,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          stops: [0.3,0.7],
+                          colors:[
+                            Color(0xffF9881F),
+                            Color(0xffFF774C)
+                          ]),
+                      borderRadius: BorderRadius.circular(w*0.06)
+                  ),
+                  child: Center(
+                      child: Text("Create an account",
+                        style: TextStyle(
+                            fontSize: w*0.045,
+                            fontWeight: FontWeight.w600,
+                            color: colors.White
+                        ),)),
                 ),
-                child: Center(
-                    child: Text("Create an account",
+              ),
+              SizedBox(height: w*0.05,),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, CupertinoDialogRoute(builder: (context) => LoginPage(), context: context));
+                },
+                child: Container(
+                  height: h*0.065,
+                  width: w*0.93,
+                  decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(w*0.06)
+                  ),
+                  child: Center(
+                    child: Text("login",
                       style: TextStyle(
                           fontSize: w*0.045,
                           fontWeight: FontWeight.w600,
-                          color: colors.White
-                      ),)),
-              ),
-              SizedBox(height: w*0.05,),
-              Container(
-                height: h*0.065,
-                width: w*0.93,
-                decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(w*0.06)
-                ),
-                child: Center(
-                  child: Text("login",
-                    style: TextStyle(
-                        fontSize: w*0.045,
-                        fontWeight: FontWeight.w600,
-                        color: colors.Red
+                          color: colors.Red
+                      ),
                     ),
                   ),
                 ),

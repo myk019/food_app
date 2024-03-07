@@ -5,17 +5,17 @@ import 'package:food_app/commons/colours.dart';
 import '../../commons/icons.dart';
 import '../../main.dart';
 
-class ResetPassword extends StatefulWidget {
-  const ResetPassword({super.key});
+class EditProfile extends StatefulWidget {
+  const EditProfile({super.key});
 
   @override
-  State<ResetPassword> createState() => _ResetPasswordState();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
+class _EditProfileState extends State<EditProfile> {
 
-  TextEditingController passwordController=TextEditingController();
-  TextEditingController passwordController2=TextEditingController();
+  TextEditingController nameController=TextEditingController();
+  TextEditingController emailController=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,124 +27,31 @@ class _ResetPasswordState extends State<ResetPassword> {
         title: SvgPicture.asset(IconConst.SplashIcon,height: w*0.07,width: w*0.07,),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: SizedBox(
-          height: h*0.9,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Center(
-                child: Container(
-                  height: w*0.23,
-                  width: w*0.8,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Center(
-                        child: Text("Change password",
-                          style: TextStyle(
-                              fontSize: w*0.07,
-                              fontWeight: FontWeight.w800,
-                              color: colors.Black
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: Text("Enter your valid password",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: w*0.04,
-                              fontWeight: FontWeight.w500,
-                              color: colors.Black
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                height: h*0.28,
-                // color: Colors.blue,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text("Update your profile",
+            style: TextStyle(
+                fontSize: w*0.07,
+                fontWeight: FontWeight.w800,
+                color: colors.Black
+            ),
+          ),
+          Center(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: SizedBox(
+                height: h*0.4,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding:  EdgeInsets.only(left: w*0.04),
-                      child: Text("Password",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: w*0.042,
-                            color: colors.Black
-                        ),),
+                    CircleAvatar(
+                      radius: w*0.15,
+                      backgroundColor: colors.PrimaryColour,
+                      child: Icon(Icons.image_outlined,color: colors.White,size: w*0.1),
                     ),
                     TextFormField(
-                      controller: passwordController,
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.done,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: w*0.05
-                      ),
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      // validator: (value) {
-                      //   if(
-                      //   !emailValidation.hasMatch(value!)
-                      //   ){
-                      //     return ("Enter valid email");
-                      //   }else{
-                      //     return null;
-                      //   }
-                      // },
-                      decoration: InputDecoration(
-                          suffixIcon: Padding(
-                            padding: EdgeInsets.all(w*0.023),
-                          ),
-                          constraints: BoxConstraints(
-                              maxWidth: w*0.9,
-                              maxHeight: w*0.20
-                          ),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(w*0.05)
-                          ),
-                          filled: true,
-                          fillColor: colors.White,
-                          labelText: "Enter password",
-
-                          labelStyle: TextStyle(
-                              fontSize: w*0.05,
-                              fontWeight:FontWeight.w500,
-                              color: colors.Grey
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: colors.Grey2
-                              ),
-                              borderRadius: BorderRadius.circular(w*0.05)
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: colors.Grey2
-                              ),
-                              borderRadius: BorderRadius.circular(w*0.05)
-                          )
-                      ),
-                    ),
-                    Padding(
-                      padding:  EdgeInsets.only(left: w*0.04),
-                      child: Text("Confirm Password",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: w*0.042,
-                            color: colors.Black
-                        ),),
-                    ),
-                    TextFormField(
-                      controller: passwordController2,
+                      controller: nameController,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.done,
                       style: TextStyle(
@@ -174,20 +81,72 @@ class _ResetPasswordState extends State<ResetPassword> {
                           ),
                           filled: true,
                           fillColor: colors.White,
-                          labelText: "Confirm password",
+                          labelText: "User name",
                           labelStyle: TextStyle(
-                              fontSize: w*0.05,
+                              fontSize: w*0.04,
                               fontWeight:FontWeight.w500,
                               color: colors.Grey
                           ),
                           enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   color: colors.Grey2
                               ),
                               borderRadius: BorderRadius.circular(w*0.05)
                           ),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
+                                  color: colors.Grey2
+                              ),
+                              borderRadius: BorderRadius.circular(w*0.05)
+                          )
+                      ),
+                    ),
+                    TextFormField(
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.done,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: w*0.05
+                      ),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      // validator: (value) {
+                      //   if(
+                      //   !emailValidation.hasMatch(value!)
+                      //   ){
+                      //     return ("Enter valid email");
+                      //   }else{
+                      //     return null;
+                      //   }
+                      // },
+                      decoration: InputDecoration(
+                          suffixIcon: Padding(
+                            padding: EdgeInsets.all(w*0.023),
+                          ),
+                          constraints: BoxConstraints(
+                              maxWidth: w*0.9,
+                              maxHeight: w*0.20
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(w*0.05)
+                          ),
+                          filled: true,
+                          fillColor: colors.White,
+                          labelText: "Enter email",
+
+                          labelStyle: TextStyle(
+                              fontSize: w*0.04,
+                              fontWeight:FontWeight.w500,
+                              color: colors.Grey
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: colors.Grey2
+                              ),
+                              borderRadius: BorderRadius.circular(w*0.05)
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
                                   color: colors.Grey2
                               ),
                               borderRadius: BorderRadius.circular(w*0.05)
@@ -197,37 +156,31 @@ class _ResetPasswordState extends State<ResetPassword> {
                   ],
                 ),
               ),
-              SizedBox(height: w*0.05,),
-              Column(
-                children: [
-                  Container(
-                    height: h*0.065,
-                    width: w*0.93,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            stops: [0.3,0.7],
-                            colors:[
-                              Color(0xffF9881F),
-                              Color(0xffFF774C)
-                            ]),
-                        borderRadius: BorderRadius.circular(w*0.06)
-                    ),
-                    child: Center(
-                        child: Text("Confirm",
-                          style: TextStyle(
-                              fontSize: w*0.045,
-                              fontWeight: FontWeight.w600,
-                              color: colors.White
-                          ),)),
-                  ),
-                  SizedBox(height: w*0.1,),
-                ],
-              ),
-            ],
+            ),
           ),
-        ),
+          Container(
+            height: h*0.065,
+            width: w*0.93,
+            decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    stops: [0.3,0.7],
+                    colors:[
+                      Color(0xffF9881F),
+                      Color(0xffFF774C)
+                    ]),
+                borderRadius: BorderRadius.circular(w*0.06)
+            ),
+            child: Center(
+                child: Text("Update",
+                  style: TextStyle(
+                      fontSize: w*0.045,
+                      fontWeight: FontWeight.w600,
+                      color: colors.White
+                  ),)),
+          ),
+        ],
       ),
     );
   }

@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:food_app/auth/screen/forget_password.dart';
 import 'package:food_app/commons/colours.dart';
 
 import '../../commons/icons.dart';
@@ -28,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: SizedBox(
           height: h*0.9,
           child: Column(
@@ -37,8 +39,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Center(
                 child: SizedBox(
-                  height: w*0.23,
-                  width: w*0.8,
+                  width: w*0.85,
                   // color: Colors.blue,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,14 +47,15 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Text("Login to your account",
                         style: TextStyle(
-                            fontSize: w*0.076,
+                            fontSize: w*0.07,
                             fontWeight: FontWeight.w800,
                             color: colors.Black
                         ),
                       ),
-                      Text("Good to see you again, enter your details\nbelow to continue ordering.",
+                      SizedBox(height: h*0.015,),
+                      Text("Good to see you again, enter your details below to continue ordering.",
                         style: TextStyle(
-                            fontSize: w*0.045,
+                            fontSize: w*0.035,
                             fontWeight: FontWeight.w500,
                             color: colors.Black
                         ),
@@ -74,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text("Email Address",
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: w*0.042,
+                            fontSize: w*0.04,
                             color: colors.Black
                         ),),
                     ),
@@ -111,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                           fillColor: colors.White,
                           labelText: "Enter email",
                           labelStyle: TextStyle(
-                              fontSize: w*0.05,
+                              fontSize: w*0.04,
                               fontWeight:FontWeight.w500,
                               color: colors.Grey
                           ),
@@ -134,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text("Password",
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: w*0.042,
+                            fontSize: w*0.04,
                             color: colors.Black
                         ),),
                     ),
@@ -172,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                           labelText: "Enter password",
 
                           labelStyle: TextStyle(
-                              fontSize: w*0.05,
+                              fontSize: w*0.04,
                               fontWeight:FontWeight.w500,
                               color: colors.Grey
                           ),
@@ -197,23 +199,24 @@ class _LoginPageState extends State<LoginPage> {
               Column(
                 children: [
                   Container(
-                    height: h*0.062,
-                    width: w*0.56,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(w*0.06),
-                        color: colors.White
+                      color: colors.White
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(IconConst.GoogleIcon),
-                        Text("Sign-in with Google",
-                          style: TextStyle(
-                              fontSize: w*0.045,
-                              fontWeight: FontWeight.w600,
-                              color: colors.Black
-                          ),)
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20,10,20,10.0),
+                      child: Wrap(
+                        children: [
+                          SvgPicture.asset(IconConst.GoogleIcon),
+                          SizedBox(width: w*0.015,),
+                          Text("Sign-in with Google",
+                            style: TextStyle(
+                                fontSize: w*0.045,
+                                fontWeight: FontWeight.w600,
+                                color: colors.Black
+                            ),)
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: w*0.05,),
@@ -232,7 +235,7 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(w*0.06)
                     ),
                     child: Center(
-                        child: Text("Create an account",
+                        child: Text("Sign in",
                           style: TextStyle(
                               fontSize: w*0.045,
                               fontWeight: FontWeight.w600,
@@ -240,19 +243,24 @@ class _LoginPageState extends State<LoginPage> {
                           ),)),
                   ),
                   SizedBox(height: w*0.05,),
-                  Container(
-                    height: h*0.065,
-                    width: w*0.93,
-                    decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(w*0.06)
-                    ),
-                    child: Center(
-                      child: Text("Forgot password",
-                        style: TextStyle(
-                            fontSize: w*0.045,
-                            fontWeight: FontWeight.w600,
-                            color: colors.Red
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, CupertinoDialogRoute(builder: (context) => ForgetPAssword(), context: context));
+                    },
+                    child: Container(
+                      height: h*0.065,
+                      width: w*0.93,
+                      decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(w*0.06)
+                      ),
+                      child: Center(
+                        child: Text("Forgot password",
+                          style: TextStyle(
+                              fontSize: w*0.045,
+                              fontWeight: FontWeight.w600,
+                              color: colors.Red
+                          ),
                         ),
                       ),
                     ),
