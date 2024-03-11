@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: SvgPicture.asset(IconConst.SplashIcon,height: w*0.07,width: w*0.07,),
+        title: SvgPicture.asset(IconConst.splashIcon,height: w*0.07,width: w*0.07,),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -179,13 +179,13 @@ class _LoginPageState extends State<LoginPage> {
                               color: colors.Grey
                           ),
                           enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   color: colors.Grey2
                               ),
                               borderRadius: BorderRadius.circular(w*0.05)
                           ),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   color: colors.Grey2
                               ),
                               borderRadius: BorderRadius.circular(w*0.05)
@@ -207,7 +207,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.fromLTRB(20,10,20,10.0),
                       child: Wrap(
                         children: [
-                          SvgPicture.asset(IconConst.GoogleIcon),
+                          SvgPicture.asset(IconConst.googleIcon),
                           SizedBox(width: w*0.015,),
                           Text("Sign-in with Google",
                             style: TextStyle(
@@ -224,7 +224,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: h*0.065,
                     width: w*0.93,
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             stops: [0.3,0.7],
@@ -245,7 +245,6 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: w*0.05,),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, CupertinoDialogRoute(builder: (context) => ForgetPAssword(), context: context));
                     },
                     child: Container(
                       height: h*0.065,

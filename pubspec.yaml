@@ -43,6 +43,8 @@ dependencies:
   image_picker: ^1.0.7
   smooth_page_indicator: ^1.1.0
   super_banners: ^0.0.1
+  flutter_flip_card: ^0.0.3
+  lottie: ^2.7.0
 
 dev_dependencies:
   flutter_test:

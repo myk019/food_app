@@ -1,10 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/auth/screen/create_account.dart';
+import 'package:food_app/auth/screen/delivery_method.dart';
 import 'package:food_app/auth/screen/edit_profile.dart';
 import 'package:food_app/auth/screen/forget_password.dart';
 import 'package:food_app/auth/screen/login_account.dart';
 import 'package:food_app/auth/screen/orders_page.dart';
+import 'package:food_app/auth/screen/payment_page.dart';
 import 'package:food_app/auth/screen/reset_password.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/on_body/screen/onbord_screen.dart';
@@ -40,7 +42,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme:GoogleFonts.dmSansTextTheme(),
       ),
-      home:  OrderPage(),
+      home:  DeliveryMethod(),
     );
   }
 }

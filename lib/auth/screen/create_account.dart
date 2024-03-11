@@ -28,7 +28,7 @@ class _CreatePageState extends State<CreatePage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: colors.Background,
-        title: SvgPicture.asset(IconConst.SplashIcon,height: w*0.07,width: w*0.07,),
+        title: SvgPicture.asset(IconConst.splashIcon,height: w*0.07,width: w*0.07,),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -251,7 +251,7 @@ class _CreatePageState extends State<CreatePage> {
                           child: Wrap(
                             // mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SvgPicture.asset(IconConst.GoogleIcon),
+                              SvgPicture.asset(IconConst.googleIcon),
                               SizedBox(width: w*0.015,),
                               Text("Sign-in with Google",
                                 style: TextStyle(

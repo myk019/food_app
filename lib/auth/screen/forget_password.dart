@@ -25,7 +25,7 @@ class _ForgetPAsswordState extends State<ForgetPAssword> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: colors.Background,
-        title: SvgPicture.asset(IconConst.SplashIcon,height: w*0.07,width: w*0.07,),
+        title: SvgPicture.asset(IconConst.splashIcon,height: w*0.07,width: w*0.07,),
         centerTitle: true,
       ),
       body: SingleChildScrollView(

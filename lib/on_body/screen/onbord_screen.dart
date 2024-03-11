@@ -30,7 +30,7 @@ class _OnBodyScreenState extends State<OnBodyScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: SvgPicture.asset(IconConst.SplashIcon,height: w*0.07,width: w*0.07,),
+        title: SvgPicture.asset(IconConst.splashIcon,height: w*0.07,width: w*0.07,),
         centerTitle: true,
         actions: [
           onPageIndex==2?const SizedBox():

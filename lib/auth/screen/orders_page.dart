@@ -62,10 +62,15 @@ class _OrderPageState extends State<OrderPage> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          title: SvgPicture.asset(
-            IconConst.leftArrow,
-            height: w * 0.06,
-            width: w * 0.06,
+          title: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: SvgPicture.asset(
+              IconConst.leftArrow,
+              height: h * 0.03,
+              width: w * 0.06,
+            ),
           ),
         ),
         body: Column(
@@ -105,6 +110,9 @@ class _OrderPageState extends State<OrderPage> {
               color: Colors.transparent,
               child: TabBarView(
                   children: [
+
+                    /// Complete Orders
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -125,13 +133,13 @@ class _OrderPageState extends State<OrderPage> {
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Container(
-                                          height: h * 0.09,
-                                          width: w * 0.22,
+                                          height: h * 0.07,
+                                          width: w * 0.2,
                                           decoration: BoxDecoration(
                                               // color: Colors.blue,
                                               borderRadius:
                                               BorderRadius.circular(w * 0.04)),
-                                          child: SvgPicture.asset(IconConst.GoogleIcon),
+                                          child: SvgPicture.asset(IconConst.star),
                                         ),
                                         Container(
                                           height: h * 0.1,
@@ -231,6 +239,9 @@ class _OrderPageState extends State<OrderPage> {
                     )
                   ],
                 ),
+
+                /// Pending Orders
+
                 Column(
                   children: [
                     Text('data'),

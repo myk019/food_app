@@ -8,4 +8,6 @@ class ImageConst{
   static const pizza="assets/images/🍕.png";
   static const burger="assets/images/🍔.png";
   static const bigburger="assets/images/Burger.png";
+  static const card="assets/images/card.png";
+  static const lottie="assets/Gifs/Animation .json";
 }
