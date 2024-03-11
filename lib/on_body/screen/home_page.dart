@@ -67,9 +67,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: colors.Background,
       appBar: AppBar(
-        backgroundColor: colors.White,
+        backgroundColor: colors.Background,
         elevation: 0,
-        leading: Container(
+        leading: SizedBox(
           height: w*0.5,
           width: w*0.5,
           // color: Colors.red,
@@ -90,14 +90,18 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         actions: [
           SizedBox(
-            height: w*0.15,
-            width: w*0.15,
+            height: w*0.12,
+            width: w*0.12,
             // color: colors.Red,
             child: CircleAvatar(
-              radius: w*0.03,
-            ),
-          )
+              radius: w*0.02,
+              backgroundColor: colors.White,
+              child: SvgPicture.asset(IconConst.googleIcon),
+                         ),
+          ),
+          SizedBox(width: w*0.03,),
         ],
+
       ),
       body: Padding(
         padding: EdgeInsets.all(w*0.05),
@@ -111,7 +115,7 @@ class _HomePageState extends State<HomePage> {
             ),),
             SizedBox(height: w*0.05,),
             SizedBox(
-              height: w*0.35,
+              height: h*0.16,
               width: w*1,
               // color: Colors.red,
               child: ListView.separated(
@@ -127,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                      });
                    },
                    child: Container(
-                        height: w*0.33,
+                        height: h*0.33,
                         width: w*0.25,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.vertical(top: Radius.circular(w*0.19),bottom: Radius.circular(w*0.19)),
@@ -153,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                                 Center(
                                   child:
                                   Container(
-                                    height: w*0.11,
+                                    height: h*0.05,
                                     width: w*0.11,
                                     // color: Colors.red,
                                     child: Image(image: AssetImage(items[index]["image"]),fit: BoxFit.cover,),
@@ -228,8 +232,17 @@ class _HomePageState extends State<HomePage> {
 
                         ),),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            SvgPicture.asset(IconConst.star)
+                            Row(
+                              children: [
+                                SvgPicture.asset(IconConst.star),
+                                SizedBox(width: w*0.01,),
+                                Text("4+")
+                              ],
+                            ),
+                            SizedBox(width: w*0.23,),
+                            SvgPicture.asset(IconConst.heart),
                           ],
                         )
                       ],

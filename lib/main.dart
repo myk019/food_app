@@ -10,6 +10,7 @@ import 'package:food_app/auth/screen/payment_page.dart';
 import 'package:food_app/auth/screen/reset_password.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/on_body/screen/onbord_screen.dart';
+import 'package:food_app/on_body/screen/selected_item_page.dart';
 import 'package:food_app/splash/screen/splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme:GoogleFonts.dmSansTextTheme(),
       ),
-      home:  DeliveryMethod(),
+      home:  SelectedItemPage(),
     );
   }
 }

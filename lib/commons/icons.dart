@@ -7,6 +7,9 @@ class IconConst{
   static const googleIcon="assets/icons/google.svg";
   static const heart="assets/icons/Heart.svg";
   static const star="assets/icons/Star 1.svg";
+  static const profilehead="assets/icons/profilehead.svg";
+  static const thijj="assets/icons/thijj.svg";
+  static const clock="assets/icons/clock.svg";
   static const leftArrow="assets/icons/Left Arrow.svg";
   //payment icons
   static const addMore="assets/icons/add more.svg";

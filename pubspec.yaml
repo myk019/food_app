@@ -45,6 +45,7 @@ dependencies:
   super_banners: ^0.0.1
   flutter_flip_card: ^0.0.3
   lottie: ^2.7.0
+  awesome_bottom_bar: ^1.2.4
 
 dev_dependencies:
   flutter_test:
