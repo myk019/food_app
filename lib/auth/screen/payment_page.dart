@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_flip_card/controllers/flip_card_controllers.dart';
 import 'package:flutter_flip_card/flipcard/gesture_flip_card.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/images.dart';
+import 'package:food_app/on_body/screen/bottom_navigation.dart';
+import 'package:food_app/on_body/screen/home_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
@@ -349,6 +352,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Lottie.asset(ImageConst.lottie),
+                      // SvgPicture.asset(IconConst.googleIcon),
                       Text("Payment Successfull!",style: TextStyle(
                           fontSize: w*0.06,
                           fontWeight: FontWeight.w700,
@@ -409,7 +413,10 @@ class _PaymentPageState extends State<PaymentPage> {
                   ),
                 ),
               );
+             
             },);
+          Future.delayed(Duration(seconds: 3)).then((value) =>
+              Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => NavigationPage(),)));
         },
         child: Padding(
           padding:  EdgeInsets.only(bottom: w*0.02),

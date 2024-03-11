@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme:GoogleFonts.dmSansTextTheme(),
       ),
-      home:  SelectedItemPage(),
+      home:  PaymentPage(),
     );
   }
 }

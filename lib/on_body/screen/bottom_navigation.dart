@@ -10,15 +10,15 @@ import 'cart_page.dart';
 import 'favourite_page.dart';
 import 'notification_page.dart';
 
-class BottomNavigation extends StatefulWidget {
-  const BottomNavigation({super.key});
+class NavigationPage extends StatefulWidget {
+  const NavigationPage({super.key});
 
   @override
-  State<BottomNavigation> createState() => _BottomNavigationState();
+  State<NavigationPage> createState() => _NavigationPageState();
 }
 
 
-class _BottomNavigationState extends State<BottomNavigation> {
+class _NavigationPageState extends State<NavigationPage> {
 
   int selectIndex=0;
   List pages=[
