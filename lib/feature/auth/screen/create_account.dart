@@ -1,25 +1,37 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
 
-import '../../commons/icons.dart';
-import '../../main.dart';
+import '../../../commons/icons.dart';
+import '../../../main.dart';
+import '../controller/user_controller.dart';
 import 'login_account.dart';
 
-class CreatePage extends StatefulWidget {
+class CreatePage extends ConsumerStatefulWidget {
   const CreatePage({super.key});
 
   @override
-  State<CreatePage> createState() => _CreatePageState();
+  ConsumerState<CreatePage> createState() => _CreatePageState();
 }
 
-class _CreatePageState extends State<CreatePage> {
+class _CreatePageState extends ConsumerState<CreatePage> {
 
   TextEditingController nameController=TextEditingController();
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
 
+
+  addUser(){
+    ref.read(usercontrollerprovider).userFunction(
+        name: nameController.text,
+        email: emailController.text,
+        password: passwordController.text);
+  }
+  googleAuth(){
+    ref.read(usercontrollerprovider).googleFunction(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -242,24 +254,29 @@ class _CreatePageState extends State<CreatePage> {
                 child: Column(
                   children: [
                     Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(w*0.06),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(20,10,20,10.0),
-                          child: Wrap(
-                            // mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(IconConst.googleIcon),
-                              SizedBox(width: w*0.015,),
-                              Text("Sign-in with Google",
-                                style: TextStyle(
-                                  fontSize: w*0.045,
-                                  fontWeight: FontWeight.w600,
-                                  color: colors.Black
-                                ),)
-                            ],
+                      child: GestureDetector(
+                        onTap: () {
+                          googleAuth();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(w*0.06),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(20,10,20,10.0),
+                            child: Wrap(
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(IconConst.googleIcon),
+                                SizedBox(width: w*0.015,),
+                                Text("Sign-in with Google",
+                                  style: TextStyle(
+                                    fontSize: w*0.045,
+                                    fontWeight: FontWeight.w600,
+                                    color: colors.Black
+                                  ),)
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -267,6 +284,8 @@ class _CreatePageState extends State<CreatePage> {
                     SizedBox(height: w*0.05,),
                     GestureDetector(
                       onTap: () {
+                        addUser();
+                        const SnackBar(content: Text("error"));
                         Navigator.push(context, CupertinoDialogRoute(builder: (context) => const LoginPage(), context: context));
                       },
                       child: Container(

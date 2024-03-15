@@ -2,25 +2,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_flip_card/controllers/flip_card_controllers.dart';
 import 'package:flutter_flip_card/flipcard/gesture_flip_card.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
+import 'package:food_app/commons/icons.dart';
 import 'package:food_app/commons/images.dart';
-import 'package:food_app/on_body/screen/bottom_navigation.dart';
-import 'package:food_app/on_body/screen/home_page.dart';
+import 'package:food_app/feature/payment/contoller/payment_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../commons/icons.dart';
-import '../../main.dart';
+import '../../../main.dart';
+import '../../../on_body/screen/bottom_navigation.dart';
 
-class PaymentPage extends StatefulWidget {
+class PaymentPage extends ConsumerStatefulWidget {
   const PaymentPage({super.key});
 
   @override
-  State<PaymentPage> createState() => _PaymentPageState();
+  ConsumerState createState() => _PaymentPageState();
 }
 
-class _PaymentPageState extends State<PaymentPage> {
+class _PaymentPageState extends ConsumerState<PaymentPage> {
 
   ///Controllers
 
@@ -29,6 +30,15 @@ class _PaymentPageState extends State<PaymentPage> {
   TextEditingController dateController=TextEditingController();
   TextEditingController cvvController=TextEditingController();
   GestureFlipCardController flipCardController=GestureFlipCardController();
+
+  addPaymentDetails(){
+    ref.watch(paymentcontrolleprovider).paymentFunction(
+        cardname: nameController.text,
+        number: numberController.text,
+        date: dateController.text,
+        cvv: cvvController.text);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -337,6 +347,7 @@ class _PaymentPageState extends State<PaymentPage> {
       ),
       floatingActionButton: InkWell(
         onTap: () {
+          addPaymentDetails();
           showDialog(
             context: context,
             barrierDismissible: true,
@@ -346,14 +357,14 @@ class _PaymentPageState extends State<PaymentPage> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(w*0.05)
                 ),
-                content: Container(
+                content: SizedBox(
                   height: w*1.2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Lottie.asset(ImageConst.lottie),
                       // SvgPicture.asset(IconConst.googleIcon),
-                      Text("Payment Successfull!",style: TextStyle(
+                      Text("Payment Successfully",style: TextStyle(
                           fontSize: w*0.06,
                           fontWeight: FontWeight.w700,
                           color: colors.PrimaryColour
@@ -369,6 +380,12 @@ class _PaymentPageState extends State<PaymentPage> {
                           onTap: () {
                           },
                           child: Container(
+                            height: w*0.15,
+                            width: w*0.85,
+                            decoration: BoxDecoration(
+                              color: colors.PrimaryColour,
+                              borderRadius: BorderRadius.circular(w*0.1),
+                            ),
                             child: Center(
                               child: Text("View Ticket",
                                 style: TextStyle(
@@ -376,12 +393,6 @@ class _PaymentPageState extends State<PaymentPage> {
                                     fontWeight: FontWeight.w600,
                                     color: colors.White
                                 ),),
-                            ),
-                            height: w*0.15,
-                            width: w*0.85,
-                            decoration: BoxDecoration(
-                              color: colors.PrimaryColour,
-                              borderRadius: BorderRadius.circular(w*0.1),
                             ),
                           ),
                         ),
@@ -392,6 +403,12 @@ class _PaymentPageState extends State<PaymentPage> {
                             Navigator.pop(context);
                           },
                           child: Container(
+                            height: w*0.15,
+                            width: w*0.85,
+                            decoration: BoxDecoration(
+                              color: colors.White,
+                              borderRadius: BorderRadius.circular(w*0.1),
+                            ),
                             child: Center(
                               child: Text("Cancel",
                                 style: TextStyle(
@@ -400,12 +417,6 @@ class _PaymentPageState extends State<PaymentPage> {
                                     color: colors.PrimaryColour
                                 ),),
                             ),
-                            height: w*0.15,
-                            width: w*0.85,
-                            decoration: BoxDecoration(
-                              color: colors.White,
-                              borderRadius: BorderRadius.circular(w*0.1),
-                            ),
                           ),
                         ),
                       ),
@@ -413,10 +424,10 @@ class _PaymentPageState extends State<PaymentPage> {
                   ),
                 ),
               );
-             
+
             },);
-          Future.delayed(Duration(seconds: 3)).then((value) =>
-              Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => NavigationPage(),)));
+          Future.delayed(const Duration(seconds: 3)).then((value) =>
+              Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const NavigationPage(),)));
         },
         child: Padding(
           padding:  EdgeInsets.only(bottom: w*0.02),

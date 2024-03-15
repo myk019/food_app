@@ -1,23 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/auth/screen/forget_password.dart';
 import 'package:food_app/commons/colours.dart';
+import 'package:food_app/feature/auth/controller/user_controller.dart';
 
-import '../../commons/icons.dart';
-import '../../main.dart';
+import '../../../commons/icons.dart';
+import '../../../main.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
 
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
+  
+GoogleAuth(){
+  ref.read(usercontrollerprovider).googleFunction(context);
+}
+  
 
   @override
   Widget build(BuildContext context) {
@@ -198,24 +205,29 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: w*0.1,),
               Column(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(w*0.06),
-                      color: colors.White
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20,10,20,10.0),
-                      child: Wrap(
-                        children: [
-                          SvgPicture.asset(IconConst.googleIcon),
-                          SizedBox(width: w*0.015,),
-                          Text("Sign-in with Google",
-                            style: TextStyle(
-                                fontSize: w*0.045,
-                                fontWeight: FontWeight.w600,
-                                color: colors.Black
-                            ),)
-                        ],
+                  GestureDetector(
+                    onTap: () {
+                      GoogleAuth();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(w*0.06),
+                        color: colors.White
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20,10,20,10.0),
+                        child: Wrap(
+                          children: [
+                            SvgPicture.asset(IconConst.googleIcon),
+                            SizedBox(width: w*0.015,),
+                            Text("Sign-in with Google",
+                              style: TextStyle(
+                                  fontSize: w*0.045,
+                                  fontWeight: FontWeight.w600,
+                                  color: colors.Black
+                              ),)
+                          ],
+                        ),
                       ),
                     ),
                   ),

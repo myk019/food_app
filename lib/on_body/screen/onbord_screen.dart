@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:food_app/auth/screen/create_account.dart';
-import 'package:food_app/auth/screen/login_account.dart';
+import 'package:food_app/feature/auth/screen/create_account.dart';
+import 'package:food_app/feature/auth/screen/login_account.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/commons/images.dart';
