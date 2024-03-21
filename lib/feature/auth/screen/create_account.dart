@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
+import 'package:food_app/commons/images.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../commons/icons.dart';
 import '../../../main.dart';
@@ -18,6 +22,9 @@ class CreatePage extends ConsumerStatefulWidget {
 
 class _CreatePageState extends ConsumerState<CreatePage> {
 
+  String imgUrl=("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKc6EnanoKKj61vCCamKeDwXelxNzUElzIWWDgf75XNEa1-uaHgiSq32hF7bp73Tq9nsY&usqp=CAU");
+
+
   TextEditingController nameController=TextEditingController();
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
@@ -27,11 +34,49 @@ class _CreatePageState extends ConsumerState<CreatePage> {
     ref.read(usercontrollerprovider).userFunction(
         name: nameController.text,
         email: emailController.text,
-        password: passwordController.text);
+        password: passwordController.text,
+        image: imgUrl);
   }
   googleAuth(){
     ref.read(usercontrollerprovider).googleFunction(context);
   }
+
+  @override
+  // void initState() {
+  //   if()
+  //   super.initState();
+  // }
+
+  // var file;
+  // pickFile(ImageSource) async {
+  //   final imageFile = await ImagePicker.platform.pickImage(source: ImageSource);
+  //   file = File(imageFile!.path);
+  //   if (mounted) {
+  //     setState(() {
+  //       file = File(imageFile.path);
+  //     });
+  //     ref.watch(usercontrollerprovider).uploadFile(file: file);
+  //     // uploadFile();
+  //   }
+  // }
+
+  // uploadFile() async {
+  //   if (file != null) {
+  //     var uploadTask = await FirebaseStorage.instance
+  //         .ref('images')
+  //         .child("${DateTime.now()}")
+  //         .putFile(file!);
+  //
+  //     imageurl = await uploadTask.ref.getDownloadURL();
+  //     print(imageurl);
+  //
+  //     ScaffoldMessenger.of(context)
+  //         .showSnackBar(SnackBar(content: Text("image uploaded")));
+  //
+  //     setState(() {});
+  //     Navigator.pop(context);
+  //   }
+  //   }
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +135,7 @@ class _CreatePageState extends ConsumerState<CreatePage> {
                   children: [
                     CircleAvatar(
                       radius: w*0.15,
-                      backgroundColor: colors.PrimaryColour,
-                      child: Icon(Icons.image_outlined,color: colors.White,size: w*0.1),
+                      backgroundImage: NetworkImage(imgUrl),
                     ),
                     TextFormField(
                       controller: nameController,

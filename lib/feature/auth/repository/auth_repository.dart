@@ -1,25 +1,33 @@
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:food_app/core/providers/firebase_provider.dart';
 import 'package:food_app/model/user_model.dart';
+import 'package:food_app/on_body/screen/bottom_navigation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:riverpod/riverpod.dart';
 
-final authrepositoryprovider = Provider((ref) => Authrepository(
-    auth: ref.watch(authprovider), firestore: ref.watch(firestoreprovider)));
+import '../screen/create_account.dart';
+
+final authrepositoryprovider = Provider((ref) => Authrepository(auth: ref.watch(authprovider), firestore: ref.watch(firestoreprovider)));
 
 class Authrepository {
   final FirebaseAuth _auth;
   final FirebaseFirestore _firestore;
-
+  // final FirebaseStorage _firebaseStorage;
   Authrepository(
       {required FirebaseAuth auth, required FirebaseFirestore firestore})
       : _auth = auth,
         _firestore = firestore;
+  // _firebaseStorage=firebaseStorage;
 
   CollectionReference get _authuser => _firestore.collection("Users");
+
+  // String imageurl = "";
+
 
   signInWithGoogle(context) async {
     // Trigger the authentication flow
@@ -48,13 +56,40 @@ class Authrepository {
           image: userCredential.user!.photoURL.toString());
 
       await _authuser.doc(userCredential.user!.email!).set(userData.toMap());
+    }else{
+      Navigator.push(context, CupertinoPageRoute(builder: (context) => const NavigationPage(),));
     }
 
   }
 
-  UserDetails(name, email, password) {
-    UserModel userModel =
-        UserModel(name: name, email: email, password: password, image: "");
+
+
+  // uploadFile({required File file,}) async {
+  //
+  //   if (file != null) {
+  //     var uploadTask = await _firebaseStorage
+  //         .ref('images')
+  //         .child("${DateTime.now()}")
+  //         .putFile(file!);
+  //
+  //     imageurl = await uploadTask.ref.getDownloadURL();
+  //     print("======================= image url ====================");
+  //     print(imageurl);
+  //
+  //     // ScaffoldMessenger.of(context)
+  //     //     .showSnackBar(SnackBar(content: Text("image uploaded")));
+  //     // setState(() {});
+  //     // Navigator.pop(context);
+  //
+  //   }
+  // }
+
+  UserDetails(name, email, password,image) {
+
+    UserModel userModel = UserModel(name: name, email: email, password: password, image: image );
     _authuser.doc(email).set(userModel.toMap());
   }
+
+
+
 }

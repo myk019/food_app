@@ -12,8 +12,8 @@ class UserController{
 
 
 
-  userFunction({required name,required email,required password}){
-    _authrepository.UserDetails(name, email, password);
+  userFunction({required name,required email,required password,required image}){
+    _authrepository.UserDetails(name, email, password,image);
 }
 
 googleFunction(context){
