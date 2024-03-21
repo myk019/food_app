@@ -11,6 +11,7 @@ class IconConst{
   static const thijj="assets/icons/thijj.svg";
   static const clock="assets/icons/clock.svg";
   static const leftArrow="assets/icons/Left Arrow.svg";
+  static const drawerr="assets/icons/drawerr.svg";
   //payment icons
   static const addMore="assets/icons/add more.svg";
   static const masterCard="assets/icons/mastercard.svg";

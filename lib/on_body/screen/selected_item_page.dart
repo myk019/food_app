@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
+import 'package:food_app/on_body/screen/your_cart_page.dart';
 
 import '../../commons/icons.dart';
 import '../../commons/images.dart';
@@ -24,11 +26,19 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
       appBar: AppBar(
         backgroundColor: colors.Background,
         elevation: 0,
-        leading: SizedBox(
-            height: w * 0.5,
-            width: w * 0.5,
-            // color: Colors.red,
-            child: Image(image: AssetImage(ImageConst.drawer))),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: SvgPicture.asset(
+              IconConst.leftArrow,
+              height: w*0.03,
+              width: w*0.06,
+            ),
+          ),
+        ),
         title: Column(
           children: [
             Text(
@@ -85,35 +95,35 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
           SizedBox(
             height: h * 0.05,
           ),
-          Container(
-            height: h * 0.06,
-            width: w * 0.25,
-            decoration: BoxDecoration(
-                color: colors.Red,
-                borderRadius: BorderRadius.circular(w * 0.07),
-                gradient: const LinearGradient(
-                    colors: [Color(0xffF9881F), Color(0xffFF774C)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    stops: [0.3, 0.7])),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Icon(
-                  Icons.remove,
-                  color: colors.White,
-                ),
-                Text(
-                  "2",
-                  style: TextStyle(color: colors.White),
-                ),
-                Icon(
-                  Icons.add,
-                  color: colors.White,
-                ),
-              ],
-            ),
-          ),
+          // Container(
+          //   height: h * 0.06,
+          //   width: w * 0.25,
+          //   decoration: BoxDecoration(
+          //       color: colors.Red,
+          //       borderRadius: BorderRadius.circular(w * 0.07),
+          //       gradient: const LinearGradient(
+          //           colors: [Color(0xffF9881F), Color(0xffFF774C)],
+          //           begin: Alignment.topLeft,
+          //           end: Alignment.bottomRight,
+          //           stops: [0.3, 0.7])),
+          //   child: const Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //     children: [
+          //       Icon(
+          //         Icons.remove,
+          //         color: colors.White,
+          //       ),
+          //       Text(
+          //         "2",
+          //         style: TextStyle(color: colors.White),
+          //       ),
+          //       Icon(
+          //         Icons.add,
+          //         color: colors.White,
+          //       ),
+          //     ],
+          //   ),
+          // ),
           SizedBox(
             height: w * 0.07,
           ),
@@ -227,21 +237,26 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
           ),
           SizedBox(
             height: h*0.03,),
-          Container(
-            height: h*0.06,
-            width: w*0.7,
-            decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(w*0.05),
-              gradient: LinearGradient(colors: [colors.PrimaryColour,colors.Red.withOpacity(0.9)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  stops: [0.1,10.0]
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, CupertinoPageRoute(builder: (context) => YourCartPage(),));
+            },
+            child: Container(
+              height: h*0.06,
+              width: w*0.7,
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(w*0.05),
+                gradient: LinearGradient(colors: [colors.PrimaryColour,colors.Red.withOpacity(0.9)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    stops: [0.1,10.0]
+                ),
               ),
+              child: Center(child: Text("Add to cart",style: TextStyle(
+                  color: colors.White
+              ),)),
             ),
-            child: Center(child: Text("Add to cart",style: TextStyle(
-                color: colors.White
-            ),)),
           )
         ],
       ),

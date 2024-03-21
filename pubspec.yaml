@@ -48,6 +48,8 @@ dependencies:
   awesome_bottom_bar: ^1.2.4
   flutter_riverpod: ^2.4.10
   google_sign_in: ^6.1.6
+  flutter_slidable: ^3.1.0
+  rive: ^0.12.3
 
 dev_dependencies:
   flutter_test:
