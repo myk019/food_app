@@ -3,12 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:food_app/core/providers/firebase_provider.dart';
 import 'package:food_app/model/user_model.dart';
 import 'package:food_app/on_body/screen/bottom_navigation.dart';
+import 'package:food_app/on_body/screen/utube/homepage_utube.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:riverpod/riverpod.dart';
+
 
 import '../screen/create_account.dart';
 
@@ -57,7 +60,10 @@ class Authrepository {
 
       await _authuser.doc(userCredential.user!.email!).set(userData.toMap());
     }else{
-      Navigator.push(context, CupertinoPageRoute(builder: (context) => const NavigationPage(),));
+
+//       SharedPreferences _prefs= await SharedPreferences.getInstance();
+//       _prefs.setString("email", userCredential.user!.email.toString());
+// Navigator.push(context, CupertinoPageRoute(builder: (context) => HomePageUtube() ,));
     }
 
   }

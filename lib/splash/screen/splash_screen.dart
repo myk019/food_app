@@ -4,6 +4,7 @@ import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/on_body/screen/onbord_screen.dart';
 
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -11,16 +12,30 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
+String? prefName;
+
+// getData() async {
+//   SharedPreferences _prefs=await SharedPreferences.getInstance();
+//   _prefs.get("email");
+//
+//
+// }
+
+
+
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    Future.delayed(const Duration(seconds: 4))
-        .then((value) => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const OnBodyScreen(),
-            )));
+
+
+    // getData();
+    // Future.delayed(const Duration(seconds: 4))
+    //     .then((value) => Navigator.pushReplacement(
+    //         context,
+    //         MaterialPageRoute(
+    //           builder: (context) => const OnBodyScreen(),
+    //         )));
     super.initState();
   }
 
