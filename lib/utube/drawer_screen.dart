@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/auth/screen/edit_profile.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/feature/auth/screen/login_account.dart';
+import 'package:food_app/feature/payment/screen/payment_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../main.dart';
@@ -32,16 +33,17 @@ class _DrawerScreenState extends State<DrawerScreen> {
             children: [
               CircleAvatar(
                 radius: w*0.08,
+                backgroundImage: NetworkImage(userImg.toString())
               ),
               SizedBox(width: w*0.03,),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("h",style: TextStyle(
+                  Text(userName??"",style: TextStyle(
                     fontSize: w*0.04,
                     fontWeight: FontWeight.w700
                   ),),
-                  Text("Bio",style: TextStyle(
+                  Text(userEmail??"",style: TextStyle(
                       fontSize: w*0.04,
                       fontWeight: FontWeight.w600
                   ),)
@@ -65,26 +67,31 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     children: [
                       Icon(Icons.account_circle,color: Colors.white,size: w*0.077,),
                       SizedBox(width: w*0.03,),
-                      Text("Account",style: TextStyle(
+                      Text("My profile",style: TextStyle(
                           color: Colors.white,fontWeight: FontWeight.w600,fontSize: w*0.04
+                      ),),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, CupertinoPageRoute(builder: (context) => PaymentPage(),));
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.payment,color: Colors.white,size: w*0.077,),
+                      SizedBox(width: w*0.03,),
+                      Text("Payment method",style: TextStyle(
+                          color: Colors.white,fontWeight: FontWeight.w600,fontSize: w*0.04,
                       ),),
                     ],
                   ),
                 ),
                 Row(
                   children: [
-                    Icon(Icons.privacy_tip,color: Colors.white,size: w*0.077,),
-                    SizedBox(width: w*0.03,),
-                    Text("Privacy",style: TextStyle(
-                        color: Colors.white,fontWeight: FontWeight.w600,fontSize: w*0.04
-                    ),),
-                  ],
-                ),
-                Row(
-                  children: [
                     Icon(Icons.help,color: Colors.white,size: w*0.077,),
                     SizedBox(width: w*0.03,),
-                    Text("Help",style: TextStyle(
+                    Text("Settings",style: TextStyle(
                         color: Colors.white,fontWeight: FontWeight.w600,fontSize: w*0.04
                     ),),
                   ],
@@ -93,7 +100,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   children: [
                     Icon(Icons.chat,color: Colors.white,size: w*0.077,),
                     SizedBox(width: w*0.03,),
-                    Text("Chat",style: TextStyle(
+                    Text("Help",style: TextStyle(
                         color: Colors.white,fontWeight: FontWeight.w600,fontSize: w*0.04
                     ),),
                   ],
