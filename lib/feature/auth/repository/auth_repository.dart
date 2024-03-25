@@ -66,7 +66,7 @@ class Authrepository {
       User? user=userCredential.user;
       userName=user?.displayName.toString();
       userEmail=user?.email.toString();
-      userImg=user?.photoURL;
+      userImg=user!.photoURL!;
 
       SharedPreferences _prefs= await SharedPreferences.getInstance();
       _prefs.setString("email", userCredential.user!.email.toString() );
