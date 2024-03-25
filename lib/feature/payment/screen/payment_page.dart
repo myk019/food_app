@@ -102,7 +102,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                                 SvgPicture.asset(IconConst.masterCard,height: w*0.15,width: w*0.15,)
                               ],
                             ),
-                            SizedBox(height: w*0.05,),
+                            // SizedBox(height: w*0.02,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
