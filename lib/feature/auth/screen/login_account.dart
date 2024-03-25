@@ -7,7 +7,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:food_app/auth/screen/forget_password.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/feature/auth/controller/user_controller.dart';
-import 'package:food_app/on_body/screen/bottom_navigation.dart';
+import 'package:food_app/navigations/screen/bottom_navigation.dart';
+import 'package:food_app/utube/homepage_utube.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../commons/icons.dart';
@@ -24,6 +25,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
+
+  // addUser(){
+  //   ref.read(usercontrollerprovider).userFunction(
+  //       name: nameController.text,
+  //       email: emailController.text,
+  //       password: passwordController.text,
+  //       image: imgUrl);
+  // }
   
 GoogleAuth(){
   ref.read(usercontrollerprovider).googleFunction(context);
@@ -239,7 +248,7 @@ GoogleAuth(){
                   GestureDetector(
                     onTap: () {
 
-                      Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavigationPage(),), (route) => false);
+                      Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => HomePageUtube(),), (route) => false);
                     },
                     child: Container(
                       height: h*0.065,

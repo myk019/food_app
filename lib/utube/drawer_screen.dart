@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:food_app/auth/screen/edit_profile.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/feature/auth/screen/login_account.dart';
-import 'package:food_app/model/user_model.dart';
-import 'package:food_app/on_body/screen/home_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../main.dart';

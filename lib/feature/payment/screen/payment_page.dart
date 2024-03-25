@@ -12,7 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../main.dart';
-import '../../../on_body/screen/bottom_navigation.dart';
+import '../../../navigations/screen/bottom_navigation.dart';
 
 class PaymentPage extends ConsumerStatefulWidget {
   const PaymentPage({super.key});

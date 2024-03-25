@@ -5,9 +5,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/commons/images.dart';
-import 'package:food_app/on_body/screen/favourite_page.dart';
-import 'package:food_app/on_body/screen/selected_item_page.dart';
-import 'package:food_app/on_body/screen/utube/drawer_screen.dart';
+import 'package:food_app/navigations/screen/favourite_page.dart';
+import 'package:food_app/selected_item_page/screen/selected_item_page.dart';
+
 
 import '../../main.dart';
 

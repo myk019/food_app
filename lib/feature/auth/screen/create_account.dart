@@ -36,47 +36,12 @@ class _CreatePageState extends ConsumerState<CreatePage> {
         email: emailController.text,
         password: passwordController.text,
         image: imgUrl);
+
   }
   googleAuth(){
     ref.read(usercontrollerprovider).googleFunction(context);
   }
 
-  @override
-  // void initState() {
-  //   if()
-  //   super.initState();
-  // }
-
-  // var file;
-  // pickFile(ImageSource) async {
-  //   final imageFile = await ImagePicker.platform.pickImage(source: ImageSource);
-  //   file = File(imageFile!.path);
-  //   if (mounted) {
-  //     setState(() {
-  //       file = File(imageFile.path);
-  //     });
-  //     ref.watch(usercontrollerprovider).uploadFile(file: file);
-  //     // uploadFile();
-  //   }
-  // }
-
-  // uploadFile() async {
-  //   if (file != null) {
-  //     var uploadTask = await FirebaseStorage.instance
-  //         .ref('images')
-  //         .child("${DateTime.now()}")
-  //         .putFile(file!);
-  //
-  //     imageurl = await uploadTask.ref.getDownloadURL();
-  //     print(imageurl);
-  //
-  //     ScaffoldMessenger.of(context)
-  //         .showSnackBar(SnackBar(content: Text("image uploaded")));
-  //
-  //     setState(() {});
-  //     Navigator.pop(context);
-  //   }
-  //   }
 
   @override
   Widget build(BuildContext context) {

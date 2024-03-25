@@ -6,11 +6,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:food_app/core/providers/firebase_provider.dart';
+import 'package:food_app/main.dart';
 import 'package:food_app/model/user_model.dart';
-import 'package:food_app/on_body/screen/bottom_navigation.dart';
-import 'package:food_app/on_body/screen/utube/homepage_utube.dart';
+import 'package:food_app/navigations/screen/bottom_navigation.dart';
+import 'package:food_app/utube/homepage_utube.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:riverpod/riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 import '../screen/create_account.dart';
@@ -60,10 +63,15 @@ class Authrepository {
 
       await _authuser.doc(userCredential.user!.email!).set(userData.toMap());
     }else{
+      User? user=userCredential.user;
+      useName=user?.displayName.toString();
+      userEmail=user?.email.toString();
 
-//       SharedPreferences _prefs= await SharedPreferences.getInstance();
-//       _prefs.setString("email", userCredential.user!.email.toString());
-// Navigator.push(context, CupertinoPageRoute(builder: (context) => HomePageUtube() ,));
+      SharedPreferences _prefs= await SharedPreferences.getInstance();
+      _prefs.setString("email", userCredential.user!.email.toString() );
+
+      print(_prefs);
+      Navigator.push(context, CupertinoPageRoute(builder: (context) => HomePageUtube(),));
     }
 
   }
@@ -94,6 +102,7 @@ class Authrepository {
 
     UserModel userModel = UserModel(name: name, email: email, password: password, image: image );
     _authuser.doc(email).set(userModel.toMap());
+
   }
 
 

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
-import 'package:food_app/on_body/screen/your_cart_page.dart';
+import 'package:food_app/navigations/screen/your_cart_page.dart';
 
 import '../../commons/icons.dart';
 import '../../commons/images.dart';
