@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:food_app/feature/payment/screen/payment_page.dart';
 import 'package:food_app/splash/screen/splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'firebase_options.dart';
@@ -9,8 +8,9 @@ import 'firebase_options.dart';
 
 var w;
 var h;
-var useName;
+var userName;
 var userEmail;
+var userImg;
 
 
 
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme:GoogleFonts.dmSansTextTheme(),
       ),
-      home:  PaymentPage()
+      home:  SplashScreen()
     );
   }
 }

@@ -64,8 +64,9 @@ class Authrepository {
       await _authuser.doc(userCredential.user!.email!).set(userData.toMap());
     }else{
       User? user=userCredential.user;
-      useName=user?.displayName.toString();
+      userName=user?.displayName.toString();
       userEmail=user?.email.toString();
+      userImg=user?.photoURL;
 
       SharedPreferences _prefs= await SharedPreferences.getInstance();
       _prefs.setString("email", userCredential.user!.email.toString() );

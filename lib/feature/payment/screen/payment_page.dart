@@ -47,7 +47,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: GestureDetector(
+        leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);
           },
