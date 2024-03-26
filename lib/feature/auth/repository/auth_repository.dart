@@ -16,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 
+import '../../../commons/snack_bar_page.dart';
 import '../screen/create_account.dart';
 
 final authrepositoryprovider = Provider((ref) => Authrepository(auth: ref.watch(authprovider), firestore: ref.watch(firestoreprovider)));
@@ -61,8 +62,12 @@ class Authrepository {
           password: "",
           image: userCredential.user!.photoURL.toString());
 
-      await _authuser.doc(userCredential.user!.email!).set(userData.toMap());
+     _authuser.add(userData.toMap());
+      // Navigator.push(context, CupertinoPageRoute(builder: (context) => HomePageUtube(),));
+
     }else{
+
+
       User? user=userCredential.user;
       userName=user?.displayName.toString();
       userEmail=user?.email.toString();
@@ -100,9 +105,30 @@ class Authrepository {
   // }
 
   UserDetails(name, email, password,image) {
-
     UserModel userModel = UserModel(name: name, email: email, password: password, image: image );
     _authuser.doc(email).set(userModel.toMap());
+
+  }
+
+  emailLogin(email,password,context) async {
+
+    QuerySnapshot data = await _authuser.where("email",isEqualTo: email).where("password",isEqualTo: password).get();
+    if(data.docs.isEmpty){
+      print("------------1-----------------------");
+      showSnackBar(context, "User doesn't Exist");
+    }else if(data.docs.isNotEmpty){
+      print("------------2-----------------------");
+
+      String usrImg= data.docs[0]["image"];
+
+      userEmail=data.docs[0]["email"];
+      userImg=data.docs[0]["image"]??"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKc6EnanoKKj61vCCamKeDwXelxNzUElzIWWDgf75XNEa1-uaHgiSq32hF7bp73Tq9nsY&usqp=CAU";
+      userName=data.docs[0]["name"];
+      Navigator.push(context, CupertinoPageRoute(builder: (context) => HomePageUtube(),));
+    }else{
+      print("------------3-----------------------");      return null;
+    }
+
 
   }
 

@@ -6,6 +6,7 @@ import 'package:food_app/commons/colours.dart';
 import 'package:food_app/feature/auth/screen/login_account.dart';
 import 'package:food_app/feature/payment/screen/payment_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../main.dart';
 
@@ -16,7 +17,16 @@ class DrawerScreen extends StatefulWidget {
   State<DrawerScreen> createState() => _DrawerScreenState();
 }
 
+
 class _DrawerScreenState extends State<DrawerScreen> {
+
+
+  LoginOut() async {
+
+    SharedPreferences newpref=await SharedPreferences.getInstance();
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -147,8 +157,13 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       Column(
                           children: [
                             InkWell(
-                              onTap: () {
+                              onTap: () async {
+
+                                userEmail= "";
+                                SharedPreferences pre = await SharedPreferences.getInstance();
+                                pre.remove("email");
                                 GoogleSignIn().signOut();
+
                                 FirebaseAuth.instance.signOut();
                                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage( ),), (route) => false);
                               },
@@ -177,6 +192,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             SizedBox(height: w*0.03,),
                             InkWell(
                               onTap: () {
+
                                 Navigator.pop(context);
                               },
                               child: Container(
@@ -206,6 +222,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
                  ]) );
 
               },);
+
+
+
               GoogleSignIn().signOut();
               // FirebaseAuth.instance.signOut();
               // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage( ),), (route) => false);

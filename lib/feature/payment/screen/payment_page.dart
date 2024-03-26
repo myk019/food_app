@@ -51,10 +51,11 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: SvgPicture.asset(
-            IconConst.leftArrow,
-            height: h * 0.03,
-            width: w * 0.06,
+          child: Padding(
+            padding: EdgeInsets.all(w*0.04),
+            child: SvgPicture.asset(
+              IconConst.leftArrow,
+            ),
           ),
         ),
       ),

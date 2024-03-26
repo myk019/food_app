@@ -15,8 +15,15 @@ class UserController{
   userFunction({required name,required email,required password,required image}){
     _authrepository.UserDetails(name, email, password,image);
 }
+loginFun(email,password,context){
+    _authrepository.emailLogin(email, password, context);
+}
 
 googleFunction(context){
     _authrepository.signInWithGoogle(context);
 }
+
+// newGoogleFunction(context){
+//     _authrepository.signInCreateUser(context);
+// }
 }

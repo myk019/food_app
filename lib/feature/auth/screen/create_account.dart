@@ -38,8 +38,9 @@ class _CreatePageState extends ConsumerState<CreatePage> {
         image: imgUrl);
 
   }
-  googleAuth(){
+  GoogleAuth(){
     ref.read(usercontrollerprovider).googleFunction(context);
+
   }
 
 
@@ -262,34 +263,34 @@ class _CreatePageState extends ConsumerState<CreatePage> {
               Center(
                 child: Column(
                   children: [
-                    Center(
-                      child: GestureDetector(
-                        onTap: () {
-                          googleAuth();
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(w*0.06),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(20,10,20,10.0),
-                            child: Wrap(
-                              // mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(IconConst.googleIcon),
-                                SizedBox(width: w*0.015,),
-                                Text("Sign-in with Google",
-                                  style: TextStyle(
-                                    fontSize: w*0.045,
-                                    fontWeight: FontWeight.w600,
-                                    color: colors.Black
-                                  ),)
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Center(
+                    //   child: GestureDetector(
+                    //     onTap: () {
+                    //       GoogleAuth();
+                    //     },
+                    //     child: Container(
+                    //       decoration: BoxDecoration(
+                    //           borderRadius: BorderRadius.circular(w*0.06),
+                    //       ),
+                    //       child: Padding(
+                    //         padding: const EdgeInsets.fromLTRB(20,10,20,10.0),
+                    //         child: Wrap(
+                    //           // mainAxisAlignment: MainAxisAlignment.center,
+                    //           children: [
+                    //             SvgPicture.asset(IconConst.googleIcon),
+                    //             SizedBox(width: w*0.015,),
+                    //             Text("Sign-in with Google",
+                    //               style: TextStyle(
+                    //                 fontSize: w*0.045,
+                    //                 fontWeight: FontWeight.w600,
+                    //                 color: colors.Black
+                    //               ),)
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(height: w*0.05,),
                     GestureDetector(
                       onTap: () {
