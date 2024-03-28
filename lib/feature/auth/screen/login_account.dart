@@ -281,7 +281,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     height: w * 0.05,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      // Navigator.push(context, CupertinoPageRoute(builder: (context) => CreatePage(),));
+                    },
                     child: Container(
                       height: h * 0.065,
                       width: w * 0.93,
@@ -290,7 +292,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           borderRadius: BorderRadius.circular(w * 0.06)),
                       child: Center(
                         child: Text(
-                          "Forgot password",
+                          "Create an account",
                           style: TextStyle(
                               fontSize: w * 0.045,
                               fontWeight: FontWeight.w600,

@@ -7,7 +7,7 @@ import 'package:riverpod/riverpod.dart';
 
 final paymentrepositoryprovider=Provider((ref) => PaymentRepository(firestore: ref.watch(firestoreprovider)));
 
-class PaymentRepository {
+  class PaymentRepository {
   final FirebaseFirestore _firestore;
 
   PaymentRepository({required FirebaseFirestore firestore})
