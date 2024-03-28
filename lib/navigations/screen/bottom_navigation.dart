@@ -110,7 +110,7 @@ class _NavigationPageState extends State<NavigationPage> {
               onTap: () {
 
 
-                xOffset=230;
+                xOffset=250;
                 yOffset=150;
                 scaleFactor=0.6;
                 isDrawerOpen=true;
@@ -178,7 +178,7 @@ class _NavigationPageState extends State<NavigationPage> {
           items: items,
           backgroundColor: colors.White,
           color: colors.PrimaryColour,
-          colorSelected: Colors.white,
+          colorSelected: colors.White,
           indexSelected: selectIndex,
           onTap: (int index) => setState(() {
             selectIndex = index;

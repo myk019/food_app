@@ -20,14 +20,6 @@ class DrawerScreen extends StatefulWidget {
 
 class _DrawerScreenState extends State<DrawerScreen> {
 
-
-  LoginOut() async {
-
-    SharedPreferences newpref=await SharedPreferences.getInstance();
-
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -157,13 +149,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       Column(
                           children: [
                             InkWell(
-                              onTap: () async {
-
-                                userEmail= "";
-                                SharedPreferences pre = await SharedPreferences.getInstance();
-                                pre.remove("email");
+                              onTap: () {
                                 GoogleSignIn().signOut();
-
                                 FirebaseAuth.instance.signOut();
                                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage( ),), (route) => false);
                               },
@@ -222,9 +209,6 @@ class _DrawerScreenState extends State<DrawerScreen> {
                  ]) );
 
               },);
-
-
-
               GoogleSignIn().signOut();
               // FirebaseAuth.instance.signOut();
               // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage( ),), (route) => false);

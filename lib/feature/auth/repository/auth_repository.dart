@@ -62,9 +62,7 @@ class Authrepository {
           password: "",
           image: userCredential.user!.photoURL.toString());
 
-     _authuser.add(userData.toMap());
-      // Navigator.push(context, CupertinoPageRoute(builder: (context) => HomePageUtube(),));
-
+      await _authuser.doc(userCredential.user!.email!).set(userData.toMap());
     }else{
 
 
@@ -105,6 +103,7 @@ class Authrepository {
   // }
 
   UserDetails(name, email, password,image) {
+
     UserModel userModel = UserModel(name: name, email: email, password: password, image: image );
     _authuser.doc(email).set(userModel.toMap());
 
