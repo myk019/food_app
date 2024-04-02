@@ -5,9 +5,9 @@ import '../repository/categoryApp_repository.dart';
 
 final streamCategoryAppController =StateNotifierProvider((ref) => CategoryAppController(streamCategoryApp: ref.watch(streamCategoryAppRepository)));
 
- final streamDataProvider=StreamProvider((ref) => ref.watch(streamCategoryAppController.notifier).AppCategory());
+ final streamDataProvider=StreamProvider((ref) => ref.watch(streamCategoryAppController.notifier).appCategory());
 
- final streamItemsProvider = StreamProvider.autoDispose.family((ref,String categoryId) => ref.watch(streamCategoryAppController.notifier).AppItems(categoryId: categoryId));
+ final streamItemsProvider = StreamProvider.autoDispose.family((ref,String categoryId) => ref.watch(streamCategoryAppController.notifier).appItems(categoryId: categoryId));
 
 
 
@@ -16,12 +16,12 @@ class CategoryAppController extends StateNotifier{
 
   CategoryAppController({required StreamCategoryApp streamCategoryApp}):_streamCategoryApp=streamCategoryApp,super(null);
 
- Stream AppCategory(){
+ Stream appCategory(){
    return _streamCategoryApp.streamCategory();
   }
 
 
-  Stream AppItems({required String categoryId}){
+  Stream appItems({required String categoryId}){
    return _streamCategoryApp.streamItem(categoryId);
   }
 

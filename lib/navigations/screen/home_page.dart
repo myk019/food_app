@@ -6,6 +6,7 @@ import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/commons/images.dart';
 import 'package:food_app/feature/streamCategoryApp/controller/categoryApp_controller.dart';
+import 'package:food_app/model/category_model.dart';
 import 'package:food_app/navigations/screen/favourite_page.dart';
 import 'package:food_app/selected_item_page/screen/selected_item_page.dart';
 
@@ -23,24 +24,6 @@ List cart = [];
 class _HomePageState extends ConsumerState<HomePage> {
   int? selectedIndex;
 
-  List items = [
-    {
-      "image": "assets/images/🍔.png",
-      "name": "Pizza",
-    },
-    {
-      "image": "assets/images/🍔.png",
-      "name": "Burger",
-    },
-    {
-      "image": "assets/images/🍔.png",
-      "name": "sausage",
-    },
-    {
-      "image": "assets/images/🍔.png",
-      "name": "Samoli",
-    },
-  ];
 
   getFun(Map<String, dynamic> map, bool status) {
     status == true ? cart.add(map) : cart.remove(map);
@@ -84,50 +67,6 @@ class _HomePageState extends ConsumerState<HomePage> {
     return Scaffold(
       backgroundColor: colors.Background,
 
-      // appBar: AppBar(
-      //   backgroundColor: colors.Background,
-      //   elevation: 0,
-      //   leading: GestureDetector(
-      //     onTap: () {
-      //
-      //
-      //        Navigator.push(context, CupertinoPageRoute(builder: (context) => HiddenDrawerPage(),));
-      //     },
-      //     child: SizedBox(
-      //       height: w*0.5,
-      //       width: w*0.5,
-      //       // color: Colors.red,
-      //       child: Image(image: AssetImage(ImageConst.drawer))
-      //     ),
-      //   ),
-      //   title: Column(
-      //     children: [
-      //       Text("Delivery to",style: TextStyle(
-      //         color: colors.Black,
-      //         fontSize: w*0.03
-      //       ),),
-      //       Text("lekki phase 1, Estate",style: TextStyle(
-      //           color: colors.Red,
-      //           fontSize: w*0.03
-      //       ),)
-      //     ],
-      //   ),
-      //   centerTitle: true,
-      //   actions: [
-      //     SizedBox(
-      //       height: w*0.12,
-      //       width: w*0.12,
-      //       // color: colors.Red,
-      //       child: CircleAvatar(
-      //         radius: w*0.02,
-      //         backgroundColor: colors.White,
-      //         child: SvgPicture.asset(IconConst.googleIcon),
-      //                    ),
-      //     ),
-      //     SizedBox(width: w*0.03,),
-      //   ],
-      //
-      // ),
       body: Padding(
         padding: EdgeInsets.all(w * 0.05),
         child: Column(
@@ -256,8 +195,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   width: w * 1,
                   // color: Colors.red,
                   child: ref
-                      .watch(streamItemsProvider()
-                  ).when(data: (data) {
+                      .watch(streamItemsProvider(selectedIndex.toString())).when(data: (data) {
                         return ListView.separated(
                           physics: BouncingScrollPhysics(),
                           itemCount: data.length,

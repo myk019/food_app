@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
+import 'package:food_app/model/category_model.dart';
 import 'package:food_app/navigations/screen/home_page.dart';
 import 'package:food_app/on_body/screen/search_page.dart';
 
