@@ -140,7 +140,7 @@ class _OnBodyScreenState extends State<OnBodyScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, CupertinoDialogRoute(builder: (context) => CreatePage(), context: context));
+                    Navigator.push(context, CupertinoDialogRoute(builder: (context) => CreatePage(google: false,), context: context));
                   },
                   child: Container(
                     height: h*0.065,

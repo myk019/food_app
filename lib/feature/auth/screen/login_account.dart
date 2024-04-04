@@ -27,28 +27,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  // addUser(){
-  //   ref.read(usercontrollerprovider).userFunction(
-  //       name: nameController.text,
-  //       email: emailController.text,
-  //       password: passwordController.text,
-  //       image: imgUrl);
-  // }
   GoogleAuth() {
     ref.read(usercontrollerprovider).googleFunction(context);
   }
 
-  // getUser(email){
-  //   ref.read(usercontrollerprovider).getFunction(email);
-  //   if(emailController.text==email.toString()){
-  //     showSnackBar(context, "successfully");
-  //     Navigator.push(context, CupertinoPageRoute(builder: (context) => HomePageUtube(),));
-  //   }else{
-  //     showSnackBar(context, "please create account");
-  //     Navigator.push(context, CupertinoPageRoute(builder: (context) => CreatePage(),));
-  //
-  //   }
-  // }
   loginUser() {
     ref.watch(usercontrollerprovider).loginFun(emailController.text.trim(), passwordController.text.trim(), context);
   }
@@ -282,7 +264,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, CupertinoPageRoute(builder: (context) => const CreatePage(),));
+                      Navigator.push(context, CupertinoPageRoute(builder: (context) => CreatePage(google: false,),));
                     },
                     child: Container(
                       height: h * 0.065,

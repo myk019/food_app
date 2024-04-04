@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_app/feature/auth/screen/create_account.dart';
+import 'package:food_app/feature/auth/screen/login_account.dart';
 import 'package:food_app/feature/payment/screen/payment_page.dart';
 import 'package:food_app/splash/screen/splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +14,8 @@ var h;
 var userName;
 String? userEmail;
 var userImg;
+var userId;
+bool? google;
 
 
 
@@ -42,7 +45,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme:GoogleFonts.dmSansTextTheme(),
       ),
-      home:  SplashScreen()
+      home:  LoginPage()
     );
   }
 }

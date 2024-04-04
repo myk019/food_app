@@ -1,20 +1,19 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
-import 'package:food_app/commons/images.dart';
-import 'package:image_picker/image_picker.dart';
-
+import 'package:food_app/model/user_model.dart';
 import '../../../commons/icons.dart';
 import '../../../main.dart';
 import '../controller/user_controller.dart';
 import 'login_account.dart';
 
 class CreatePage extends ConsumerStatefulWidget {
-  const CreatePage({super.key});
+  UserModel? userModel;
+  final bool google;
+  CreatePage({super.key,this.userModel,required this.google});
 
   @override
   ConsumerState<CreatePage> createState() => _CreatePageState();
@@ -35,12 +34,38 @@ class _CreatePageState extends ConsumerState<CreatePage> {
         name: nameController.text,
         email: emailController.text,
         password: passwordController.text,
-        image: imgUrl);
-
+        image: imgUrl,
+        id: "");
   }
+
+
   GoogleAuth(){
     ref.read(usercontrollerprovider).googleFunction(context);
+  }
 
+
+  // googleNewUserScreen(){
+  //   ref.read(usercontrollerprovider).googleNewUserController(nameController.text, emailController.text, passwordController.text, widget.userModel?.image.toString(),widget.userModel!.id);
+  // }
+  bool pick=false;
+
+ String profileImage="";
+
+ @override
+  // void didChangeDependencies() {
+  //  // profileImage=widget.userModel!.image.toString();
+  //   // TODO: implement didChangeDependencies
+  //   super.didChangeDependencies();
+  // }
+
+  @override
+  void initState() {
+    if(widget.google==true){
+      emailController = TextEditingController(text: widget.userModel?.email);
+      imgUrl=widget.userModel!.image.toString();
+      nameController.text = widget.userModel!.name;
+    }
+    super.initState();
   }
 
 
@@ -99,10 +124,16 @@ class _CreatePageState extends ConsumerState<CreatePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    // google==true ?
                     CircleAvatar(
                       radius: w*0.15,
                       backgroundImage: NetworkImage(imgUrl),
                     ),
+                    //     :
+                    // CircleAvatar(
+                    //   radius: w*0.15,
+                    //   backgroundImage: NetworkImage(profileImage),
+                    // ),
                     TextFormField(
                       controller: nameController,
                       keyboardType: TextInputType.emailAddress,
@@ -172,7 +203,9 @@ class _CreatePageState extends ConsumerState<CreatePage> {
                       //     return null;
                       //   }
                       // },
+                      readOnly: widget.google,
                       decoration: InputDecoration(
+
                           suffixIcon: Padding(
                             padding: EdgeInsets.all(w*0.023),
                           ),
@@ -294,8 +327,10 @@ class _CreatePageState extends ConsumerState<CreatePage> {
                     SizedBox(height: w*0.05,),
                     GestureDetector(
                       onTap: () {
+                        // googleNewUserScreen();
+                        // GoogleAuth();
                         addUser();
-                        const SnackBar(content: Text("error"));
+                        // const SnackBar(content: Text("error"));
                         Navigator.push(context, CupertinoDialogRoute(builder: (context) => const LoginPage(), context: context));
                       },
                       child: Container(
@@ -322,19 +357,24 @@ class _CreatePageState extends ConsumerState<CreatePage> {
                       ),
                     ),
                     SizedBox(height: w*0.05,),
-                    Container(
-                      height: h*0.065,
-                      width: w*0.93,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(w*0.06)
-                      ),
-                      child: Center(
-                        child: Text("Login to my account",
-                          style: TextStyle(
-                              fontSize: w*0.045,
-                              fontWeight: FontWeight.w600,
-                              color: colors.Red
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, CupertinoPageRoute(builder: (context) => LoginPage(),));
+                      },
+                      child: Container(
+                        height: h*0.065,
+                        width: w*0.93,
+                        decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(w*0.06)
+                        ),
+                        child: Center(
+                          child: Text("Login to my account",
+                            style: TextStyle(
+                                fontSize: w*0.045,
+                                fontWeight: FontWeight.w600,
+                                color: colors.Red
+                            ),
                           ),
                         ),
                       ),
