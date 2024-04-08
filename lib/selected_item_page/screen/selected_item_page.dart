@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
+import 'package:food_app/model/itemApp_model.dart';
 import 'package:food_app/navigations/screen/your_cart_page.dart';
 
 import '../../commons/icons.dart';
@@ -9,7 +10,8 @@ import '../../commons/images.dart';
 import '../../main.dart';
 
 class SelectedItemPage extends StatefulWidget {
-  const SelectedItemPage({super.key});
+  final itemAppModel selectedItem;
+  const SelectedItemPage({super.key,required this.selectedItem});
 
   @override
   State<SelectedItemPage> createState() => _SelectedItemPageState();
@@ -87,48 +89,18 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
                         spreadRadius: 1,
                         blurRadius: 5)
                   ],
-                  image: const DecorationImage(
-                    image: AssetImage(ImageConst.bigburger),
-                  )),
+                  // image: const DecorationImage(
+                  //   image:NetworkImage(widget.)
+                  // )
+              ),
+              child: Image.network(widget.selectedItem.ItemImage,fit: BoxFit.cover,)
             ),
           ),
-          SizedBox(
-            height: h * 0.05,
-          ),
-          // Container(
-          //   height: h * 0.06,
-          //   width: w * 0.25,
-          //   decoration: BoxDecoration(
-          //       color: colors.Red,
-          //       borderRadius: BorderRadius.circular(w * 0.07),
-          //       gradient: const LinearGradient(
-          //           colors: [Color(0xffF9881F), Color(0xffFF774C)],
-          //           begin: Alignment.topLeft,
-          //           end: Alignment.bottomRight,
-          //           stops: [0.3, 0.7])),
-          //   child: const Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //     children: [
-          //       Icon(
-          //         Icons.remove,
-          //         color: colors.White,
-          //       ),
-          //       Text(
-          //         "2",
-          //         style: TextStyle(color: colors.White),
-          //       ),
-          //       Icon(
-          //         Icons.add,
-          //         color: colors.White,
-          //       ),
-          //     ],
-          //   ),
-          // ),
           SizedBox(
             height: w * 0.07,
           ),
           Text(
-            "Big boys Cheese burger",
+            widget.selectedItem.ItemName,
             style: TextStyle(fontSize: w * 0.06, fontWeight: FontWeight.w700),
           ),
           SizedBox(
@@ -176,10 +148,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
           SizedBox(
             height: h * 0.03,
           ),
-          Container(
-              width: w * 0.88,
-              child: Text(
-                  "Our simple, classic cheeseburger begins with a 100% pure beef burger seasoned with just a pinch of salt and pepper. The McDonald’s Cheeseburger is topped")),
+          Text(widget.selectedItem.ItemDescription),
           SizedBox(
             height: h * 0.03,
           ),
@@ -239,7 +208,7 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
             height: h*0.03,),
           GestureDetector(
             onTap: () {
-              Navigator.push(context, CupertinoPageRoute(builder: (context) => YourCartPage(),));
+              Navigator.push(context, CupertinoPageRoute(builder: (context) => YourCartPage(passedSelectedItem: widget.selectedItem),));
             },
             child: Container(
               height: h*0.06,
