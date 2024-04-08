@@ -15,14 +15,21 @@ class StreamCategoryApp{
 
  CollectionReference get _category =>_firestore.collection("Categories");
 
+
+
  streamCategory(){
    return _category.snapshots().map((event) => event.docs.map((e) => CategoryModelApp.fromMap(e.data()as Map<String,dynamic>)).toList());
  }
 
- Stream streamItem(categoryId){
-  return _category.doc(categoryId).collection("Subitems").snapshots().map((event) => event.docs.map((e) => itemAppModel.fromMap(e.data())).toList());
+  streamItem(categoryId){
+   print("repository ----------------------- ${categoryId}");
+  var data = _category.doc(categoryId).collection("Subitems").snapshots().map((event) => event.docs.map((e) => itemAppModel.fromMap(e.data())).toList());
+  return data;
  }
 
+ //  favItemsRep(){
+ //  return _category.doc().collection("Subitems").snapshots().map((event) => event.docs.map((e) => itemAppModel.fromMap(e.data())).toList());
+ // }
 
 
 }

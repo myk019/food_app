@@ -4,11 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/commons/images.dart';
+import 'package:food_app/model/itemApp_model.dart';
 
 import '../../main.dart';
 
 class YourCartPage extends StatefulWidget {
-  const YourCartPage({super.key});
+  final itemAppModel passedSelectedItem;
+  const YourCartPage({super.key,required this.passedSelectedItem});
 
   @override
   State<YourCartPage> createState() => _YourCartPageState();
