@@ -3,9 +3,10 @@ class UserModel {
   String email;
   String password;
   String image;
+  String id;
   List cart;
 
-  UserModel({required this.name, required this.email, required this.password,required this.image,required this.cart});
+  UserModel({required this.name, required this.email, required this.password,required this.image,required this.cart, required this.id,});
 
   Map<String, dynamic> toMap() {
     return {
@@ -13,6 +14,7 @@ class UserModel {
       "email": this.email,
       "password": this.password,
       "image": this.image,
+      "id":this.id,
       "cart":this.cart
     };
   }
@@ -23,7 +25,8 @@ class UserModel {
         email: map["email"] ?? "",
         password: map["password"] ?? "",
         image: map["image"] ?? "",
-      cart: map["cart"]??""
+      cart: map["cart"]??"",
+        id: map ["id"]??""
     );
   }
 
@@ -32,6 +35,7 @@ class UserModel {
     String? email,
     String? password,
     String? image,
+    String? id,
     List? cart
   }) {
     return UserModel(
@@ -39,7 +43,8 @@ class UserModel {
         email: email ?? this.email,
         password: password ?? this.password,
         image: image ?? this.image,
-        cart: cart??this.cart
+        cart: cart??this.cart,
+        id: id??this.id
     );
   }
 }

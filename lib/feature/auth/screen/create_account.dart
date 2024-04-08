@@ -35,7 +35,8 @@ class _CreatePageState extends ConsumerState<CreatePage> {
         email: emailController.text,
         password: passwordController.text,
         image: imgUrl,
-        id: "");
+        id: "",
+        cart: []);
   }
 
 
