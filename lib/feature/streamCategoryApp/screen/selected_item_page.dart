@@ -1,25 +1,102 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
+import 'package:food_app/feature/streamCategoryApp/controller/categoryApp_controller.dart';
+import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
+import 'package:food_app/model/cart_model.dart';
 import 'package:food_app/model/itemApp_model.dart';
+import 'package:food_app/model/user_model.dart';
 import 'package:food_app/navigations/screen/your_cart_page.dart';
 
-import '../../commons/icons.dart';
-import '../../commons/images.dart';
-import '../../main.dart';
+import '../../../commons/icons.dart';
+import '../../../commons/images.dart';
+import '../../auth/repository/auth_repository.dart';
+import '../../../main.dart';
 
-class SelectedItemPage extends StatefulWidget {
+class SelectedItemPage extends ConsumerStatefulWidget {
   final itemAppModel selectedItem;
   const SelectedItemPage({super.key,required this.selectedItem});
 
   @override
-  State<SelectedItemPage> createState() => _SelectedItemPageState();
+  ConsumerState<SelectedItemPage> createState() => _SelectedItemPageState();
 }
 
-class _SelectedItemPageState extends State<SelectedItemPage> {
+class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
   int selectedIndex=0;
+  List itemsList = [];
 
+  addingCart(){
+
+    Map<String ,dynamic> itemData ={
+      "itemId":widget.selectedItem.itemId,
+      "itemName": widget.selectedItem.ItemName,
+    };
+
+    CartModel cartModel = CartModel(ItemName: widget.selectedItem.ItemName, ItemId: widget.selectedItem.itemId, ItemPrice: "", ItemQty: "");
+
+    itemsList.add(cartModel.toMap());
+
+    ref.watch(streamCategoryAppController.notifier).addingCartItem(cartList: itemsList);
+  }
+
+
+  //   var user=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+//   currentUserModel = UserModel.fromMap(user.data()!);
+//   var data2=await FirebaseFirestore.instance.collection("product").doc(data.id).get();
+//   ProductModel productModel = ProductModel.fromMap(data2.data()!);
+//   List fav=currentUserModel!.favourites;
+//   List favUser=productModel.favUser;
+//   print(fav);
+//   if(fav.contains(data.id)){
+//   fav.remove(data.id);
+//   }else{
+//   fav.add(data.id);
+//   }if(favUser.contains(currentUserEmail)){
+//   favUser.remove(currentUserEmail);
+//   }else{
+//   favUser.add(currentUserEmail);
+//   }
+//   FirebaseFirestore.instance.collection("product").doc(data.id).update({
+//   "favUser":favUser
+//   });
+//   FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
+//   "favourites": fav
+//   });
+//   var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
+//   currentUserModel = UserModel.fromMap(data1.data()!);
+//   var data3=await FirebaseFirestore.instance.collection("product").doc(data.id).get();
+//   productModel=ProductModel.fromMap(data3.data()!);
+//   setState(() {
+//
+//   });
+// }
+
+  // addToCart() async {
+  //   var cartData=await FirebaseFirestore.instance.collection("Users").doc(userId).get();
+  //     currentUserModel=UserModel.fromMap(cartData.data()!);
+  //     List emptycart=currentUserModel!.cart;
+  //
+  //     if(emptycart.contains(cartData.id)){
+  //       emptycart.remove(cartData.id);
+  //     }else{
+  //       emptycart.add(cartData.id);
+  //     }
+  //
+  //     // FirebaseFirestore.instance.collection("Users").doc(userId).update(
+  //     //     {
+  //     //       "cart":emptycart
+  //     //     });
+  //
+  //
+  //     var cart2=FirebaseFirestore.instance.collection("Users").doc(userEmail).get();
+  //    // currentUserModel=UserModel.fromMap(cart2.data()!);
+  //     setState(() {
+  //
+  //     });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -208,6 +285,8 @@ class _SelectedItemPageState extends State<SelectedItemPage> {
             height: h*0.03,),
           GestureDetector(
             onTap: () {
+              // addToCart();
+              addingCart();
               Navigator.push(context, CupertinoPageRoute(builder: (context) => YourCartPage(passedSelectedItem: widget.selectedItem),));
             },
             child: Container(

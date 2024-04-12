@@ -29,4 +29,8 @@ class CategoryAppController extends StateNotifier{
    return _streamCategoryApp.streamItem(categoryId);
   }
 
+  addingCartItem({required List cartList}){
+   return _streamCategoryApp.addCartFunc(cartList: cartList);
+  }
+
 }

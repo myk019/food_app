@@ -34,7 +34,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   loginUser() {
     ref.watch(usercontrollerprovider).loginFun(emailController.text.trim(), passwordController.text.trim(), context);
   }
-  // List data=[].
+
 
   @override
   Widget build(BuildContext context) {
@@ -232,12 +232,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   GestureDetector(
                     onTap: () {
                       loginUser();
-                      // Navigator.pushAndRemoveUntil(
-                      //     context,
-                      //     CupertinoPageRoute(
-                      //       builder: (context) => HomePageUtube(),
-                      //     ),
-                      //     (route) => false);
                     },
                     child: Container(
                       height: h * 0.065,

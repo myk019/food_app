@@ -35,8 +35,9 @@ class _CreatePageState extends ConsumerState<CreatePage> {
         email: emailController.text,
         password: passwordController.text,
         image: imgUrl,
-        id: "",
-        cart: []);
+        id: widget.userModel?.id,
+        cart: []
+    );
   }
 
 
@@ -328,10 +329,7 @@ class _CreatePageState extends ConsumerState<CreatePage> {
                     SizedBox(height: w*0.05,),
                     GestureDetector(
                       onTap: () {
-                        // googleNewUserScreen();
-                        // GoogleAuth();
                         addUser();
-                        // const SnackBar(content: Text("error"));
                         Navigator.push(context, CupertinoDialogRoute(builder: (context) => const LoginPage(), context: context));
                       },
                       child: Container(

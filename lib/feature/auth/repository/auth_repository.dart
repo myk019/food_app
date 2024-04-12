@@ -123,6 +123,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:food_app/core/providers/firebase_provider.dart';
 import 'package:food_app/feature/auth/screen/create_account.dart';
+import 'package:food_app/feature/streamCategoryApp/repository/categoryApp_repository.dart';
 import 'package:food_app/main.dart';
 import 'package:food_app/model/user_model.dart';
 import 'package:food_app/utube/homepage_utube.dart';
@@ -138,23 +139,21 @@ import '../../../commons/snack_bar_page.dart';
 
 UserModel? currentUserModel;
 
+
+String? userId;
+
 final authrepositoryprovider = Provider((ref) => Authrepository(auth: ref.watch(authprovider), firestore: ref.watch(firestoreprovider)));
 
 class Authrepository {
   final FirebaseAuth _auth;
   final FirebaseFirestore _firestore;
-  // final FirebaseStorage _firebaseStorage;
-  Authrepository(
-      {required FirebaseAuth auth, required FirebaseFirestore firestore})
-      : _auth = auth,
-        _firestore = firestore;
-  // _firebaseStorage=firebaseStorage;
+
+  Authrepository({required FirebaseAuth auth, required FirebaseFirestore firestore}): _auth = auth, _firestore = firestore;
 
   CollectionReference get _authuser => _firestore.collection("Users");
 
-  // String imageurl = "";
 
-
+  ///Google Signing
   signInWithGoogle(context) async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -174,9 +173,7 @@ class Authrepository {
     // late UserModel userData;
 
 
-    var data= await FirebaseFirestore.instance.collection("Users").where("email", isEqualTo: userCredential.user!.email).get();
-
-// print(data.docs);
+    var data= await _authuser.where("email", isEqualTo: userCredential.user!.email).get();
     if(data.docs.isEmpty){
       User user=userCredential.user!;
       userName=user?.displayName.toString();
@@ -184,28 +181,24 @@ class Authrepository {
       userImg=user!.photoURL!;
       userId=user.uid.toString();
 
-
-      UserModel userModel = UserModel(name: userName, email: userEmail??'', password: '', image: userImg, id: '', cart: []);
+      UserModel userModel = UserModel(name: userName, email: userEmail!, password: '', image: userImg, id: user.uid, cart: []);
 
       Navigator.push(context, CupertinoPageRoute(builder: (context) => CreatePage(google: true,userModel: userModel,),));
-    }else{
+    }
+    else{
       User? user=userCredential.user;
       userName=user?.displayName.toString();
       userEmail=user?.email.toString();
       userImg=user!.photoURL!;
-      userId=user.uid.toString();
+      userId=user.uid;
 
       SharedPreferences _prefs= await SharedPreferences.getInstance();
       _prefs.setString("email", userCredential.user!.email.toString() );
-
-
-      print(".....................................................................");
       print(_prefs);
       Navigator.push(context, CupertinoPageRoute(builder: (context) => HomePageUtube(),));
     }
 
   }
-
 
   // FirebaseFirestore.instance.collection("Users").where('email',isEqualTo: userCredential.user?.email).get().then((value) {
   //   UserModel.fromMap()
@@ -253,53 +246,42 @@ class Authrepository {
   // }
 
 
-  googleNewUser(name,email,password,image,id){
-    UserModel userModel=UserModel(name: name, email: email, password: password, image: image, id: id, cart: []);
-    _authuser.add(userModel.toMap());
-  }
+  // googleNewUser(name,email,password,image,id){
+  //   UserModel userModel=UserModel(name: name, email: email, password: password, image: image, id: id, cart: []);
+  //   _authuser.add(userModel.toMap());
+  // }
 
 
-  UserDetails(name, email, password,image,id, cart) {
-
+  newUserDetails(name, email, password,image,id, cart) {
     UserModel userModel = UserModel(name: name, email: email, password: password, image: image, id: id, cart: [] );
-    _authuser.add(userModel.toMap()).then((value) {
-      value.update(userModel.copyWith(id: value.id).toMap());
+    _authuser.doc(id).set(userModel.toMap()).then((value) {
+      currentUserModel = userModel;
     });
-
   }
+
 
   emailLogin(email,password,context) async {
-
-    QuerySnapshot data = await _authuser.where("email",isEqualTo: email)
-    // .where("password",isEqualTo: password)
-        .get();
+    QuerySnapshot data = await _authuser.where("email",isEqualTo: email).get();
     if(data.docs.isEmpty){
-      print("------------1-----------------------");
       showSnackBar(context, "User doesn't Exist");
     }else if(data.docs.isNotEmpty){
-      print("------------2-----------------------");
 
-      // String usrImg= data.docs[0]["image"];
-
-
-      if(data.docs[0]["password"]== password){
-
+      if(data.docs[0]["email"]==email && data.docs[0]["password"]==password){
+        userId = data.docs[0]["id"];
         userEmail=data.docs[0]["email"];
         userImg=data.docs[0]["image"]??"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKc6EnanoKKj61vCCamKeDwXelxNzUElzIWWDgf75XNEa1-uaHgiSq32hF7bp73Tq9nsY&usqp=CAU";
         userName=data.docs[0]["name"];
+
+        _authuser.doc(userId).get().then((value) {
+          currentUserModel = UserModel.fromMap(value.data() as Map<String,dynamic>);
+        });
+
         Navigator.push(context, CupertinoPageRoute(builder: (context) => HomePageUtube(),));}
       else{
         showSnackBar(context, "Wrong password");
-
       }
-
     }else{
       print("------------3-----------------------");      return null;
     }
-
-
   }
-
-
-
 }

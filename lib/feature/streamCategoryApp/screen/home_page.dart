@@ -10,7 +10,7 @@ import 'package:food_app/feature/streamCategoryApp/controller/categoryApp_contro
 import 'package:food_app/model/category_model.dart';
 import 'package:food_app/model/itemApp_model.dart';
 import 'package:food_app/navigations/screen/favourite_page.dart';
-import 'package:food_app/selected_item_page/screen/selected_item_page.dart';
+import 'package:food_app/feature/streamCategoryApp/screen/selected_item_page.dart';
 
 import '../../../main.dart';
 
@@ -163,6 +163,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   //   }, error: (error, stackTrace) => Center(child: Text("error")), loading: () => CircularProgressIndicator());
   // }
 
+
+
   streamCategoryFunc(){
     return ref.watch(streamDataProvider).when(
       data: (data) {
@@ -228,7 +230,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ],
                       ),
                     ],
-                  )),
+                  ),
+              ),
             );
           },
           separatorBuilder: (BuildContext context, int index) {
@@ -324,6 +327,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
 var id;
+
+
 
 
 

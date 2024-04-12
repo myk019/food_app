@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/auth/screen/edit_profile.dart';
 import 'package:food_app/commons/colours.dart';
+import 'package:food_app/feature/auth/repository/auth_repository.dart';
 import 'package:food_app/feature/auth/screen/login_account.dart';
 import 'package:food_app/feature/payment/screen/payment_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
