@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_app/model/cart_model.dart';
 
 import '../../../model/itemApp_model.dart';
 import '../repository/categoryApp_repository.dart';
@@ -29,7 +30,9 @@ class CategoryAppController extends StateNotifier{
    return _streamCategoryApp.streamItem(categoryId);
   }
 
-  addingCartItem({required List cartList}){
+  addingCartItem({required CartModel cartList}){
+   print("second");
+   print(cartList.toMap());
    return _streamCategoryApp.addCartFunc(cartList: cartList);
   }
 
