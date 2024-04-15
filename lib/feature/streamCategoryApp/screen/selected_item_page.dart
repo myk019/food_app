@@ -30,16 +30,10 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
 
   addingCart(){
 
-    Map<String ,dynamic> itemData ={
-      "itemId":widget.selectedItem.itemId,
-      "itemName": widget.selectedItem.ItemName,
-    };
-
     CartModel cartModel = CartModel(ItemName: widget.selectedItem.ItemName, ItemId: widget.selectedItem.itemId, ItemPrice: "", ItemQty: "");
+    print("frst");
 
-    itemsList.add(cartModel.toMap());
-
-    ref.watch(streamCategoryAppController.notifier).addingCartItem(cartList: itemsList);
+    ref.watch(streamCategoryAppController.notifier).addingCartItem(cartList: cartModel);
   }
 
 

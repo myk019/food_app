@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_app/core/providers/firebase_provider.dart';
 import 'package:food_app/feature/auth/repository/auth_repository.dart';
+import 'package:food_app/model/cart_model.dart';
+import 'package:food_app/model/user_model.dart';
 
 import '../../../model/category_model.dart';
 import '../../../model/itemApp_model.dart';
@@ -31,9 +33,17 @@ class StreamCategoryApp{
  }
 
 
- addCartFunc({required List cartList}){
-  print("id ssssssssssssssssssssssssssssssssss 3");
-  _users.doc(userId).update({'cart':cartList});
+ addCartFunc({required CartModel cartList}) async {
+List cart=[];
+  UserModel User=await _users.doc(userId).get().then((value) => UserModel.fromMap(value.data() as Map<String,dynamic>)
+);
+  for(var data in User.cart){
+   cart.add(data);
+  }
+  cart.add(cartList.toMap());
+
+print(cart);
+  _users.doc(userId).update({'cart':cart});
  }
 
  //  favItemsRep(){

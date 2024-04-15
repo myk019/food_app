@@ -119,11 +119,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:food_app/core/providers/firebase_provider.dart';
 import 'package:food_app/feature/auth/screen/create_account.dart';
-import 'package:food_app/feature/streamCategoryApp/repository/categoryApp_repository.dart';
 import 'package:food_app/main.dart';
 import 'package:food_app/model/user_model.dart';
 import 'package:food_app/utube/homepage_utube.dart';
@@ -266,7 +263,8 @@ class Authrepository {
       showSnackBar(context, "User doesn't Exist");
     }else if(data.docs.isNotEmpty){
 
-      if(data.docs[0]["email"]==email && data.docs[0]["password"]==password){
+      if(data.docs[0]["email"]==email &&
+          data.docs[0]["password"]==password){
         userId = data.docs[0]["id"];
         userEmail=data.docs[0]["email"];
         userImg=data.docs[0]["image"]??"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKc6EnanoKKj61vCCamKeDwXelxNzUElzIWWDgf75XNEa1-uaHgiSq32hF7bp73Tq9nsY&usqp=CAU";

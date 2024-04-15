@@ -6,6 +6,8 @@ import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/model/category_model.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
+import 'package:food_app/model/itemApp_model.dart';
+import 'package:food_app/navigations/screen/your_cart_page.dart';
 import 'package:food_app/on_body/screen/search_page.dart';
 
 import '../../main.dart';
@@ -13,9 +15,8 @@ import 'cart_page.dart';
 import 'favourite_page.dart';
 import 'notification_page.dart';
 
+
 class NavigationPage extends StatefulWidget {
-
-
   const NavigationPage({super.key,});
 
   @override
@@ -37,7 +38,7 @@ class _NavigationPageState extends State<NavigationPage> {
     FavouritePage(a: cart ,),
     SearchPage(),
     NotificationPage(),
-    CartPage()
+    YourCartPage(passedSelectedItem: itemAppModel.fromMap(Map()))
   ];
   List<TabItem> items = [
     TabItem(
