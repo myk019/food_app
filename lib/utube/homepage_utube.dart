@@ -18,7 +18,6 @@ class _HomePageUtubeState extends State<HomePageUtube> {
     return Scaffold(
       body: Stack(
         children: [
-
            DrawerScreen(),
           NavigationPage()
         ],

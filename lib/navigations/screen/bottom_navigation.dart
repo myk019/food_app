@@ -38,7 +38,7 @@ class _NavigationPageState extends State<NavigationPage> {
     FavouritePage(a: cart ,),
     SearchPage(),
     NotificationPage(),
-    YourCartPage(passedSelectedItem: itemAppModel.fromMap(Map()))
+    CartPage()
   ];
   List<TabItem> items = [
     TabItem(
