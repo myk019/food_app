@@ -41,14 +41,25 @@ List cart=[];
    cart.add(data);
   }
   cart.add(cartList.toMap());
-
+  currentUserModel!.cart=cart;
 print(cart);
   _users.doc(userId).update({'cart':cart});
  }
 
- //  favItemsRep(){
- //  return _category.doc().collection("Subitems").snapshots().map((event) => event.docs.map((e) => itemAppModel.fromMap(e.data())).toList());
- // }
+ cartItem(){
+   return _users.doc(userId).snapshots().map((snapshot){
+     List<Map<String, dynamic>> dataList = [];
+     if (snapshot.exists) {
+      Map <String,dynamic> a = snapshot.data() as Map<String,dynamic>;
+      dataList = List<Map<String, dynamic>>.from(a['cart']);
+   }
+     return dataList;
+   });
+ }
+
+ deleteProduct(List cart){
+   _users.doc(currentUserModel!.id).delete();
+ }
 
 
 }

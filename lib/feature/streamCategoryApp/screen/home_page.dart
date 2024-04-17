@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/commons/images.dart';
+import 'package:food_app/feature/auth/repository/auth_repository.dart';
 import 'package:food_app/feature/streamCategoryApp/controller/categoryApp_controller.dart';
 import 'package:food_app/model/category_model.dart';
 import 'package:food_app/model/itemApp_model.dart';
@@ -25,7 +26,7 @@ List cart = [];
 
 class _HomePageState extends ConsumerState<HomePage> {
   int? selectedIndex;
-  String categoryId="";
+  String categoryId="PZXf5wsCd83CeFqwt6Su";
 
   String itemImage="";
 
@@ -164,7 +165,6 @@ class _HomePageState extends ConsumerState<HomePage> {
   // }
 
 
-
   streamCategoryFunc(){
     return ref.watch(streamDataProvider).when(
       data: (data) {
@@ -175,7 +175,6 @@ class _HomePageState extends ConsumerState<HomePage> {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                print(categoryId);
                 categoryId = data[index].id;
                 setState(() {});
               },
@@ -322,9 +321,14 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
           );
         }, separatorBuilder: (BuildContext context, int index) { return SizedBox(width: w*0.03,); },);
-    }, error: (error, stackTrace) => Center(child: Text("Please select Category 4")),
+    },
+          error: (error, stackTrace) => Center(child: Text("Please select Category 4")),
         loading: () => CircularProgressIndicator());
   }
+
+  // defaultCategory(){
+  //   ref.watch(streamDataProvider).
+  // }
 
 var id;
 
@@ -380,7 +384,7 @@ var id;
 
   @override
   void initState() {
-    categoryId;
+
     // TODO: implement initState
     super.initState();
   }

@@ -9,10 +9,12 @@ import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
 import 'package:food_app/model/cart_model.dart';
 import 'package:food_app/model/itemApp_model.dart';
 import 'package:food_app/model/user_model.dart';
+import 'package:food_app/navigations/screen/cart_page.dart';
 import 'package:food_app/navigations/screen/your_cart_page.dart';
 
 import '../../../commons/icons.dart';
 import '../../../commons/images.dart';
+import '../../../navigations/screen/bottom_navigation.dart';
 import '../../auth/repository/auth_repository.dart';
 import '../../../main.dart';
 
@@ -30,7 +32,8 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
 
   addingCart(){
 
-    CartModel cartModel = CartModel(ItemName: widget.selectedItem.ItemName, ItemId: widget.selectedItem.itemId, ItemPrice: "", ItemQty: "");
+    CartModel cartModel = CartModel(ItemName: widget.selectedItem.ItemName, ItemId: widget.selectedItem.itemId, ItemPrice: widget.selectedItem.ItemPrice,
+        ItemQty: 1, ItemImage: widget.selectedItem.ItemImage, ItemDescriptionofslect: widget.selectedItem.ItemDescription,);
     print("frst");
 
     ref.watch(streamCategoryAppController.notifier).addingCartItem(cartList: cartModel);
@@ -281,7 +284,8 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
             onTap: () {
               // addToCart();
               addingCart();
-              Navigator.push(context, CupertinoPageRoute(builder: (context) => YourCartPage(passedSelectedItem: widget.selectedItem),));
+              print("5555555555555444444444444444444444444444444444444444444");
+              Navigator.push(context, CupertinoPageRoute(builder: (context) => NavigationPage(),));
             },
             child: Container(
               height: h*0.06,

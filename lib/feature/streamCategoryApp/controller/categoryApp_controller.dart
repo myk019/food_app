@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
 import 'package:food_app/model/cart_model.dart';
 
 import '../../../model/itemApp_model.dart';
@@ -10,6 +11,7 @@ final streamCategoryAppController =StateNotifierProvider((ref) => CategoryAppCon
 
  final streamItemsProvider = StreamProvider.autoDispose.family((ref,String categoryId) => ref.watch(streamCategoryAppController.notifier).appItems(categoryId: categoryId));
 
+  final streamCartProvider=StreamProvider((ref) => ref.watch(streamCategoryAppController.notifier).cartItems());
 
 class CategoryAppController extends StateNotifier{
   final StreamCategoryApp _streamCategoryApp;
@@ -34,6 +36,15 @@ class CategoryAppController extends StateNotifier{
    print("second");
    print(cartList.toMap());
    return _streamCategoryApp.addCartFunc(cartList: cartList);
+  }
+
+
+  Stream cartItems(){
+   return _streamCategoryApp.cartItem();
+  }
+
+  deleteTheProduct(List cart){
+   _streamCategoryApp.deleteProduct(cart);
   }
 
 }
