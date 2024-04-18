@@ -19,9 +19,9 @@ import '../../auth/repository/auth_repository.dart';
 import '../../../main.dart';
 
 class SelectedItemPage extends ConsumerStatefulWidget {
-  final UserModel crntModel;
+  // final UserModel crntModel;
   final itemAppModel selectedItem;
-  const SelectedItemPage({super.key,required this.selectedItem,required this.crntModel});
+  const SelectedItemPage({super.key,required this.selectedItem});
 
   @override
   ConsumerState<SelectedItemPage> createState() => _SelectedItemPageState();
@@ -33,7 +33,10 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
 
   addingCart() async {
 
-    // currentUserModel = await FirebaseFirestore.instance.collection("Users").get(); ;
+    // var data = await FirebaseFirestore.instance.collection("Users").doc(userId).get();
+    // List ExistCart= data['ItemId'];
+
+
 
     CartModel cartModel = CartModel(ItemName: widget.selectedItem.ItemName, ItemId: widget.selectedItem.itemId, ItemPrice: int.parse(widget.selectedItem.ItemPrice.toString()),
         ItemQty: 1, ItemImage: widget.selectedItem.ItemImage, ItemDescriptionofslect: widget.selectedItem.ItemDescription, Fav: [],);

@@ -279,7 +279,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context,CupertinoPageRoute(builder: (context) => SelectedItemPage(selectedItem: data[index], crntModel: currentUserModel!,),));
+                      Navigator.push(context,CupertinoPageRoute(builder: (context) => SelectedItemPage(selectedItem: data[index],),));
                     },
                     child: Container(
                       margin: EdgeInsets.only(top: w*0.03,left: w*0.025),

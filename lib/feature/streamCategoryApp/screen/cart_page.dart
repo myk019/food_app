@@ -50,7 +50,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                 ),
                 SlidableAction(
                   onPressed: (context) {
-                    FirebaseFirestore.instance.collection("Users").doc(currentUserModel!.id).update(
+                    FirebaseFirestore.instance.collection("Users").doc(userId).update(
                         {
                           "cart":FieldValue.arrayRemove([data[index]])
                         });
@@ -190,7 +190,7 @@ class _CartPageState extends ConsumerState<CartPage> {
   List<QueryDocumentSnapshot<Map<String, dynamic>>>? data;
 
   totalPrize(){
-    FirebaseFirestore.instance.collection('Users').doc(currentUserModel!.id).snapshots().listen((event){
+    FirebaseFirestore.instance.collection('Users').doc(userId).snapshots().listen((event){
       total=0;
 
       for(int i=0;i<event["cart"].length;i++){

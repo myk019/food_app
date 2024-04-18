@@ -35,13 +35,17 @@ class StreamCategoryApp{
 
  addCartFunc({required CartModel cartList}) async {
 List cart=[];
-  UserModel User=await _users.doc(userId).get().then((value) => UserModel.fromMap(value.data() as Map<String,dynamic>)
+  currentUserModel =await _users.doc(userId).get().then((value) => UserModel.fromMap(value.data() as Map<String,dynamic>)
 );
-  for(var data in User.cart){
+  for(var data in currentUserModel!.cart){
    cart.add(data);
+   print("-----------fdycvscgvudssbc aihsbciubasihcjaknscoub--------------------------aaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbccccccccccccccccc");
+   print(cart);
+
   }
   cart.add(cartList.toMap());
   currentUserModel!.cart=cart;
+  print("-------------------------------------aaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbccccccccccccccccc");
 print(cart);
   _users.doc(userId).update({'cart':cart});
  }
