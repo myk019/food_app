@@ -14,7 +14,7 @@ var h;
 var userName;
 String? userEmail;
 var userImg;
-var userId;
+var UserId;
 bool? google;
 
 
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme:GoogleFonts.dmSansTextTheme(),
       ),
-      home:  LoginPage()
+      home:  SplashScreen()
     );
   }
 }

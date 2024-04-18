@@ -173,10 +173,10 @@ class Authrepository {
     var data= await _authuser.where("email", isEqualTo: userCredential.user!.email).get();
     if(data.docs.isEmpty){
       User user=userCredential.user!;
-      userName=user?.displayName.toString();
-      userEmail=user?.email.toString();
-      userImg=user!.photoURL!;
-      userId=user.uid.toString();
+      userName=user.displayName.toString();
+      userEmail=user.email.toString();
+      userImg=user.photoURL!;
+      // userId=user.uid.toString();
 
       UserModel userModel = UserModel(name: userName, email: userEmail!, password: '', image: userImg, id: user.uid, cart: []);
 
@@ -187,12 +187,18 @@ class Authrepository {
       userName=user?.displayName.toString();
       userEmail=user?.email.toString();
       userImg=user!.photoURL!;
-      userId=user.uid;
+      // userId=user.uid;
+
+
 
       currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id: userId!);
 
       SharedPreferences _prefs= await SharedPreferences.getInstance();
-      _prefs.setString("email", userCredential.user!.email.toString() );
+      _prefs.setString("email", userCredential.user!.email.toString());
+      _prefs.setString("name", userCredential.user!.displayName.toString());
+      _prefs.setString("image", userCredential.user!.photoURL.toString());
+      _prefs.setString("id", userCredential.user!.uid);
+
       print(_prefs);
       Navigator.push(context, CupertinoPageRoute(builder: (context) => HomePageUtube(),));
     }
@@ -257,6 +263,26 @@ class Authrepository {
       currentUserModel = userModel;
     });
   }
+
+
+
+
+  userUpdate(UserModel userModel){
+    _authuser.doc(currentUserModel!.id).update(userModel.toMap()).then((value) async {
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      userName = userModel.name;
+      userEmail = userModel.email;
+      _prefs.setString("email", userModel.email);
+      _prefs.setString("name", userModel.name);
+      _prefs.setString("id", currentUserModel!.id);
+    } );
+  }
+
+
+  // currentUserModelUpdate() async {
+  //   var data=await FirebaseFirestore.instance.collection("Users").doc(userId).get();
+  //   currentUserModel=UserModel.fromMap(data.data()!);
+  // }
 
 
   emailLogin(email,password,context) async {

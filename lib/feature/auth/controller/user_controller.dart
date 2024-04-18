@@ -24,5 +24,11 @@ loginFun(email,password,context){
 googleFunction(context){
     _authrepository.signInWithGoogle(context);
 }
+userUpdateCo(UserModel userModel){
+    _authrepository.userUpdate(userModel);
+}
+// currentUserModelUpdate(){
+//     _authrepository.currentUserModelUpdate();
+// }
 
 }

@@ -53,13 +53,6 @@ class _CreatePageState extends ConsumerState<CreatePage> {
 
  String profileImage="";
 
- @override
-  // void didChangeDependencies() {
-  //  // profileImage=widget.userModel!.image.toString();
-  //   // TODO: implement didChangeDependencies
-  //   super.didChangeDependencies();
-  // }
-
   @override
   void initState() {
     if(widget.google==true){

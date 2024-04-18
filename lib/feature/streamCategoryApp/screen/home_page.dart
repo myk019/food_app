@@ -382,13 +382,7 @@ var id;
     super.didChangeDependencies();
   }
 
-  @override
-  void initState() {
 
-    // TODO: implement initState
-    super.initState();
-  }
-  
   // favouriteFun() async {
   //   var favouriteUser= await FirebaseFirestore.instance.collection("Users").doc(userEmail).get();
   //   var favItem= await FirebaseFirestore.instance.collection("Subitems").doc(widget.).get();
@@ -405,43 +399,45 @@ var id;
 
       body: Padding(
         padding: EdgeInsets.all(w * 0.05),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Enjoy Delicious food",
-              style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w700),
-            ),
-            SizedBox(
-              height: w * 0.05,
-            ),
-            SizedBox(
-              height: h * 0.16,
-              width: w * 1,
-              child: streamCategoryFunc()
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Popular restaurants",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w800, fontSize: w * 0.037),
-                ),
-                Text(
-                  "View all(29)",
-                  style: TextStyle(color: colors.Red, fontSize: w * 0.03),
-                )
-              ],
-            ),
-            SizedBox(
-                height: h * 0.34,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Enjoy Delicious food",
+                style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w700),
+              ),
+              SizedBox(
+                height: w * 0.05,
+              ),
+              SizedBox(
+                height: h * 0.16,
                 width: w * 1,
-                // color: Colors.red,
-                child:streamItems()
-            )
-          ],
+                child: streamCategoryFunc()
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Popular restaurants",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w800, fontSize: w * 0.037),
+                  ),
+                  Text(
+                    "View all(29)",
+                    style: TextStyle(color: colors.Red, fontSize: w * 0.03),
+                  )
+                ],
+              ),
+              SizedBox(
+                  height: h * 0.34,
+                  width: w * 1,
+                  // color: Colors.red,
+                  child:streamItems()
+              )
+            ],
+          ),
         ),
       ),
     );
