@@ -7,8 +7,10 @@ class CartModel{
   String ItemId;
   String ItemImage;
   String ItemDescriptionofslect;
+  List Fav;
 
-  CartModel({required this.ItemName, required this.ItemId, required this.ItemPrice,required this.ItemQty,required this.ItemImage,required this.ItemDescriptionofslect});
+  CartModel({required this.ItemName, required this.ItemId, required this.ItemPrice,
+    required this.ItemQty,required this.ItemImage,required this.ItemDescriptionofslect,required this.Fav});
 
   Map<String, dynamic> toMap() {
     return {
@@ -17,7 +19,8 @@ class CartModel{
       "ItemQty": this.ItemQty,
       "ItemId": this.ItemId,
       "ItemImage":this.ItemImage,
-      "ItemDescriptionofslect":this.ItemDescriptionofslect
+      "ItemDescriptionofslect":this.ItemDescriptionofslect,
+      "Fav":this.Fav
     };
   }
 
@@ -28,7 +31,8 @@ class CartModel{
         ItemQty: map["ItemQty"] ?? "",
         ItemPrice: map["ItemPrice"] ?? 0,
       ItemImage:map["itemImage"]??"",
-        ItemDescriptionofslect:map["ItemDescriptionofslect"]??""
+        ItemDescriptionofslect:map["ItemDescriptionofslect"]??"",
+      Fav: map["Fav"]??[]
     );
   }
 
@@ -38,7 +42,8 @@ class CartModel{
     int? ItemQty,
     int? ItemPrice,
     String? ItemImage,
-    String? ItemDescriptionofslect
+    String? ItemDescriptionofslect,
+    List? Fav
   }) {
     return CartModel(
         ItemPrice: ItemPrice ?? this.ItemPrice,
@@ -46,7 +51,8 @@ class CartModel{
         ItemId: ItemId ?? this.ItemId,
         ItemName: ItemName ?? this.ItemName,
       ItemImage: ItemImage??this.ItemImage,
-        ItemDescriptionofslect:ItemDescriptionofslect??this.ItemDescriptionofslect
+        ItemDescriptionofslect:ItemDescriptionofslect??this.ItemDescriptionofslect,
+        Fav: Fav??this.Fav
     );
   }
 }

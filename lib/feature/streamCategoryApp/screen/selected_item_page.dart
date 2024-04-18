@@ -9,7 +9,7 @@ import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
 import 'package:food_app/model/cart_model.dart';
 import 'package:food_app/model/itemApp_model.dart';
 import 'package:food_app/model/user_model.dart';
-import 'package:food_app/navigations/screen/cart_page.dart';
+import 'package:food_app/feature/streamCategoryApp/screen/cart_page.dart';
 import 'package:food_app/navigations/screen/your_cart_page.dart';
 
 import '../../../commons/icons.dart';
@@ -19,8 +19,9 @@ import '../../auth/repository/auth_repository.dart';
 import '../../../main.dart';
 
 class SelectedItemPage extends ConsumerStatefulWidget {
+  final UserModel crntModel;
   final itemAppModel selectedItem;
-  const SelectedItemPage({super.key,required this.selectedItem});
+  const SelectedItemPage({super.key,required this.selectedItem,required this.crntModel});
 
   @override
   ConsumerState<SelectedItemPage> createState() => _SelectedItemPageState();
@@ -30,11 +31,12 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
   int selectedIndex=0;
   List itemsList = [];
 
-  addingCart(){
+  addingCart() async {
 
-    CartModel cartModel = CartModel(ItemName: widget.selectedItem.ItemName, ItemId: widget.selectedItem.itemId, ItemPrice: widget.selectedItem.ItemPrice,
-        ItemQty: 1, ItemImage: widget.selectedItem.ItemImage, ItemDescriptionofslect: widget.selectedItem.ItemDescription,);
-    print("frst");
+    // currentUserModel = await FirebaseFirestore.instance.collection("Users").get(); ;
+
+    CartModel cartModel = CartModel(ItemName: widget.selectedItem.ItemName, ItemId: widget.selectedItem.itemId, ItemPrice: int.parse(widget.selectedItem.ItemPrice.toString()),
+        ItemQty: 1, ItemImage: widget.selectedItem.ItemImage, ItemDescriptionofslect: widget.selectedItem.ItemDescription, Fav: [],);
 
     ref.watch(streamCategoryAppController.notifier).addingCartItem(cartList: cartModel);
   }
@@ -282,9 +284,10 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
             height: h*0.03,),
           GestureDetector(
             onTap: () {
-              // addToCart();
+
               addingCart();
-              print("5555555555555444444444444444444444444444444444444444444");
+
+
               Navigator.push(context, CupertinoPageRoute(builder: (context) => NavigationPage(),));
             },
             child: Container(

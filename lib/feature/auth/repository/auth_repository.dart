@@ -191,7 +191,7 @@ class Authrepository {
 
 
 
-      currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id: userId!);
+      currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id: data.docs.first.id);
 
       SharedPreferences _prefs= await SharedPreferences.getInstance();
       _prefs.setString("email", userCredential.user!.email.toString());

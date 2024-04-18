@@ -26,7 +26,7 @@ List cart = [];
 
 class _HomePageState extends ConsumerState<HomePage> {
   int? selectedIndex;
-  String categoryId="PZXf5wsCd83CeFqwt6Su";
+  String categoryId="";
 
   String itemImage="";
 
@@ -164,6 +164,14 @@ class _HomePageState extends ConsumerState<HomePage> {
   //   }, error: (error, stackTrace) => Center(child: Text("error")), loading: () => CircularProgressIndicator());
   // }
 
+  randomId() async {
+    var name= await FirebaseFirestore.instance.collection("Categories").get();
+    categoryId = name.docs.isNotEmpty ? name.docs[0].id : "";
+    setState(() {
+
+    });
+  }
+
 
   streamCategoryFunc(){
     return ref.watch(streamDataProvider).when(
@@ -271,7 +279,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context,CupertinoPageRoute(builder: (context) => SelectedItemPage(selectedItem: data[index]),));
+                      Navigator.push(context,CupertinoPageRoute(builder: (context) => SelectedItemPage(selectedItem: data[index], crntModel: currentUserModel!,),));
                     },
                     child: Container(
                       margin: EdgeInsets.only(top: w*0.03,left: w*0.025),
@@ -300,20 +308,20 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ],
                       ),
                       SizedBox(width: w*0.23,),
-                      // GestureDetector(
-                      //     onTap: () {
-                      //       if(food[index]["fav"].contains(index)){
-                      //         food[index]["fav"].remove(index);
-                      //         getFun(food[index], false);
-                      //       }else{
-                      //         food[index]["fav"].add(index);
-                      //         getFun(food[index], true);
-                      //       }
-                      //       setState(() {
-                      //       });
-                      //       // Navigator.push(context, MaterialPageRoute(builder: (context) => FavouritePage(),));
-                      //     },
-                      //     child:SvgPicture.asset( IconConst.heart,height: w*0.05,width: w*0.05,color: food[index]["fav"].contains(index)? colors.Red:colors.Black,)),
+                      GestureDetector(
+                          onTap: () {
+                            // if(food[index]["fav"].contains(index)){
+                            //   food[index]["fav"].remove(index);
+                            //   getFun(food[index], false);
+                            // }else{
+                            //   food[index]["fav"].add(index);
+                            //   getFun(food[index], true);
+                            // }
+                            setState(() {
+                            });
+                            // Navigator.push(context, MaterialPageRoute(builder: (context) => FavouritePage(),));
+                          },
+                          child:SvgPicture.asset( IconConst.heart,height: w*0.05,width: w*0.05,)),
                     ],
                   )
                 ],
@@ -382,7 +390,13 @@ var id;
     super.didChangeDependencies();
   }
 
-
+  @override
+  void initState() {
+    randomId();
+    // TODO: implement initState
+    super.initState();
+  }
+  
   // favouriteFun() async {
   //   var favouriteUser= await FirebaseFirestore.instance.collection("Users").doc(userEmail).get();
   //   var favItem= await FirebaseFirestore.instance.collection("Subitems").doc(widget.).get();

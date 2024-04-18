@@ -1,5 +1,6 @@
 import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:awesome_bottom_bar/widgets/inspired/inspired.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
@@ -11,7 +12,7 @@ import 'package:food_app/navigations/screen/your_cart_page.dart';
 import 'package:food_app/on_body/screen/search_page.dart';
 
 import '../../main.dart';
-import 'cart_page.dart';
+import '../../feature/streamCategoryApp/screen/cart_page.dart';
 import 'favourite_page.dart';
 import 'notification_page.dart';
 
@@ -175,19 +176,29 @@ class _NavigationPageState extends State<NavigationPage> {
         backgroundColor: colors.Background,
         body: pages[selectIndex],
         bottomNavigationBar:
-        BottomBarInspiredInside(
-          // height: h*0.07,
-          items: items,
-          backgroundColor: colors.White,
-          color: colors.PrimaryColour,
-          colorSelected: colors.White,
-          indexSelected: selectIndex,
-          onTap: (int index) => setState(() {
-            selectIndex = index;
-          }),
-          chipStyle: ChipStyle(convexBridge: true),
-          itemStyle: ItemStyle.circle,
-          animated: true,
+        Stack(
+          children: [
+            Positioned(
+              top: w*0.03,
+              child: CircleAvatar(
+                radius: w*0.04,
+                backgroundColor: Colors.red,
+              ),
+            ),
+            BottomBarInspiredInside(
+              items: items,
+              backgroundColor: colors.White,
+              color: colors.PrimaryColour,
+              colorSelected: colors.White,
+              indexSelected: selectIndex,
+              onTap: (int index) => setState(() {
+                selectIndex = index;
+              }),
+              chipStyle: ChipStyle(convexBridge: true),
+              itemStyle: ItemStyle.circle,
+              animated: true,
+            ),
+          ],
         ),
       ),
     );

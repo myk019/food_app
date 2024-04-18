@@ -22,9 +22,6 @@ class CategoryAppController extends StateNotifier{
    return _streamCategoryApp.streamCategory();
   }
 
-  // Stream favItem(List fav){
-  //  return _streamCategoryApp.favItemsRep();
-  // }
 
 
   Stream appItems({required String categoryId}){

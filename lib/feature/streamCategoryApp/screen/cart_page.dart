@@ -1,15 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
+import 'package:lottie/lottie.dart';
 
-import '../../commons/icons.dart';
-import '../../feature/auth/repository/auth_repository.dart';
-import '../../feature/streamCategoryApp/controller/categoryApp_controller.dart';
-import '../../main.dart';
+import '../../../commons/icons.dart';
+import '../../auth/repository/auth_repository.dart';
+import '../controller/categoryApp_controller.dart';
+import '../../../main.dart';
 
 class CartPage extends ConsumerStatefulWidget {
   const CartPage({super.key});
@@ -26,7 +28,7 @@ class _CartPageState extends ConsumerState<CartPage> {
 
   cartCard(){
     return ref.watch(streamCartProvider).when(data:(data){
-      return  ListView.separated(
+      return data.isNotEmpty?ListView.separated(
         physics: BouncingScrollPhysics(),
         itemCount: data.length,
         itemBuilder: (BuildContext context, int index) {
@@ -48,8 +50,11 @@ class _CartPageState extends ConsumerState<CartPage> {
                 ),
                 SlidableAction(
                   onPressed: (context) {
-
-                  },
+                    FirebaseFirestore.instance.collection("Users").doc(currentUserModel!.id).update(
+                        {
+                          "cart":FieldValue.arrayRemove([data[index]])
+                        });
+                    },
                   backgroundColor: Colors.transparent,
                   foregroundColor: Colors.red,
                   icon: Icons.delete,
@@ -164,6 +169,14 @@ class _CartPageState extends ConsumerState<CartPage> {
         },
         separatorBuilder: (BuildContext context, int index) { return SizedBox(height: h*0.03,); },
 
+      ):
+      Column(
+        children: [
+          Center(child: Text("You Haven't Added Any Item",style: TextStyle(
+            fontWeight: FontWeight.w900,
+            fontSize: w*0.04
+          ),)),
+        ],
       );
 
     },
