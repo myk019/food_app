@@ -29,6 +29,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   String categoryId="";
 
   String itemImage="";
+  bool view=true;
 
   // docEmpty(){
   //   StreamBuilder<QuerySnapshot>(
@@ -255,96 +256,179 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   streamItems(){
-
       return ref.watch(streamItemsProvider(categoryId)).when(data: (data) {
       print("screen ----------------------- ${categoryId}");
-      return ListView.separated(
-        physics: BouncingScrollPhysics(),
-        itemCount: data.length,
-        scrollDirection: Axis.horizontal,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return  Container(
-            height: h*0.32,
-            width: w*0.5,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(w*0.05),
-              color: colors.White,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context,CupertinoPageRoute(builder: (context) => SelectedItemPage(selectedItem: data[index],),));
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(top: w*0.03,left: w*0.025),
-                      height: h*0.15,
-                      width: w*0.35,
-                      // color: Colors.green,
-                      child: Image(image: NetworkImage(data[index].ItemImage),fit: BoxFit.cover,),
+      return  Column(
+        children: [
+          view==true? Expanded(
+            child: Container(
+              height: h*1,
+              // color: Colors.red,
+              child: ListView.separated(
+                physics: BouncingScrollPhysics(),
+                itemCount: data.length,
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return  Container(
+                    height: h*1,
+                    width: w*0.5,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(w*0.05),
+                      color: colors.White,
                     ),
-                  ),
-                  // SizedBox(height: h*0.01,),
-                  Text(data[index].ItemName,style: TextStyle(
-                      fontWeight: FontWeight.w700
-                  ),),
-                  Text(data[index].ItemDescription,style: TextStyle(
-                      fontSize: w*0.026
-
-                  ),),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Row(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SvgPicture.asset(IconConst.star),
-                          SizedBox(width: w*0.01,),
-                          Text("4+")
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(context,CupertinoPageRoute(builder: (context) => SelectedItemPage(selectedItem: data[index],),));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(top: w*0.03,left: w*0.025),
+                              height: h*0.15,
+                              width: w*0.35,
+                              // color: Colors.green,
+                              child: Image(image: NetworkImage(data[index].ItemImage),fit: BoxFit.cover,),
+                            ),
+                          ),
+                          // SizedBox(height: h*0.01,),
+                          Text(data[index].ItemName,style: TextStyle(
+                              fontWeight: FontWeight.w700
+                          ),),
+                          Text(data[index].ItemDescription,style: TextStyle(
+                              fontSize: w*0.026
+
+                          ),),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Row(
+                                children: [
+                                  SvgPicture.asset(IconConst.star),
+                                  SizedBox(width: w*0.01,),
+                                  Text("4+")
+                                ],
+                              ),
+                              SizedBox(width: w*0.23,),
+                              GestureDetector(
+                                  onTap: () {
+                                    // if(food[index]["fav"].contains(index)){
+                                    //   food[index]["fav"].remove(index);
+                                    //   getFun(food[index], false);
+                                    // }else{
+                                    //   food[index]["fav"].add(index);
+                                    //   getFun(food[index], true);
+                                    // }
+                                    setState(() {
+                                    });
+                                    // Navigator.push(context, MaterialPageRoute(builder: (context) => FavouritePage(),));
+                                  },
+                                  child:SvgPicture.asset( IconConst.heart,height: w*0.05,width: w*0.05,)),
+                            ],
+                          )
                         ],
                       ),
-                      SizedBox(width: w*0.23,),
-                      GestureDetector(
-                          onTap: () {
-                            // if(food[index]["fav"].contains(index)){
-                            //   food[index]["fav"].remove(index);
-                            //   getFun(food[index], false);
-                            // }else{
-                            //   food[index]["fav"].add(index);
-                            //   getFun(food[index], true);
-                            // }
-                            setState(() {
-                            });
-                            // Navigator.push(context, MaterialPageRoute(builder: (context) => FavouritePage(),));
-                          },
-                          child:SvgPicture.asset( IconConst.heart,height: w*0.05,width: w*0.05,)),
-                    ],
-                  )
-                ],
-              ),
+                    ),
+                  );
+                }, separatorBuilder: (BuildContext context, int index) { return SizedBox(width: w*0.03,); },),
             ),
-          );
-        }, separatorBuilder: (BuildContext context, int index) { return SizedBox(width: w*0.03,); },);
+          ): Expanded(
+            child: ListView.separated(
+                    itemCount: data.length,
+                    shrinkWrap: true,
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (BuildContext , index) {
+            return SizedBox(
+              child: InkWell(
+                onTap: () {
+                   Navigator.push(context, CupertinoPageRoute(builder: (context) => SelectedItemPage(selectedItem: data[index]),));
+                },
+                child: Container(
+                  height: w*0.4,
+                  width: w*0.9,
+                  decoration: BoxDecoration(
+                      color: colors.Red,
+                      borderRadius: BorderRadius.circular(w*0.03)
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: w*0.03),
+                        height: w*0.3,
+                        width: w*0.3,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(image: NetworkImage(data[index].ItemImage),fit: BoxFit.fill),
+                            borderRadius: BorderRadius.circular(w*0.03)
+                        ),
+                      ),
+                      SizedBox(width:w*0.02),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(data[index].ItemName,
+                            style: TextStyle(
+                                fontSize: w*0.035,
+                                fontWeight: FontWeight.w700
+                            ),),
+                          // SizedBox(height: w*0.05,),
+                          Text(data[index].ItemDescription,
+                            style: TextStyle(
+                                fontSize: w*0.03,
+                                fontWeight: FontWeight.w400
+                            ),),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Row(
+                                children: [
+                                  SvgPicture.asset(IconConst.star),
+                                  SizedBox(width: w*0.01,),
+                                  Text("4+")
+                                ],
+                              ),
+                              SizedBox(width: w*0.23,),
+                              GestureDetector(
+                                  onTap: () {
+                                    // if(food[index]["fav"].contains(index)){
+                                    //   food[index]["fav"].remove(index);
+                                    //   getFun(food[index], false);
+                                    // }else{
+                                    //   food[index]["fav"].add(index);
+                                    //   getFun(food[index], true);
+                                    // }
+                                    setState(() {
+                                    });
+                                    // Navigator.push(context, MaterialPageRoute(builder: (context) => FavouritePage(),));
+                                  },
+                                  child:SvgPicture.asset( IconConst.heart,height: w*0.05,width: w*0.05,)),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                    ],
+                  ),
+                ),
+              ),
+            );
+                    }, separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(height: w*0.03,); },
+                  ),
+          )]);
+
     },
           error: (error, stackTrace) => Center(child: Text("Please select Category 4")),
         loading: () => CircularProgressIndicator());
   }
 
-  // defaultCategory(){
-  //   ref.watch(streamDataProvider).
-  // }
 
 var id;
-
-
-
-
-
-
   getFun(Map<String, dynamic> map, bool status) {
     status == true ? cart.add(map) : cart.remove(map);
   }
@@ -430,6 +514,9 @@ var id;
                 width: w * 1,
                 child: streamCategoryFunc()
               ),
+              SizedBox(
+                height: w * 0.05,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -438,14 +525,26 @@ var id;
                     style: TextStyle(
                         fontWeight: FontWeight.w800, fontSize: w * 0.037),
                   ),
-                  Text(
-                    "View all(29)",
-                    style: TextStyle(color: colors.Red, fontSize: w * 0.03),
+                  GestureDetector(
+                    onTap:() {
+                      view=!view;
+                      setState(() {
+                      });
+                      print("--------------------------------------------");
+                      print(view);
+                    },
+                    child: Text(
+                      "View all(29)",
+                      style: TextStyle(color: colors.Red, fontSize: w * 0.03),
+                    ),
                   )
                 ],
               ),
               SizedBox(
-                  height: h * 0.34,
+                height: w * 0.05,
+              ),
+              SizedBox(
+                  height: view?h*0.34: h * 0.44,
                   width: w * 1,
                   // color: Colors.red,
                   child:streamItems()

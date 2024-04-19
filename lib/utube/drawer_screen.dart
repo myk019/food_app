@@ -47,6 +47,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
   @override
   void initState() {
     print(userName);
+    print(userImg);
     // TODO: implement initState
     super.initState();
   }

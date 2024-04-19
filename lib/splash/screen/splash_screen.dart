@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/feature/auth/repository/auth_repository.dart';
+import 'package:food_app/feature/auth/screen/login_account.dart';
 import 'package:food_app/main.dart';
 import 'package:food_app/model/user_model.dart';
 import 'package:food_app/on_body/screen/onbord_screen.dart';
@@ -29,23 +30,34 @@ class _SplashScreenState extends State<SplashScreen> {
     userName=_prefs.getString("name");
     userImg=_prefs.getString("image");
     userId=_prefs.getString("id");
-    print("8888888888888888888888888888888888888888888888888888888888888888888888888888888");
+    print("88888888888888888888888888888888888azexsvfgbyzesxrcdtvfygb88888888888888888888888888888888888888888888");
     print(userName);
     print(userEmail);
     print(userId);
     print(userImg);
-    print("8888888888888888888888888888888888888888888888888888888888888888888888888888888");
+    var cuData=await FirebaseFirestore.instance.collection("Users").doc(userId).get();
+    if(!cuData.exists){
+      Future.delayed(Duration(seconds: 2)).then((value) => Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) =>LoginPage(),)));
+    }
+    else{
+      currentUserModel=UserModel.fromMap(cuData.data()!);
+      print(cuData);
+      print("-------------------------------------88888888888888");
+      userName=currentUserModel!.name??'';
+      currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id: userId!);
+      print(currentUserModel);
+      print("8888888888888888888888888888888888888888888888888888888888888888888888888888888");
+      // getname();
+      Future.delayed(Duration(seconds: 2)).then((value) => Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => HomePageUtube(),)));
+    }
 
-    Future.delayed(Duration(seconds: 2)).then((value) => Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => HomePageUtube(),)));
 
 
   }
   getname() async {
-    print(userId);
+    print(currentUserModel);
     print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    var cuData=await FirebaseFirestore.instance.collection("Users").doc(userId).get();
-    currentUserModel=UserModel.fromMap(cuData.data()!);
-    userName=currentUserModel!.name??'';
+
     setState(() {
     });
   }
@@ -53,7 +65,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     getData();
-    getname();
     // TODO: implement initState
     // Future.delayed(const Duration(seconds: 4))
     //     .then((value) => Navigator.pushReplacement(

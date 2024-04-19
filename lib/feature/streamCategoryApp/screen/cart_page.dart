@@ -53,7 +53,10 @@ class _CartPageState extends ConsumerState<CartPage> {
                     FirebaseFirestore.instance.collection("Users").doc(userId).update(
                         {
                           "cart":FieldValue.arrayRemove([data[index]])
-                        });
+                        }).then((value) async {
+                          var data = await FirebaseFirestore.instance.collection("Users").doc(userId).get();
+                          currentUserModel!.cart=data["cart"];
+                    });
                     },
                   backgroundColor: Colors.transparent,
                   foregroundColor: Colors.red,
@@ -112,6 +115,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                             cart![index]["ItemQty"]++;
 
                             FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).update(currentUserModel!.copyWith(cart: cart).toMap());
+                            print(currentUserModel!.cart);
                             totalPrize();
                             setState(() {
 
@@ -130,16 +134,17 @@ class _CartPageState extends ConsumerState<CartPage> {
                         Text( data[index]["ItemQty"].toString() ),
 
 
-                        data[index]['ItemQty']==1 ? SizedBox() : GestureDetector(
+                        data[index]['ItemQty']<=1 ? SizedBox() : GestureDetector(
                           onTap: () async {
 
                             //var data = await FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).get();
-                            List? cart= currentUserModel?.cart;
                             // int currentQty = cart[index]['ItemQty'];
                             // cart[index]['ItemQty'] = currentQty+1;
+                            List? cart= currentUserModel?.cart;
                             cart![index]["ItemQty"]--;
 
-                            FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).update(currentUserModel!.copyWith(cart: cart).toMap());
+                            FirebaseFirestore.instance.collection("Users").doc(userId).update(currentUserModel!.copyWith(cart: cart).toMap());
+                            print(currentUserModel!.cart);
                             totalPrize();
                             setState(() {
 
@@ -196,9 +201,6 @@ class _CartPageState extends ConsumerState<CartPage> {
       for(int i=0;i<event["cart"].length;i++){
         total=(event["cart"][i]['ItemPrice']*event["cart"][i]['ItemQty'])+total;
       }
-      setState(() {
-
-      });
     });
   }
 

@@ -176,7 +176,7 @@ class Authrepository {
       userName=user.displayName.toString();
       userEmail=user.email.toString();
       userImg=user.photoURL!;
-      // userId=user.uid.toString();
+      userId=user.uid.toString();
 
       UserModel userModel = UserModel(name: userName, email: userEmail!, password: '', image: userImg, id: user.uid, cart: []);
 
@@ -187,17 +187,18 @@ class Authrepository {
       userName=user?.displayName.toString();
       userEmail=user?.email.toString();
       userImg=user!.photoURL!;
-      // userId=user.uid;
+      userId=user.uid;
 
 
 
-      currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id: data.docs.first.id);
+      currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id:userId!);
+      print(currentUserModel);
 
       SharedPreferences _prefs= await SharedPreferences.getInstance();
       _prefs.setString("email", userCredential.user!.email.toString());
       _prefs.setString("name", userCredential.user!.displayName.toString());
       _prefs.setString("image", userCredential.user!.photoURL.toString());
-      _prefs.setString("id", userCredential.user!.uid);
+      _prefs.setString("id", data.docs.first.id);
 
       print(_prefs);
       Navigator.push(context, CupertinoPageRoute(builder: (context) => HomePageUtube(),));

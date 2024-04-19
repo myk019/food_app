@@ -11,6 +11,7 @@ import 'package:food_app/model/itemApp_model.dart';
 import 'package:food_app/model/user_model.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/cart_page.dart';
 import 'package:food_app/navigations/screen/your_cart_page.dart';
+import 'package:food_app/utube/homepage_utube.dart';
 
 import '../../../commons/icons.dart';
 import '../../../commons/images.dart';
@@ -30,13 +31,36 @@ class SelectedItemPage extends ConsumerStatefulWidget {
 class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
   int selectedIndex=0;
   List itemsList = [];
+  bool added = false;
+  Map currentItem={};
+
+  checkFun(){
+    print(currentUserModel!.cart);
+    print(widget.selectedItem.itemId);
+    for(int i=0; i<currentUserModel!.cart.length; i++){
+        if(currentUserModel!.cart[i]["ItemId"]==widget.selectedItem.itemId && currentUserModel!.cart[i]["ItemQty"] > 0){
+          added=true;
+          currentItem=currentUserModel!.cart[i];
+          setState(() {
+
+          });
+        }
+        else{
+          added=false;
+          setState(() {
+
+          });
+        }
+    }
+    print(added);
+  }
+
+
 
   addingCart() async {
 
     // var data = await FirebaseFirestore.instance.collection("Users").doc(userId).get();
     // List ExistCart= data['ItemId'];
-
-
 
     CartModel cartModel = CartModel(ItemName: widget.selectedItem.ItemName, ItemId: widget.selectedItem.itemId, ItemPrice: int.parse(widget.selectedItem.ItemPrice.toString()),
         ItemQty: 1, ItemImage: widget.selectedItem.ItemImage, ItemDescriptionofslect: widget.selectedItem.ItemDescription, Fav: [],);
@@ -44,7 +68,12 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
     ref.watch(streamCategoryAppController.notifier).addingCartItem(cartList: cartModel);
   }
 
-
+@override
+  void initState() {
+    checkFun();
+    // TODO: implement initState
+    super.initState();
+  }
   //   var user=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
 //   currentUserModel = UserModel.fromMap(user.data()!);
 //   var data2=await FirebaseFirestore.instance.collection("product").doc(data.id).get();
@@ -285,13 +314,101 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
           ),
           SizedBox(
             height: h*0.03,),
+          added ?
+          SizedBox(
+            height: h*0.04,
+            width: w*0.2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () async{
+                    //var data = await FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).get();
+                    // int currentQty = cart[index]['ItemQty'];
+                    // cart[index]['ItemQty'] = currentQty+1;
+                    List? cart= currentUserModel?.cart;
+                    Map a = cart!.where((element) => element["ItemId"]==widget.selectedItem.itemId).first;
+                    a["ItemQty"]++;
+
+                    FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).update(currentUserModel!.copyWith(cart: cart).toMap());
+
+                    setState(() {
+
+                    });
+                  },
+                  child: Container(
+                    height: h*0.07,
+                    width: w*0.07,
+                    decoration: BoxDecoration(
+                        color: colors.PrimaryColour,
+                        shape: BoxShape.circle
+                    ),
+                    child: Icon(Icons.add,color: Colors.white,),
+                  ),
+                ),
+                Text(currentItem["ItemQty"].toString()),
+                GestureDetector(
+                  onTap: () async{
+                    //var data = await FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).get();
+                    List? cart= currentUserModel?.cart;
+                    // int currentQty = cart[index]['ItemQty'];
+                    // cart[index]['ItemQty'] = currentQty+1;
+                    Map a = cart!.where((element) => element["ItemId"]==widget.selectedItem.itemId).first;
+                    a["ItemQty"]--;
+                    checkFun();
+                    if(a["ItemQty"]==0){
+                      cart.removeWhere((element) => element["ItemId"]==widget.selectedItem.itemId);
+                    }
+
+                    FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).update(currentUserModel!.copyWith(cart: cart).toMap());
+
+                    setState(() {
+
+                    });
+                  },
+                  child: Container(
+                    height: h*0.07,
+                    width: w*0.07,
+                    decoration: BoxDecoration(
+                        color: colors.PrimaryColour,
+                        shape: BoxShape.circle
+                    ),
+                    child: Icon(Icons.remove,color: Colors.white,),
+                  ),
+                ),
+
+                // currentUserModel!.cart[]['ItemQty']==1 ? SizedBox() : GestureDetector(
+                //   onTap: () async {
+                //
+                //     //var data = await FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).get();
+                //     // int currentQty = cart[index]['ItemQty'];
+                //     // cart[index]['ItemQty'] = currentQty+1;
+                //     List? cart= currentUserModel?.cart;
+                //     cart![index]["ItemQty"]--;
+                //
+                //     FirebaseFirestore.instance.collection("Users").doc(userId).update(currentUserModel!.copyWith(cart: cart).toMap());
+                //     totalPrize();
+                //     setState(() {
+                //
+                //     });
+                //   },
+                //   child: Container(
+                //     height: h*0.07,
+                //     width: w*0.07,
+                //     decoration: BoxDecoration(
+                //         color: colors.PrimaryColour,
+                //         shape: BoxShape.circle
+                //     ),
+                //     child: Icon(Icons.remove,color: Colors.white,),
+                //   ),
+                // ),
+              ],
+            ),
+          ) :
           GestureDetector(
             onTap: () {
-
               addingCart();
-
-
-              Navigator.push(context, CupertinoPageRoute(builder: (context) => NavigationPage(),));
+              Navigator.push(context, CupertinoPageRoute(builder: (context) => HomePageUtube(),));
             },
             child: Container(
               height: h*0.06,
