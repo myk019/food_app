@@ -63,7 +63,7 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
     // List ExistCart= data['ItemId'];
 
     CartModel cartModel = CartModel(ItemName: widget.selectedItem.ItemName, ItemId: widget.selectedItem.itemId, ItemPrice: int.parse(widget.selectedItem.ItemPrice.toString()),
-        ItemQty: 1, ItemImage: widget.selectedItem.ItemImage, ItemDescriptionofslect: widget.selectedItem.ItemDescription, Fav: [],);
+        ItemQty: 1, ItemImage: widget.selectedItem.ItemImage, ItemDescriptionofslect: widget.selectedItem.ItemDescription,);
 
     ref.watch(streamCategoryAppController.notifier).addingCartItem(cartList: cartModel);
   }

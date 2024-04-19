@@ -24,7 +24,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   // String? UserName;
   getData() async {
-
     SharedPreferences _prefs=await SharedPreferences.getInstance();
     userEmail=_prefs.getString("email");
     userName=_prefs.getString("name");
