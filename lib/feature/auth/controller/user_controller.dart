@@ -12,8 +12,8 @@ class UserController{
 
 
 
-  userFunction({required name,required email,required password,required image,required id,required cart}){
-    _authrepository.newUserDetails(name, email, password,image,id,cart);
+  userFunction({required name,required email,required password,required image,required id,required cart,required status}){
+    _authrepository.newUserDetails(name, email, password,image,id,cart,status);
 }
 
 

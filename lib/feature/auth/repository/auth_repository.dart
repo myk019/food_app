@@ -177,8 +177,11 @@ class Authrepository {
       userEmail=user.email.toString();
       userImg=user.photoURL!;
       userId=user.uid.toString();
+      userId=user.uid.toString();
+      print("=================================================================");
+      print(userId);
 
-      UserModel userModel = UserModel(name: userName, email: userEmail!, password: '', image: userImg, id: user.uid, cart: []);
+      UserModel userModel = UserModel(name: userName, email: userEmail!, password: '', image: userImg, id: user.uid, cart: [], status: false, fav: []);
 
       Navigator.push(context, CupertinoPageRoute(builder: (context) => CreatePage(google: true,userModel: userModel,),));
     }
@@ -188,11 +191,15 @@ class Authrepository {
       userEmail=user?.email.toString();
       userImg=user!.photoURL!;
       userId=user.uid;
+      userId=user.uid;
+      print("============================ertyuiodfrgthyjudtfvbgnhuijmk,o=====================================");
+      print(userId);
 
 
 
-      currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id:userId!);
+      currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id:userId!, status: false, fav: []);
       print(currentUserModel);
+      // currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id: data.docs.first.id, status: false, fav: []);
 
       SharedPreferences _prefs= await SharedPreferences.getInstance();
       _prefs.setString("email", userCredential.user!.email.toString());
@@ -258,8 +265,8 @@ class Authrepository {
   // }
 
 
-  newUserDetails(name, email, password,image,id, cart) {
-    UserModel userModel = UserModel(name: name, email: email, password: password, image: image, id: id, cart: [] );
+  newUserDetails(name, email, password,image,id, cart,status) {
+    UserModel userModel = UserModel(name: name, email: email, password: password, image: image, id: id, cart: [], status: false, fav: [] );
     _authuser.doc(id).set(userModel.toMap()).then((value) {
       currentUserModel = userModel;
     });

@@ -5,8 +5,10 @@ class UserModel {
   String image;
   String id;
   List cart;
+  bool status;
+  List fav;
 
-  UserModel({required this.name, required this.email, required this.password,required this.image,required this.cart, required this.id,});
+  UserModel({required this.name, required this.email, required this.password,required this.image,required this.cart, required this.id,required this.status,required this.fav});
 
   Map<String, dynamic> toMap() {
     return {
@@ -15,7 +17,9 @@ class UserModel {
       "password": this.password,
       "image": this.image,
       "id":this.id,
-      "cart":this.cart
+      "cart":this.cart,
+      "status":this.status,
+      "Fav":this.fav,
     };
   }
 
@@ -26,7 +30,9 @@ class UserModel {
         password: map["password"] ?? "",
         image: map["image"] ?? "",
       cart: map["cart"]??"",
-        id: map ["id"]??""
+        id: map ["id"]??"",
+      status: map["status"]??"",
+      fav: map["Fav"]??"",
     );
   }
 
@@ -36,7 +42,9 @@ class UserModel {
     String? password,
     String? image,
     String? id,
-    List? cart
+    List? cart,
+    bool? status,
+    List? fav,
   }) {
     return UserModel(
         name: name ?? this.name,
@@ -44,7 +52,9 @@ class UserModel {
         password: password ?? this.password,
         image: image ?? this.image,
         cart: cart??this.cart,
-        id: id??this.id
+        id: id??this.id,
+        status: status??this.status,
+      fav: fav??this.fav,
     );
   }
 }

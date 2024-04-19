@@ -21,7 +21,11 @@ class EditProfile extends ConsumerStatefulWidget {
   ConsumerState<EditProfile> createState() => _EditProfileState();
 }
 
+
 class _EditProfileState extends ConsumerState<EditProfile> {
+
+  bool coverImg=false;
+
   TextEditingController nameController = TextEditingController(text: userName);
   TextEditingController emailController = TextEditingController(text: userEmail);
 
@@ -113,10 +117,11 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                     GestureDetector(
                       onTap: () {
                         selectFileToMessage("user");
+                        coverImg=true;
                       },
                       child: CircleAvatar(
                         radius: w * 0.15,
-                        backgroundImage: NetworkImage(userImg),
+                        backgroundImage: NetworkImage(coverImg?coverImage.toString():userImg),
                       ),
                     ),
                     TextFormField(

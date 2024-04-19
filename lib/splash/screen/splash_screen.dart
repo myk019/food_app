@@ -8,7 +8,6 @@ import 'package:food_app/feature/auth/repository/auth_repository.dart';
 import 'package:food_app/feature/auth/screen/login_account.dart';
 import 'package:food_app/main.dart';
 import 'package:food_app/model/user_model.dart';
-import 'package:food_app/on_body/screen/onbord_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utube/homepage_utube.dart';
@@ -39,11 +38,11 @@ class _SplashScreenState extends State<SplashScreen> {
       Future.delayed(Duration(seconds: 2)).then((value) => Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) =>LoginPage(),)));
     }
     else{
-      currentUserModel=UserModel.fromMap(cuData.data()!);
+      // currentUserModel=UserModel.fromMap(cuData.data()!);
       print(cuData);
       print("-------------------------------------88888888888888");
-      userName=currentUserModel!.name??'';
-      currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id: userId!);
+      // userName=currentUserModel!.name??'';
+      currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id: userId!, status: false, fav: []);
       print(currentUserModel);
       print("8888888888888888888888888888888888888888888888888888888888888888888888888888888");
       // getname();

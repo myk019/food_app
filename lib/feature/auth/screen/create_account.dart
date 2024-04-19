@@ -36,7 +36,8 @@ class _CreatePageState extends ConsumerState<CreatePage> {
         password: passwordController.text,
         image: imgUrl,
         id: widget.userModel?.id,
-        cart: []
+        cart: [],
+        status: false
     );
   }
 
