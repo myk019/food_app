@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
+import 'package:food_app/feature/streamCategoryApp/repository/categoryApp_repository.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
 import 'package:lottie/lottie.dart';
 
@@ -109,11 +110,12 @@ class _CartPageState extends ConsumerState<CartPage> {
                         GestureDetector(
                           onTap: () async{
                             //var data = await FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).get();
-                            List? cart= currentUserModel?.cart;
                             // int currentQty = cart[index]['ItemQty'];
                             // cart[index]['ItemQty'] = currentQty+1;
+                            // ref.watch(streamCategoryAppController.notifier).totalPrice();
+                            List? cart= currentUserModel?.cart;
+                            print(cart);
                             cart![index]["ItemQty"]++;
-
                             FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).update(currentUserModel!.copyWith(cart: cart).toMap());
                             print(currentUserModel!.cart);
                             totalPrize();
@@ -140,7 +142,9 @@ class _CartPageState extends ConsumerState<CartPage> {
                             //var data = await FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).get();
                             // int currentQty = cart[index]['ItemQty'];
                             // cart[index]['ItemQty'] = currentQty+1;
+                            // ref.watch(streamCategoryAppController.notifier).totalPrice();
                             List? cart= currentUserModel?.cart;
+                            print(currentUserModel!.cart);
                             cart![index]["ItemQty"]--;
 
                             FirebaseFirestore.instance.collection("Users").doc(userId).update(currentUserModel!.copyWith(cart: cart).toMap());
@@ -160,10 +164,6 @@ class _CartPageState extends ConsumerState<CartPage> {
                             child: Icon(Icons.remove,color: Colors.white,),
                           ),
                         ),
-
-
-
-
                       ],
                     ),
                   )
@@ -194,13 +194,19 @@ class _CartPageState extends ConsumerState<CartPage> {
 
   List<QueryDocumentSnapshot<Map<String, dynamic>>>? data;
 
-  totalPrize(){
-    FirebaseFirestore.instance.collection('Users').doc(userId).snapshots().listen((event){
-      total=0;
+  totalPrize() async{
 
-      for(int i=0;i<event["cart"].length;i++){
-        total=(event["cart"][i]['ItemPrice']*event["cart"][i]['ItemQty'])+total;
-      }
+    total=0;
+
+    for(int i=0;i<currentUserModel!.cart.length;i++){
+      total=(currentUserModel!.cart[i]['ItemPrice']*currentUserModel!.cart[i]['ItemQty'])+total;
+    }
+    print("000000000000000000000000000000000");
+    print(total);
+    print("000000000000000000000000000000000");
+
+    setState(() {
+
     });
   }
 
@@ -215,6 +221,8 @@ class _CartPageState extends ConsumerState<CartPage> {
 
   @override
   Widget build(BuildContext context) {
+    // final totalPrice=ref.watch(totalProv.notifier).state;
+    // final funcTotalPr = ref.watch(totalPriceProvider.notifier).state;
     return Scaffold(
       backgroundColor: colors.Background,
       body: Padding(

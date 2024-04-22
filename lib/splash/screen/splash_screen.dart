@@ -42,7 +42,8 @@ class _SplashScreenState extends State<SplashScreen> {
       print(cuData);
       print("-------------------------------------88888888888888");
       // userName=currentUserModel!.name??'';
-      currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id: userId!, status: false, fav: []);
+      var data = await FirebaseFirestore.instance.collection("Users").doc(userId).get();
+      currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: data["cart"], id: userId!, status: false, fav: []);
       print(currentUserModel);
       print("8888888888888888888888888888888888888888888888888888888888888888888888888888888");
       // getname();

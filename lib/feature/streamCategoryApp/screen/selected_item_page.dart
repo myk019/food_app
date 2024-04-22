@@ -41,17 +41,15 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
         if(currentUserModel!.cart[i]["ItemId"]==widget.selectedItem.itemId && currentUserModel!.cart[i]["ItemQty"] > 0){
           added=true;
           currentItem=currentUserModel!.cart[i];
-          setState(() {
-
-          });
+          break;
         }
         else{
           added=false;
-          setState(() {
-
-          });
         }
     }
+    setState(() {
+
+    });
     print(added);
   }
 
@@ -64,7 +62,6 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
 
     CartModel cartModel = CartModel(ItemName: widget.selectedItem.ItemName, ItemId: widget.selectedItem.itemId, ItemPrice: int.parse(widget.selectedItem.ItemPrice.toString()),
         ItemQty: 1, ItemImage: widget.selectedItem.ItemImage, ItemDescriptionofslect: widget.selectedItem.ItemDescription,);
-
     ref.watch(streamCategoryAppController.notifier).addingCartItem(cartList: cartModel);
   }
 
