@@ -299,7 +299,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             child: Container(
               height: h*1,
               // color: Colors.red,
-              child: ListView.separated(
+              child: ListView.builder(
                 physics: BouncingScrollPhysics(),
                 itemCount: data.length,
                 scrollDirection: Axis.horizontal,
@@ -308,9 +308,18 @@ class _HomePageState extends ConsumerState<HomePage> {
                   return  Container(
                     height: h*1,
                     width: w*0.5,
+                    margin: EdgeInsets.all(w*0.03),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(w*0.05),
                       color: colors.White,
+                      boxShadow: [
+                        BoxShadow(
+                          color: colors.PrimaryColour.withOpacity(0.15),
+                          offset: Offset(0, 4),
+                          blurRadius:4,
+                          spreadRadius: 2
+                        )
+                      ]
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -380,7 +389,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                       ),
                     ),
                   );
-                }, separatorBuilder: (BuildContext context, int index) { return SizedBox(width: w*0.03,); },),
+                },
+               // separatorBuilder: (BuildContext context, int index) { return SizedBox(width: w*0.03,); },
+              ),
             ),
           ): Expanded(
             child: ListView.separated(

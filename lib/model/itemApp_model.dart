@@ -3,11 +3,10 @@ class itemAppModel{
   String ItemImage;
   String ItemDescription;
   int ItemPrice;
-  List fav;
   String itemId;
 
   itemAppModel({required this.ItemName,required this.ItemDescription,required this.ItemImage,
-    required this.ItemPrice,required this.fav,required this.itemId,});
+    required this.ItemPrice,required this.itemId,});
 
   Map<String,dynamic> toMap() {
     return {
@@ -15,7 +14,6 @@ class itemAppModel{
       "ItemImage": this.ItemImage,
       "ItemDescription": this.ItemDescription,
       "ItemPrice": this.ItemPrice,
-      "Fav":this.fav,
       "ItemId":this.itemId,
     };
   }
@@ -25,7 +23,6 @@ class itemAppModel{
         ItemDescription: map["ItemDescription"]??"",
         ItemImage: map["ItemImage"]??"",
         ItemPrice: map["ItemPrice"]??0,
-      fav: map["Fav"]??"",
         itemId: map["ItemId"]??"",
     );
   }
@@ -35,7 +32,6 @@ class itemAppModel{
     String? ItemImage,
     String? ItemDescription,
     int? ItemPrice,
-    List? fav,
     String? itemId,
   })
   {
@@ -44,7 +40,6 @@ class itemAppModel{
         ItemDescription: ItemDescription??this.ItemDescription,
         ItemImage: ItemImage??this.ItemImage,
         ItemPrice: ItemPrice??this.ItemPrice,
-        fav: fav??this.fav,
         itemId: itemId??this.itemId,
     );
 

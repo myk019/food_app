@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
+import 'package:food_app/commons/lottie.dart';
+import 'package:food_app/feature/payment/screen/payment_page.dart';
 import 'package:food_app/feature/streamCategoryApp/repository/categoryApp_repository.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
 import 'package:lottie/lottie.dart';
@@ -29,7 +32,7 @@ class _CartPageState extends ConsumerState<CartPage> {
 
   cartCard(){
     return ref.watch(streamCartProvider).when(data:(data){
-      return data.isNotEmpty?ListView.separated(
+      return data.isNotEmpty?ListView.builder(
         physics: BouncingScrollPhysics(),
         itemCount: data.length,
         itemBuilder: (BuildContext context, int index) {
@@ -37,18 +40,6 @@ class _CartPageState extends ConsumerState<CartPage> {
             endActionPane: ActionPane(
               motion: BehindMotion(),
               children: [
-                Container(
-                  child: SlidableAction(
-                    onPressed: (context) {
-
-                    },
-                    backgroundColor: Colors.transparent,
-                    foregroundColor: Colors.green,
-                    icon: Icons.edit,
-                    label: "Edit",
-
-                  ),
-                ),
                 SlidableAction(
                   onPressed: (context) {
                     FirebaseFirestore.instance.collection("Users").doc(userId).update(
@@ -57,6 +48,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                         }).then((value) async {
                           var data = await FirebaseFirestore.instance.collection("Users").doc(userId).get();
                           currentUserModel!.cart=data["cart"];
+                          totalPrize();
                     });
                     },
                   backgroundColor: Colors.transparent,
@@ -73,9 +65,18 @@ class _CartPageState extends ConsumerState<CartPage> {
             child: Container(
               height: h*0.18,
               width: w*1,
+              margin: EdgeInsets.all(w*0.04),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(w*0.03),
                 color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 2,
+                    offset: Offset(0, 4),
+                    color: colors.PrimaryColour.withOpacity(0.15),
+                    blurRadius: 4
+                  )
+                ]
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -172,16 +173,23 @@ class _CartPageState extends ConsumerState<CartPage> {
             ),
           );
         },
-        separatorBuilder: (BuildContext context, int index) { return SizedBox(height: h*0.03,); },
+        // separatorBuilder: (BuildContext context, int index) { return SizedBox(height: h*0.03,); },
 
       ):
-      Column(
-        children: [
-          Center(child: Text("You Haven't Added Any Item",style: TextStyle(
-            fontWeight: FontWeight.w900,
-            fontSize: w*0.04
-          ),)),
-        ],
+      Center(
+        child: Container(
+          height:h*0.5,
+            width: w*1,
+             //color: Colors.red,
+            child: Column(
+              children: [
+                Lottie.asset(lottieConst.cartLottie),
+                Text("You Haven't Added Any Item",style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: w*0.04
+                ),),
+              ],
+            )),
       );
 
     },
@@ -225,51 +233,77 @@ class _CartPageState extends ConsumerState<CartPage> {
     // final funcTotalPr = ref.watch(totalPriceProvider.notifier).state;
     return Scaffold(
       backgroundColor: colors.Background,
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Your cart",style: TextStyle(fontSize: w*0.05,fontWeight: FontWeight.w600
-              ),),
-              SizedBox(height: h*0.02,),
-              Container(
-                width: w*1,
-                height: h*0.85,
-                child: cartCard(),
-              )
-            ],
+      body: SingleChildScrollView(
+        physics: currentUserModel!.cart.isEmpty?NeverScrollableScrollPhysics():BouncingScrollPhysics(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Your cart",style: TextStyle(fontSize: w*0.05,fontWeight: FontWeight.w600
+            ),),
+            SizedBox(height: h*0.02,),
+            Container(
+              width: w*1,
+              height: h*0.85,
+              child: cartCard(),
+            )
+          ],
 
-          ),
         ),
       ),
       floatingActionButton: Container(
-        height: h*0.1,
+        height: h*0.15,
         width: w*1,
         color: colors.White,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Divider(
-              thickness: w*0.01,
+              thickness: w*0.004,
+              color: colors.PrimaryColour,
             ),
             // SizedBox(height:w*0.05),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text("Total",style: TextStyle(
-                  fontSize: w*0.04,
-                  // fontWeight: FontWeight.w800
-                ),),
-                Text("$total",style: TextStyle(
-                    fontSize: w*0.06,
-                    fontWeight: FontWeight.w800
-                ),),
+                Row(
+                  children: [
+                    Text("Total:",style: TextStyle(
+                      fontSize: w*0.04,
+                      // fontWeight: FontWeight.w800
+                    ),),
+                    SizedBox(width: w*0.03,),
+                    // currentUserModel!.cart.isEmpty?Text("0",style: TextStyle(
+                    //     fontSize: w*0.06,
+                    //     fontWeight: FontWeight.w800
+                    // ),):
+                       Text("$total",style: TextStyle(
+                        fontSize: w*0.06,
+                        fontWeight: FontWeight.w800
+                    ),),
+                  ],
+                ),
+                GestureDetector(
+                  onTap: () {
+                    currentUserModel!.cart.isEmpty?ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Cart is Empty"))): Navigator.push(context, CupertinoPageRoute(builder: (context) => PaymentPage(),));
+                  },
+                  child: Container(
+                    height: h*0.045,
+                    width: w*0.4,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(w*0.03),
+                      color: colors.PrimaryColour,
+
+                    ),
+                    child: Center(child: Text("Order Now",style: TextStyle(
+                      color: Colors.white,fontWeight: FontWeight.w700,
+                      fontSize: w*0.04
+                    ),)),
+                  ),
+                )
               ],
-            )
+            ),
+
           ],
         ),
       ),
