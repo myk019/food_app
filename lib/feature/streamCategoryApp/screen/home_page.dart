@@ -13,6 +13,7 @@ import 'package:food_app/commons/icons.dart';
 import 'package:food_app/commons/images.dart';
 import 'package:food_app/feature/auth/repository/auth_repository.dart';
 import 'package:food_app/feature/streamCategoryApp/controller/categoryApp_controller.dart';
+import 'package:food_app/firebase_options.dart';
 import 'package:food_app/model/category_model.dart';
 import 'package:food_app/model/itemApp_model.dart';
 import 'package:food_app/navigations/screen/favourite_page.dart';
@@ -33,9 +34,31 @@ List cart = [];
 class _HomePageState extends ConsumerState<HomePage> {
   int? selectedIndex;
   String categoryId="";
-
   String itemImage="";
   bool view=true;
+  List fav=[];
+  List favourite=[];
+
+
+  getFav() async {
+    var data=await FirebaseFirestore.instance.collection("Users").doc(currentUserModel!.id).get();
+    Map favData=data.data()!;
+    favourite=favData["Fav"];
+    for(int i=0;i<favourite.length;i++){
+      fav.add(favourite[i]["ItemId"]);
+    }
+    setState(() {
+
+    });
+  }
+
+
+  favourites(){
+
+  }
+
+
+
 
   int currentIndex=0;
 
@@ -198,6 +221,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             return GestureDetector(
               onTap: () {
                 categoryId = data[index].id;
+                selectedIndex=index;
                 setState(() {});
               },
               child: Container(
@@ -209,7 +233,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           bottom: Radius.circular(w * 0.19)),
                       border: Border.all(
                         // color: colors.Green
-                           color: selectedIndex == index ? colors.Red : colors.lightgrey
+                           color: selectedIndex == index ? colors.PrimaryColour : colors.lightgrey
                       )
                   ),
                   child: Stack(
@@ -221,7 +245,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           height: h * 0.12,
                           width: w * 0.18,
                           decoration: BoxDecoration(
-                              color: selectedIndex == index ? colors.Red : colors.lightgrey,
+                              color: selectedIndex == index ? colors.PrimaryColour : colors.Green.withOpacity(0.1),
                               borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(w * 0.19),
                                   bottom:
@@ -327,18 +351,29 @@ class _HomePageState extends ConsumerState<HomePage> {
                               SizedBox(width: w*0.23,),
                               GestureDetector(
                                   onTap: () {
-                                    // if(food[index]["fav"].contains(index)){
-                                    //   food[index]["fav"].remove(index);
-                                    //   getFun(food[index], false);
-                                    // }else{
-                                    //   food[index]["fav"].add(index);
-                                    //   getFun(food[index], true);
-                                    // }
-                                    setState(() {
-                                    });
+                                   if(fav.contains(data[index].itemId)){
+                                     fav.remove(data[index].itemId);
+                                     print(favourite);
+                                     favourite.removeWhere((element) => element["ItemId"]==data[index].itemId);
+                                     FirebaseFirestore.instance.collection("Users").doc(currentUserModel!.id).update({
+                                       "Fav":favourite
+                                     });
+                                     setState(() {
+
+                                     });
+                                   }else{
+                                     fav.add(data[index].itemId);
+                                     favourite.add(data[index].toMap());
+                                     FirebaseFirestore.instance.collection("Users").doc(currentUserModel!.id).update({
+                                       "Fav":FieldValue.arrayUnion(favourite)
+                                     });
+                                   }
+                                   setState(() {
+                                   });
+                                    // Navigator.push(context, MaterialPageRoute(builder: (context) => FavouritePage(),));
                                     // Navigator.push(context, MaterialPageRoute(builder: (context) => FavouritePage(),));
                                   },
-                                  child:SvgPicture.asset( IconConst.heart,height: w*0.05,width: w*0.05,)),
+                                  child:SvgPicture.asset(fav.contains(data[index].itemId) ? IconConst.heart : IconConst.heart_outLine,height: w*0.05,width: w*0.05,)),
                             ],
                           )
                         ],
@@ -363,7 +398,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   height: w*0.4,
                   width: w*0.9,
                   decoration: BoxDecoration(
-                      color: colors.Red,
+                      color: colors.White,
                       borderRadius: BorderRadius.circular(w*0.03)
                   ),
                   child: Row(
@@ -404,20 +439,30 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 ],
                               ),
                               SizedBox(width: w*0.23,),
-                              GestureDetector(
+                              InkWell(
                                   onTap: () {
-                                    // if(food[index]["fav"].contains(index)){
-                                    //   food[index]["fav"].remove(index);
-                                    //   getFun(food[index], false);
-                                    // }else{
-                                    //   food[index]["fav"].add(index);
-                                    //   getFun(food[index], true);
-                                    // }
+                                    if(fav.contains(data[index].itemId)){
+                                      fav.remove(data[index].itemId);
+                                      print(favourite);
+                                      favourite.removeWhere((element) => element["ItemId"]==data[index].itemId);
+                                      FirebaseFirestore.instance.collection("Users").doc(currentUserModel!.id).update({
+                                        "Fav":favourite
+                                      });
+                                      setState(() {
+
+                                      });
+                                    }else{
+                                      fav.add(data[index].itemId);
+                                      favourite.add(data[index].toMap());
+                                      FirebaseFirestore.instance.collection("Users").doc(currentUserModel!.id).update({
+                                        "Fav":FieldValue.arrayUnion(favourite)
+                                      });
+                                    }
                                     setState(() {
                                     });
                                     // Navigator.push(context, MaterialPageRoute(builder: (context) => FavouritePage(),));
                                   },
-                                  child:SvgPicture.asset( IconConst.heart,height: w*0.05,width: w*0.05,)),
+                                  child:SvgPicture.asset(fav.contains(data[index].itemId) ? IconConst.heart : IconConst.heart_outLine,height: w*0.05,width: w*0.05,)),
                             ],
                           ),
                         ],
@@ -487,6 +532,7 @@ var id;
 
   @override
   void initState() {
+    getFav();
     randomId();
     // TODO: implement initState
     super.initState();

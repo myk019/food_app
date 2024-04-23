@@ -12,6 +12,7 @@ final streamCategoryAppController =StateNotifierProvider((ref) => CategoryAppCon
  final streamItemsProvider = StreamProvider.autoDispose.family((ref,String categoryId) => ref.watch(streamCategoryAppController.notifier).appItems(categoryId: categoryId));
 
   final streamCartProvider=StreamProvider((ref) => ref.watch(streamCategoryAppController.notifier).cartItems());
+  final streamItemFav=StreamProvider((ref) => ref.watch(streamCategoryAppController.notifier).itemFav());
 
    // final carouselProvider = StateProvider((ref) => ref.watch(streamCategoryAppController.notifier).carooooosel());
 
@@ -23,6 +24,9 @@ class CategoryAppController extends StateNotifier{
 
  Stream appCategory(){
    return _streamCategoryApp.streamCategory();
+  }
+ Stream itemFav(){
+   return _streamCategoryApp.streamFav();
   }
 
 

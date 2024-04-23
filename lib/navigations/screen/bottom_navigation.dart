@@ -194,7 +194,10 @@ class _NavigationPageState extends State<NavigationPage> {
               onTap: (int index) => setState(() {
                 selectIndex = index;
               }),
-              chipStyle: ChipStyle(convexBridge: true),
+              chipStyle: ChipStyle(
+                  convexBridge: true,
+                  background: colors.PrimaryColour
+              ),
               itemStyle: ItemStyle.circle,
               animated: true,
             ),

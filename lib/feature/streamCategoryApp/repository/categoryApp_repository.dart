@@ -24,13 +24,17 @@ class StreamCategoryApp{
 
  CollectionReference get _category =>_firestore.collection("Categories");
  CollectionReference get _users =>_firestore.collection("Users");
- CollectionReference get _banner=>_firestore.collection("Banner");
+ // CollectionReference get _banner=>_firestore.collection("Banner");
 
 
 
  streamCategory(){
-   return _category.snapshots().map((event) => event.docs.map((e) => CategoryModelApp.fromMap(e.data()as Map<String,dynamic>)).toList());
+   return _category.snapshots().map((event) => event.docs.map((e) => CategoryModelApp.fromMap(e.data() as Map<String,dynamic>)).toList());
  }
+ streamFav(){
+   return _users.doc(userId).snapshots().map((event) => event.data());
+ }
+
 
   streamItem(categoryId){
    print("repository ----------------------- ${categoryId}");
@@ -115,9 +119,6 @@ print(cart);
  deleteProduct(List cart){
    _users.doc(currentUserModel!.id).delete();
  }
- 
- // caroselSlider(){
- //   return _banner.doc().snapshots();
- // }
+
 
 }
