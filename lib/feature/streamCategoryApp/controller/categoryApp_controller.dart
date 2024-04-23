@@ -13,7 +13,7 @@ final streamCategoryAppController =StateNotifierProvider((ref) => CategoryAppCon
 
   final streamCartProvider=StreamProvider((ref) => ref.watch(streamCategoryAppController.notifier).cartItems());
 
-  // final totalPriceProvider = StateProvider((ref) => ref.watch(streamCategoryAppController.notifier).totalPrice());
+   // final carouselProvider = StateProvider((ref) => ref.watch(streamCategoryAppController.notifier).carooooosel());
 
 
 class CategoryAppController extends StateNotifier{
@@ -47,8 +47,8 @@ class CategoryAppController extends StateNotifier{
    _streamCategoryApp.deleteProduct(cart);
   }
 
-  //  double totalPrice(){
-  // return _streamCategoryApp.totalPrice();
+  //  Stream carooooosel(){
+  // return _streamCategoryApp.caroselSlider();
   // }
 
 }

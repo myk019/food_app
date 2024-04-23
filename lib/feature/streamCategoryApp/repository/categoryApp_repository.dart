@@ -24,6 +24,7 @@ class StreamCategoryApp{
 
  CollectionReference get _category =>_firestore.collection("Categories");
  CollectionReference get _users =>_firestore.collection("Users");
+ CollectionReference get _banner=>_firestore.collection("Banner");
 
 
 
@@ -114,6 +115,9 @@ print(cart);
  deleteProduct(List cart){
    _users.doc(currentUserModel!.id).delete();
  }
-
+ 
+ // caroselSlider(){
+ //   return _banner.doc().snapshots();
+ // }
 
 }

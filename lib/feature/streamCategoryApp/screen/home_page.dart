@@ -1,3 +1,8 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +17,7 @@ import 'package:food_app/model/category_model.dart';
 import 'package:food_app/model/itemApp_model.dart';
 import 'package:food_app/navigations/screen/favourite_page.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/selected_item_page.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../main.dart';
 
@@ -30,6 +36,13 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   String itemImage="";
   bool view=true;
+
+  int currentIndex=0;
+
+ List pic=[
+     "assets/images/Burger.png",
+     "assets/images/card.png"
+ ];
 
   // docEmpty(){
   //   StreamBuilder<QuerySnapshot>(
@@ -188,17 +201,17 @@ class _HomePageState extends ConsumerState<HomePage> {
                 setState(() {});
               },
               child: Container(
-                  height: h * 0.33,
+                  height: h * 0.28,
                   width: w * 0.25,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.vertical(
                           top: Radius.circular(w * 0.19),
                           bottom: Radius.circular(w * 0.19)),
                       border: Border.all(
-                          color: selectedIndex == index
-                              ? colors.Green
-                              : colors.lightgrey
-                              .withOpacity(0.5))),
+                        // color: colors.Green
+                           color: selectedIndex == index ? colors.Red : colors.lightgrey
+                      )
+                  ),
                   child: Stack(
                     children: [
                       Positioned(
@@ -208,10 +221,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           height: h * 0.12,
                           width: w * 0.18,
                           decoration: BoxDecoration(
-                              color: selectedIndex == index
-                                  ? colors.Green.withOpacity(0.2)
-                                  : colors.lightgrey
-                                  .withOpacity(0.05),
+                              color: selectedIndex == index ? colors.Red : colors.lightgrey,
                               borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(w * 0.19),
                                   bottom:
@@ -219,8 +229,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ),
                       ),
                       Column(
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
+                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Center(
                             child: Container(
@@ -234,7 +243,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                               ),
                             ),
                           ),
-                          Text(data[index].category)
+                          Text(data[index].category,style: TextStyle(
+                            fontWeight: FontWeight.w700
+                          ),)
                         ],
                       ),
                     ],
@@ -496,18 +507,91 @@ var id;
       backgroundColor: colors.Background,
 
       body: Padding(
-        padding: EdgeInsets.all(w * 0.05),
+        padding: EdgeInsets.all(w * 0.03),
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              StreamBuilder<QuerySnapshot<Map<String,dynamic>>>(
+                stream: FirebaseFirestore.instance.collection("Banner").snapshots(),
+                builder: (context, snapshot) {
+
+
+                  if(!snapshot.hasData){
+
+                    return CircularProgressIndicator();
+
+                  }
+                  var data=snapshot.data!.docs;
+
+                  return Column(
+                    children: [
+                      CarouselSlider.builder(
+                        itemCount: data.length,
+                        options: CarouselOptions(
+                          autoPlay: true,
+                          viewportFraction: 0.8,
+                          enlargeCenterPage: true,
+                          autoPlayAnimationDuration: Duration(
+                            // milliseconds: 500,
+                              seconds: 2
+                          ),
+                          onPageChanged: (index, reason) {
+                            currentIndex=index;
+                            setState(() {
+
+                            });
+                          },
+                        ),
+                        itemBuilder:(context, index, realIndex) {
+                          return Container(
+                            margin: EdgeInsets.only(right: w*0.01),
+                            height: h*0.4,
+                            width: w*1,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(w*0.03),
+                               image: DecorationImage(image: NetworkImage(data[index]["image"]),fit: BoxFit.fill),
+                              // color: Colors.red,
+                              // boxShadow: [
+                              //   BoxShadow(
+                              //       color: Colors.black.withOpacity(0.15),
+                              //       blurRadius:2,
+                              //       spreadRadius: 2,
+                              //       offset: Offset(
+                              //           0,4
+                              //       )
+                              //   ),
+                              // ],
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(height: h*0.01),
+                      Center(
+                        child: AnimatedSmoothIndicator(
+                          activeIndex: currentIndex,
+                          count: data.length,
+                          effect: JumpingDotEffect(
+                            dotColor: Colors.grey,
+                            activeDotColor: colors.PrimaryColour,
+                            dotHeight: w*0.02,
+                            dotWidth: w*0.02,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }
+              ),
+              SizedBox(height: h*0.02),
               Text(
-                "Enjoy Delicious food",
-                style: TextStyle(fontSize: w * 0.05, fontWeight: FontWeight.w700),
+                "ENJOY DELICIOUS FOOD",
+                style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w900),
               ),
               SizedBox(
-                height: w * 0.05,
+                height: w * 0.03,
               ),
               SizedBox(
                 height: h * 0.16,
@@ -515,7 +599,7 @@ var id;
                 child: streamCategoryFunc()
               ),
               SizedBox(
-                height: w * 0.05,
+                height: h* 0.01,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -541,14 +625,17 @@ var id;
                 ],
               ),
               SizedBox(
-                height: w * 0.05,
+                height: h * 0.01,
               ),
               SizedBox(
-                  height: view?h*0.34: h * 0.44,
+                  height: view?h*0.34: h * 0.64,
                   width: w * 1,
                   // color: Colors.red,
                   child:streamItems()
-              )
+              ),
+              SizedBox(
+                height: h * 0.04,
+              ),
             ],
           ),
         ),
