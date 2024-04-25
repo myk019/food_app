@@ -2,6 +2,7 @@ import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:awesome_bottom_bar/widgets/inspired/inspired.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
@@ -10,10 +11,12 @@ import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
 import 'package:food_app/model/itemApp_model.dart';
 import 'package:food_app/navigations/screen/your_cart_page.dart';
 import 'package:food_app/on_body/screen/search_page.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../main.dart';
 import '../../feature/streamCategoryApp/screen/cart_page.dart';
-import 'favourite_page.dart';
+import '../../feature/streamCategoryApp/screen/favourite_page.dart';
 import 'notification_page.dart';
 
 
@@ -26,6 +29,9 @@ class NavigationPage extends StatefulWidget {
 
 
 class _NavigationPageState extends State<NavigationPage> {
+
+
+
 
   double xOffset=0;
   double yOffset=0;
@@ -64,8 +70,50 @@ class _NavigationPageState extends State<NavigationPage> {
     ),
   ];
 
+  Position ?_currentLocation;
+  late bool servicePermission=false;
+  late  LocationPermission permission;
+  String _currentAdress ="";
+  Future<Position> _getCurrentLocation() async {
+    servicePermission =await Geolocator.isLocationServiceEnabled();
+    if(!servicePermission){
+
+    }
+    permission=await Geolocator.checkPermission();
+
+    if(permission == LocationPermission.denied){
+      permission =await Geolocator.requestPermission();
+    }
+    return await Geolocator.getCurrentPosition();
+  }
+  _getAddressFromCoordinates() async{
+    try{
+      List<Placemark> placemark =await placemarkFromCoordinates(_currentLocation!.latitude, _currentLocation!.longitude);
+      Placemark place = placemark[0];
+      setState(() {
+        _currentAdress ="${place.locality},${place.country}";
+      });
+    }catch (e){
+
+    }
+  }
+
+  fetch()async{
+    _currentLocation =await _getCurrentLocation();
+    await _getAddressFromCoordinates();
+    setState((){
+
+        });
+    }
+  @override
+  void initState() {
+    fetch();
+    // _determinePosition();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+
     return AnimatedContainer(
       duration: Duration(milliseconds: 250),
       transform: Matrix4.translationValues( xOffset, yOffset, 0)..scale(scaleFactor),
@@ -146,12 +194,20 @@ class _NavigationPageState extends State<NavigationPage> {
           ),
           title: Column(
             children: [
-              Text(
-                "Delivery to",
-                style: TextStyle(color: colors.Black, fontSize: w * 0.03),
+              InkWell(
+                onTap: () {
+                  // _determinePosition();
+
+                },
+                child: Text(
+                  "Delivery to",
+                  style: TextStyle(color: colors.Black, fontSize: w * 0.03),
+                ),
               ),
               Text(
-                "lekki phase 1, Estate",
+                _currentAdress.isNotEmpty?_currentAdress:("Location"),
+
+                // _position != null?("Current Location"+_position.toString()):("no Location data"),
                 style: TextStyle(color: colors.Red, fontSize: w * 0.03),
               )
             ],

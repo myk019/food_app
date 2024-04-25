@@ -34,6 +34,16 @@ class StreamCategoryApp{
  streamFav(){
    return _users.doc(userId).snapshots().map((event) => event.data());
  }
+ deleteFav(String id,index){
+   print("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+   print(id);
+   _users.doc(id).update({
+     "Fav":FieldValue.arrayRemove([index]),
+   });
+
+
+
+ }
 
 
   streamItem(categoryId){

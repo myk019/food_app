@@ -1,47 +1,52 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-//
-// getfun() async {
-//   DocumentSnapshot<Map<String, dynamic>> data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-//   currentUserModel=UserModel.fromMap(data!.data()!);
-//   List fav=currentUserModel!.favourites;
-//   if(fav!.isNotEmpty){
-//     print("ghjkl,,,,");
-//     print("cvbnm,");
-//     if(fav!.contains(widget.id)){
-//       ref.read(favour.notifier).update((state) => true);
-//     }
-//     else{
-//       ref.read(favour.notifier).update((state) => false);
-//     }
-//   }
-//
-// }
-// favFunc() async {
-//   DocumentSnapshot<Map<String, dynamic>> data=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-//   var data2=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
-//   ProductModel productModel = ProductModel.fromMap(data2.data()!);
-//   currentUserModel=UserModel.fromMap(data!.data()!);
-//   List fav=currentUserModel!.favourites;
-//   List favUser=productModel.favUser;
-//   print(fav);
-//   if(fav!.contains(widget.id)){
-//     fav!.remove(widget.id);
-//   }else{
-//     fav!.add(widget.id);
-//   }if(favUser.contains(currentUserEmail)){
-//     favUser.remove(currentUserEmail);
-//   }else{
-//     favUser.add(currentUserEmail);
-//   }
-//
-//   FirebaseFirestore.instance.collection("product").doc(widget.id).update({
-//     "favUser":favUser
-//   });
-//   FirebaseFirestore.instance.collection("users").doc(currentUserEmail).update({
-//     "favourites": fav
-//   });
-//   var data1=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
-//   currentUserModel = UserModel.fromMap(data1.data()!);
-//   var data3=await FirebaseFirestore.instance.collection("product").doc(widget.id).get();
-//   productModel=ProductModel.fromMap(data3.data()!);
-//   }
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class GeolocationExample extends StatefulWidget {
+  @override
+  _GeolocationExampleState createState() => _GeolocationExampleState();
+}
+
+class _GeolocationExampleState extends State<GeolocationExample> {
+  static const platform = MethodChannel('samples.flutter.dev/geolocation');
+  String _locationMessage = 'Unknown';
+
+  Future<void> _getLocation() async {
+    String location;
+    try {
+      final String result = await platform.invokeMethod('getLocation');
+      location = 'Location: $result';
+    } on PlatformException catch (e) {
+      location = "Failed to get location: '${e.message}'.";
+    }
+
+    setState(() {
+      _locationMessage = location;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Geolocation Example'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: _getLocation,
+              child: Text('Get Location'),
+            ),
+            SizedBox(height: 20),
+            Text(
+              _locationMessage,
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

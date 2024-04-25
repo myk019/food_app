@@ -16,7 +16,7 @@ import 'package:food_app/feature/streamCategoryApp/controller/categoryApp_contro
 import 'package:food_app/firebase_options.dart';
 import 'package:food_app/model/category_model.dart';
 import 'package:food_app/model/itemApp_model.dart';
-import 'package:food_app/navigations/screen/favourite_page.dart';
+import 'package:food_app/feature/streamCategoryApp/screen/favourite_page.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/selected_item_page.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -454,7 +454,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   onTap: () {
                                     if(fav.contains(data[index].itemId)){
                                       fav.remove(data[index].itemId);
+                                      print("---------------------dcrtfvbgynhum--------------------jik,opl.[;/");
                                       print(favourite);
+                                      print("---------------------dcrtfvbgynhum--------------------jik,opl.[;/");
+                                      print(data[index].itemId);
+
                                       favourite.removeWhere((element) => element["ItemId"]==data[index].itemId);
                                       FirebaseFirestore.instance.collection("Users").doc(currentUserModel!.id).update({
                                         "Fav":favourite

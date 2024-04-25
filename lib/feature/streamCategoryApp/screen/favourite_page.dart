@@ -1,14 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_app/commons/colours.dart';
-import 'package:food_app/commons/images.dart';
+import 'package:food_app/commons/snack_bar_page.dart';
+import 'package:food_app/feature/auth/repository/auth_repository.dart';
 import 'package:food_app/feature/streamCategoryApp/controller/categoryApp_controller.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
 import 'package:food_app/model/itemApp_model.dart';
 
-import '../../feature/streamCategoryApp/screen/selected_item_page.dart';
-import '../../main.dart';
+import 'selected_item_page.dart';
+import '../../../main.dart';
 
 class FavouritePage extends ConsumerStatefulWidget {
   final List a;
@@ -19,9 +22,13 @@ class FavouritePage extends ConsumerStatefulWidget {
   ConsumerState<FavouritePage> createState() => _FavouritePageState();
 }
 
-
-
 class _FavouritePageState extends ConsumerState<FavouritePage> {
+
+
+  deleteFav(String id,index){
+    ref.read(deleteController).deleteFav(id,index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +79,15 @@ class _FavouritePageState extends ConsumerState<FavouritePage> {
                                   Text(data["Fav"][index]["ItemPrice"].toString())
                                 ],
                               ),
+                              GestureDetector(
+                                  onTap: () {
+                                    // FirebaseFirestore.instance.collection("Users").doc(userId).update(
+                                    //     {
+                                    //       "Fav":FieldValue.arrayRemove([data["Fav"][index]])
+                                    //     });
+                                    deleteFav(userId!, data["Fav"][index]);
+                                  },
+                                  child: Icon(Icons.delete,color: colors.Red,))
                             ],
                           ),
                         ),

@@ -42,6 +42,8 @@ class _CartPageState extends ConsumerState<CartPage> {
               children: [
                 SlidableAction(
                   onPressed: (context) {
+                    print("2222222222222222222222222222222222222222222222222222222222222222222222222222222222");
+                    print(data[index]);
                     FirebaseFirestore.instance.collection("Users").doc(userId).update(
                         {
                           "cart":FieldValue.arrayRemove([data[index]])
