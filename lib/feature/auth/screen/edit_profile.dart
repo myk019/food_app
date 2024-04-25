@@ -1,8 +1,12 @@
+
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
@@ -10,6 +14,7 @@ import 'package:food_app/feature/auth/controller/user_controller.dart';
 import 'package:food_app/feature/auth/repository/auth_repository.dart';
 import 'package:food_app/model/user_model.dart';
 import 'package:food_app/utube/homepage_utube.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../../commons/icons.dart';
 import '../../../main.dart';
@@ -24,7 +29,7 @@ class EditProfile extends ConsumerStatefulWidget {
 
 class _EditProfileState extends ConsumerState<EditProfile> {
 
-  bool coverImg=false;
+  bool coverImgLoading=false;
 
   TextEditingController nameController = TextEditingController(text: userName);
   TextEditingController emailController = TextEditingController(text: userEmail);
@@ -51,35 +56,45 @@ class _EditProfileState extends ConsumerState<EditProfile> {
   bool value = false;
 
   Future selectFileToMessage(String name) async {
+    
     final result = await FilePicker.platform.pickFiles();
     if (result == null) return;
+
+    coverImgLoading = true;
+    setState(() {
+      
+    });
 
     pickFile = result.files.first;
 
     // String? ext = pickFile?.name?.split('.')?.last;
-    final fileBytes = result.files.first.bytes;
+    // final fileBytes = result.files.first.bytes;
+
+    File file = File(pickFile!.path.toString());
 
     // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context)
         .showSnackBar(const SnackBar(content: Text("Loading......")));
-    uploadFileToFireBase(name, fileBytes);
-
+    uploadFileToFireBase(name, file);
     setState(() {});
   }
-
   Future uploadFileToFireBase(String name, fileBytes) async {
-    uploadTask = FirebaseStorage.instance
-        .ref('Categories/${DateTime.now().toString()}-$name')
-        .putData(fileBytes, SettableMetadata(contentType: 'image/jpeg'));
-    final snapshot = await uploadTask?.whenComplete(() {});
-    coverImage = (await snapshot?.ref.getDownloadURL())!;
 
+  var  uploadTask =await FirebaseStorage.instance
+        .ref('Profile Image/${DateTime.now().toString()}-$name')
+        .putFile(fileBytes, SettableMetadata(contentType: 'image/jpeg'));
+    // final snapshot = await uploadTask?.whenComplete(() {});
+    coverImage = await uploadTask?.ref.getDownloadURL()!;
+    userImg=coverImage;
+ 
     // ignore: use_build_context_synchronously
     // showUploadMessage(context, '$name Uploaded Successfully...');
-    await Future.delayed(const Duration(seconds: 2));
+    // await Future.delayed(const Duration(seconds: 2));
     // ignore: use_build_context_synchronously
     // ScaffoldMessenger.of(context).clearSnackBars();
-    setState(() {});
+    setState(() {
+      coverImgLoading = false;
+    });
   }
 
   @override
@@ -114,16 +129,31 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        selectFileToMessage("user");
-                        coverImg=true;
-                      },
-                      child: CircleAvatar(
-                        radius: w * 0.15,
-                        backgroundImage: NetworkImage(coverImg?coverImage.toString():userImg),
-                      ),
+                    Stack(
+                      children:[
+                        CircleAvatar(
+                          radius: w * 0.18,
+                          child: coverImgLoading?CircularProgressIndicator(color: colors.PrimaryColour,):Text(''),
+                          backgroundImage: NetworkImage(userImg),
+                        ),
+                        Positioned(
+                          bottom:0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: () {
+                              selectFileToMessage("user");
+                              coverImgLoading=true;
+                            },
+                            child: CircleAvatar(
+                              backgroundColor: colors.PrimaryColour,
+                                radius: w*0.05,
+                                child: Icon(Icons.edit,color: colors.White,)),
+                          ),
+                        ),
+
+                      ] ,
                     ),
+                    SizedBox(height: h*0.02,),
                     TextFormField(
                       controller: nameController,
                       keyboardType: TextInputType.emailAddress,
@@ -162,6 +192,7 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                               borderSide: const BorderSide(color: colors.Grey2),
                               borderRadius: BorderRadius.circular(w * 0.05))),
                     ),
+                    SizedBox(height: h*0.01,),
                     TextFormField(
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,

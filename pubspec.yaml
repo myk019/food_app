@@ -51,7 +51,7 @@ dependencies:
   google_sign_in: ^6.1.6
   flutter_slidable: ^3.1.0
   rive: ^0.12.3
-  file_picker: ^6.1.9
+  file_picker: ^8.0.2
   shared_preferences: ^2.2.1
   carousel_slider: ^4.2.1
   geolocator: ^11.0.0

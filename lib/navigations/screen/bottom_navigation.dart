@@ -221,7 +221,7 @@ class _NavigationPageState extends State<NavigationPage> {
               child: CircleAvatar(
                 radius: w * 0.02,
                 backgroundColor: colors.White,
-                child: SvgPicture.asset(IconConst.googleIcon),
+                backgroundImage: NetworkImage(userImg)  ,
               ),
             ),
             SizedBox(
