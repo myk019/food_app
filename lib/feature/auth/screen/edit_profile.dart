@@ -6,7 +6,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
@@ -14,7 +13,6 @@ import 'package:food_app/feature/auth/controller/user_controller.dart';
 import 'package:food_app/feature/auth/repository/auth_repository.dart';
 import 'package:food_app/model/user_model.dart';
 import 'package:food_app/utube/homepage_utube.dart';
-import 'package:geolocator/geolocator.dart';
 
 import '../../../commons/icons.dart';
 import '../../../main.dart';
