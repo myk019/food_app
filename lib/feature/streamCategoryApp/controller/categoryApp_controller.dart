@@ -21,6 +21,7 @@ final streamCategoryAppController =StateNotifierProvider((ref) => CategoryAppCon
 
 
 class CategoryAppController extends StateNotifier{
+
   final StreamCategoryApp _streamCategoryApp;
 
   CategoryAppController({required StreamCategoryApp streamCategoryApp}):_streamCategoryApp=streamCategoryApp,super(null);

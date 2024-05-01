@@ -10,7 +10,7 @@ import 'package:food_app/model/cart_model.dart';
 import 'package:food_app/model/itemApp_model.dart';
 import 'package:food_app/model/user_model.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/cart_page.dart';
-import 'package:food_app/navigations/screen/your_cart_page.dart';
+// import 'package:food_app/navigations/screen/your_cart_page.dart';
 import 'package:food_app/utube/homepage_utube.dart';
 
 import '../../../commons/icons.dart';
@@ -425,6 +425,16 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
             ),
           )
         ],
+      ),
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          Navigator.push(context, CupertinoPageRoute(builder: (context) => NavigationPage(bottomIndex: 4,),));
+        },
+        child: CircleAvatar(
+          radius: w*0.08,
+          backgroundColor: colors.PrimaryColour,
+          child: Icon(Icons.shopping_cart,color: colors.White,),
+        ),
       ),
     );
   }

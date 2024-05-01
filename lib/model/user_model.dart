@@ -7,8 +7,10 @@ class UserModel {
   List cart;
   bool status;
   List fav;
+  List bookedItems;
 
-  UserModel({required this.name, required this.email, required this.password,required this.image,required this.cart, required this.id,required this.status,required this.fav});
+  UserModel({required this.name, required this.email, required this.password,required this.image,
+    required this.cart, required this.id,required this.status,required this.fav,required this.bookedItems});
 
   Map<String, dynamic> toMap() {
     return {
@@ -20,6 +22,7 @@ class UserModel {
       "cart":this.cart,
       "status":this.status,
       "Fav":this.fav,
+      "bookedItems":this.bookedItems,
     };
   }
 
@@ -33,6 +36,7 @@ class UserModel {
         id: map ["id"]??"",
       status: map["status"]??"",
       fav: map["Fav"]??"",
+      bookedItems: map["bookedItems"]??"",
     );
   }
 
@@ -45,6 +49,7 @@ class UserModel {
     List? cart,
     bool? status,
     List? fav,
+    List? bookedItems
   }) {
     return UserModel(
         name: name ?? this.name,
@@ -55,6 +60,7 @@ class UserModel {
         id: id??this.id,
         status: status??this.status,
       fav: fav??this.fav,
+      bookedItems: bookedItems??this.bookedItems,
     );
   }
 }
