@@ -19,6 +19,7 @@ String? userEmail;
 var userImg;
 var UserId;
 bool? google;
+var CurrentUserStatus;
 
 
 

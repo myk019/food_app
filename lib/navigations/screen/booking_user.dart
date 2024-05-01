@@ -12,7 +12,7 @@ import 'package:food_app/commons/colours.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:lottie/lottie.dart';
+// import 'package:lottie/lottie.dart';
 // import 'package:luna_demo/commons/color%20constansts.dart';
 // import 'package:luna_demo/features/bookings/controller/booking_controller.dart';
 // import 'package:luna_demo/features/bookings/screens/paymentMethods.dart';

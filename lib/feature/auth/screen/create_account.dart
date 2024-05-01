@@ -31,13 +31,16 @@ class _CreatePageState extends ConsumerState<CreatePage> {
 
   addUser(){
     ref.read(usercontrollerprovider).userFunction(
+      context: context,
         name: nameController.text,
         email: emailController.text,
         password: passwordController.text,
         image: imgUrl,
-        id: widget.userModel?.id,
+        id: emailController.text,
         cart: [],
-        status: false
+        status: false,
+        fav: [],
+        bookedItems: []
     );
   }
 
@@ -324,7 +327,6 @@ class _CreatePageState extends ConsumerState<CreatePage> {
                     GestureDetector(
                       onTap: () {
                         addUser();
-                        Navigator.push(context, CupertinoDialogRoute(builder: (context) => const LoginPage(), context: context));
                       },
                       child: Container(
                         height: h*0.065,

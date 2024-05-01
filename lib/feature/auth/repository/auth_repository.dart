@@ -119,8 +119,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:food_app/core/providers/firebase_provider.dart';
 import 'package:food_app/feature/auth/screen/create_account.dart';
+import 'package:food_app/feature/auth/screen/login_account.dart';
 import 'package:food_app/main.dart';
 import 'package:food_app/model/user_model.dart';
 import 'package:food_app/utube/homepage_utube.dart';
@@ -186,6 +188,24 @@ class Authrepository {
       Navigator.push(context, CupertinoPageRoute(builder: (context) => CreatePage(google: true,userModel: userModel,),));
     }
     else{
+
+      if(CurrentUserStatus=data.docs[0]["status"]==true){
+        showDialog(context: context, builder: (context) =>
+            AlertDialog(
+
+              title: Text("This email has been blocked",style: TextStyle(fontSize: w*0.05,fontWeight: FontWeight.w600),),
+
+              actions: [
+
+                TextButton(onPressed: () {
+
+                  Navigator.pop(context);
+                }, child: Text("Ok",style: TextStyle(fontSize: w*0.05,fontWeight: FontWeight.w600),))
+              ],
+            ),);
+        return;
+      }
+
       User? user=userCredential.user;
       userName=user?.displayName.toString();
       userEmail=user?.email.toString();
@@ -265,11 +285,20 @@ class Authrepository {
   // }
 
 
-  newUserDetails(name, email, password,image,id, cart,status) {
-    UserModel userModel = UserModel(name: name, email: email, password: password, image: image, id: id, cart: [], status: false, fav: [], bookedItems: [] );
+  newUserDetails(context,name, email, password,image,id, cart,status,fav, bookedItems) async {
+
+    QuerySnapshot data=await _authuser.where("email",isEqualTo: email).get();
+    if(data.docs.isNotEmpty){
+      showSnackBar(context, "user exist");
+      return;
+    }
+    UserModel userModel = UserModel(name: name, email: email, password: password, image: image, id: id, cart: [], status: false, fav: [],bookedItems:[] );
     _authuser.doc(id).set(userModel.toMap()).then((value) {
       currentUserModel = userModel;
+      Navigator.push(context, CupertinoDialogRoute(builder: (context) => const LoginPage(), context: context));
+      
     });
+
   }
 
 
@@ -317,5 +346,5 @@ class Authrepository {
     }else{
       print("------------3-----------------------");      return null;
     }
-  }
+    }
 }
