@@ -181,7 +181,7 @@ class Authrepository {
       print("=================================================================");
       print(userId);
 
-      UserModel userModel = UserModel(name: userName, email: userEmail!, password: '', image: userImg, id: user.uid, cart: [], status: false, fav: []);
+      UserModel userModel = UserModel(name: userName, email: userEmail!, password: '', image: userImg, id: user.uid, cart: [], status: false, fav: [], bookedItems: []);
 
       Navigator.push(context, CupertinoPageRoute(builder: (context) => CreatePage(google: true,userModel: userModel,),));
     }
@@ -197,7 +197,7 @@ class Authrepository {
 
 
 
-      currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id:userId!, status: false, fav: []);
+      currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id:userId!, status: false, fav: [], bookedItems: []);
       print(currentUserModel);
       // currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id: data.docs.first.id, status: false, fav: []);
 
@@ -266,7 +266,7 @@ class Authrepository {
 
 
   newUserDetails(name, email, password,image,id, cart,status) {
-    UserModel userModel = UserModel(name: name, email: email, password: password, image: image, id: id, cart: [], status: false, fav: [] );
+    UserModel userModel = UserModel(name: name, email: email, password: password, image: image, id: id, cart: [], status: false, fav: [], bookedItems: [] );
     _authuser.doc(id).set(userModel.toMap()).then((value) {
       currentUserModel = userModel;
     });

@@ -9,7 +9,7 @@ import 'package:food_app/commons/icons.dart';
 import 'package:food_app/model/category_model.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
 import 'package:food_app/model/itemApp_model.dart';
-import 'package:food_app/navigations/screen/your_cart_page.dart';
+// import 'package:food_app/navigations/screen/your_cart_page.dart';
 import 'package:food_app/on_body/screen/search_page.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -21,7 +21,8 @@ import 'notification_page.dart';
 
 
 class NavigationPage extends StatefulWidget {
-  const NavigationPage({super.key,});
+  final int bottomIndex;
+  const NavigationPage({super.key,required this.bottomIndex});
 
   @override
   State<NavigationPage> createState() => _NavigationPageState();
@@ -40,6 +41,7 @@ class _NavigationPageState extends State<NavigationPage> {
   bool isDrawerOpen=false;
 
   int selectIndex=0;
+
   List pages=[
     HomePage(),
     FavouritePage(a: cart ,),
@@ -107,6 +109,7 @@ class _NavigationPageState extends State<NavigationPage> {
     }
   @override
   void initState() {
+    selectIndex=widget.bottomIndex;
     fetch();
     // _determinePosition();
     super.initState();

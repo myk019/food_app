@@ -428,7 +428,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
 
             },);
           Future.delayed(const Duration(seconds: 3)).then((value) =>
-              Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const NavigationPage(),)));
+              Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const NavigationPage(bottomIndex: 0,),)));
         },
         child: Padding(
           padding:  EdgeInsets.only(bottom: w*0.02),

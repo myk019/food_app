@@ -10,9 +10,13 @@ import 'package:food_app/commons/lottie.dart';
 import 'package:food_app/feature/payment/screen/payment_page.dart';
 import 'package:food_app/feature/streamCategoryApp/repository/categoryApp_repository.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
+import 'package:food_app/model/booking_model.dart';
+import 'package:food_app/model/user_model.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../commons/icons.dart';
+import '../../../model/cart_model.dart';
+import '../../../navigations/screen/booking_user.dart';
 import '../../auth/repository/auth_repository.dart';
 import '../controller/categoryApp_controller.dart';
 import '../../../main.dart';
@@ -237,20 +241,23 @@ class _CartPageState extends ConsumerState<CartPage> {
       backgroundColor: colors.Background,
       body: SingleChildScrollView(
         physics: currentUserModel!.cart.isEmpty?NeverScrollableScrollPhysics():BouncingScrollPhysics(),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Your cart",style: TextStyle(fontSize: w*0.05,fontWeight: FontWeight.w600
-            ),),
-            SizedBox(height: h*0.02,),
-            Container(
-              width: w*1,
-              height: h*0.85,
-              child: cartCard(),
-            )
-          ],
+        child: Padding(
+          padding:  EdgeInsets.all(w*0.03),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Your cart",style: TextStyle(fontSize: w*0.05,fontWeight: FontWeight.w600
+              ),),
+              SizedBox(height: h*0.02,),
+              Container(
+                width: w*1,
+                height: h*0.85,
+                child: cartCard(),
+              )
+            ],
 
+          ),
         ),
       ),
       floatingActionButton: Container(
@@ -287,7 +294,8 @@ class _CartPageState extends ConsumerState<CartPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    currentUserModel!.cart.isEmpty?ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Cart is Empty"))): Navigator.push(context, CupertinoPageRoute(builder: (context) => PaymentPage(),));
+                    currentUserModel!.cart.isEmpty?ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Cart is Empty"))):
+                    Navigator.push(context, CupertinoPageRoute(builder: (context) => deliveryAddress(pickedItem: currentUserModel!.cart),));
                   },
                   child: Container(
                     height: h*0.045,

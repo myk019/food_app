@@ -53,19 +53,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
 
-  favourites(){
-
-  }
-
-
-
-
+  int dataCount=0;
   int currentIndex=0;
-
- List pic=[
-     "assets/images/Burger.png",
-     "assets/images/card.png"
- ];
 
   // docEmpty(){
   //   StreamBuilder<QuerySnapshot>(
@@ -204,6 +193,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   randomId() async {
     var name= await FirebaseFirestore.instance.collection("Categories").get();
     categoryId = name.docs.isNotEmpty ? name.docs[0].id : "";
+    selectedIndex=0;
     setState(() {
 
     });
@@ -218,63 +208,57 @@ class _HomePageState extends ConsumerState<HomePage> {
           physics: BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                categoryId = data[index].id;
-                selectedIndex=index;
-                setState(() {});
-              },
-              child: Container(
-                  height: h * 0.28,
-                  width: w * 0.25,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(w * 0.19),
-                          bottom: Radius.circular(w * 0.19)),
-                      border: Border.all(
-                        // color: colors.Green
-                           color: selectedIndex == index ? colors.PrimaryColour : colors.lightgrey
-                      )
-                  ),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: w * 0.043,
-                        left: w * 0.034,
-                        child: Container(
-                          height: h * 0.12,
-                          width: w * 0.18,
-                          decoration: BoxDecoration(
-                              color: selectedIndex == index ? colors.PrimaryColour : colors.Green.withOpacity(0.1),
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(w * 0.19),
-                                  bottom:
-                                  Radius.circular(w * 0.19))),
-                        ),
+            return Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    categoryId = data[index].id;
+                    selectedIndex=index;
+                    setState(() {});
+                  },
+                  child: Container(
+                      height: h * 0.14,
+                      width: w * 0.23,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(w * 0.19),
+                              bottom: Radius.circular(w * 0.19)),
+                          border: Border.all(
+                            // color: colors.Green
+                               color: selectedIndex == index ? colors.PrimaryColour : colors.lightgrey
+                          )
                       ),
-                      Column(
-                         mainAxisAlignment: MainAxisAlignment.center,
+                      child: Stack(
                         children: [
-                          Center(
+                          Positioned(
+                            top: w * 0.02,
+                            left: w * 0.024,
                             child: Container(
-                              height: h * 0.05,
-                              width: w * 0.11,
-                              // color: Colors.red,
-                              child: Image(
-                                image: NetworkImage(
+                              height: h * 0.12,
+                              width: w * 0.18,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(image: NetworkImage(
                                     data[index].image),
-                                fit: BoxFit.cover,
-                              ),
+                                  fit: BoxFit.cover,
+                                ),
+                                  // color: selectedIndex == index ? colors.PrimaryColour.withOpacity(0.7) : colors.Green.withOpacity(0.1),
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(w * 0.19),
+                                      bottom:
+                                      Radius.circular(w * 0.19))),
                             ),
                           ),
-                          Text(data[index].category,style: TextStyle(
-                            fontWeight: FontWeight.w700
-                          ),)
                         ],
                       ),
-                    ],
+
                   ),
-              ),
+
+                ),
+                Text(data[index].category,style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                  fontSize: w*0.03
+                ),),
+              ],
             );
           },
           separatorBuilder: (BuildContext context, int index) {
@@ -292,7 +276,8 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   streamItems(){
       return ref.watch(streamItemsProvider(categoryId)).when(data: (data) {
-      print("screen ----------------------- ${categoryId}");
+        // print("data ----------------------- ${dataCount}");
+       print("screen ----------------------- ${categoryId}");
       return  Column(
         children: [
           view==true? Expanded(
@@ -331,12 +316,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                             onTap: () {
                               Navigator.push(context,CupertinoPageRoute(builder: (context) => SelectedItemPage(selectedItem: data[index],),));
                             },
-                            child: Container(
-                              margin: EdgeInsets.only(top: w*0.03,left: w*0.025),
-                              height: h*0.15,
-                              width: w*0.35,
-                              // color: Colors.green,
-                              child: Image(image: NetworkImage(data[index].ItemImage),fit: BoxFit.cover,),
+                            child: Center(
+                              child: Container(
+                                // margin: EdgeInsets.only(top: w*0.03,left: w*0.025),
+                                height: h*0.15,
+                                width: w*0.35,
+                                // color: Colors.green,
+                                child: Image(image: NetworkImage(data[index].ItemImage),fit: BoxFit.cover,),
+                              ),
                             ),
                           ),
                           // SizedBox(height: h*0.01,),
@@ -345,7 +332,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ),),
                           Text(data[index].ItemDescription,style: TextStyle(
                               fontSize: w*0.026
-
                           ),),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -354,7 +340,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 children: [
                                   SvgPicture.asset(IconConst.star),
                                   SizedBox(width: w*0.01,),
-                                  Text("4+")
+                                  Text("4+"),
+                                  // Text(data.length.toString())
                                 ],
                               ),
                               SizedBox(width: w*0.23,),
@@ -494,15 +481,10 @@ class _HomePageState extends ConsumerState<HomePage> {
           )]);
 
     },
-          error: (error, stackTrace) => Center(child: Text("Please select Category 4")),
+          error: (error, stackTrace) => Center(child: Text(error.toString())),
         loading: () => CircularProgressIndicator());
   }
 
-
-var id;
-  getFun(Map<String, dynamic> map, bool status) {
-    status == true ? cart.add(map) : cart.remove(map);
-  }
 
 //   var user=await FirebaseFirestore.instance.collection("users").doc(currentUserEmail).get();
 //   currentUserModel = UserModel.fromMap(user.data()!);
@@ -549,6 +531,8 @@ var id;
   void initState() {
     getFav();
     randomId();
+
+
     // TODO: implement initState
     super.initState();
   }
@@ -655,7 +639,7 @@ var id;
                 height: w * 0.03,
               ),
               SizedBox(
-                height: h * 0.16,
+                height: h * 0.17,
                 width: w * 1,
                 child: streamCategoryFunc()
               ),
@@ -679,7 +663,7 @@ var id;
                       print(view);
                     },
                     child: Text(
-                      "View all(29)",
+                      "View all ",
                       style: TextStyle(color: colors.Red, fontSize: w * 0.03),
                     ),
                   )

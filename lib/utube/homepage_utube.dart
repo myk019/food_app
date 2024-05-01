@@ -20,7 +20,7 @@ class _HomePageUtubeState extends State<HomePageUtube> {
       body: Stack(
         children: [
            DrawerScreen(),
-          NavigationPage()
+          NavigationPage(bottomIndex: 0,)
         ],
       ),
     );
