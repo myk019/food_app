@@ -4,12 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_app/feature/auth/screen/create_account.dart';
 import 'package:food_app/feature/auth/screen/login_account.dart';
 import 'package:food_app/feature/payment/screen/payment_page.dart';
-import 'package:food_app/model/booking_model.dart';
+import 'package:food_app/model/booking_address_model.dart';
 import 'package:food_app/splash/screen/splash_screen.dart';
 import 'package:food_app/utube/homepage_utube.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'firebase_options.dart';
-import 'navigations/screen/booking_user.dart';
+import 'feature/booking/screen/booking_user.dart';
 
 
 var w;

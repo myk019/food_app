@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_app/commons/colours.dart';
+import 'package:food_app/commons/images.dart';
+import 'package:food_app/commons/lottie.dart';
 import 'package:food_app/commons/snack_bar_page.dart';
 import 'package:food_app/feature/auth/repository/auth_repository.dart';
 import 'package:food_app/feature/streamCategoryApp/controller/categoryApp_controller.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
 import 'package:food_app/model/itemApp_model.dart';
+import 'package:lottie/lottie.dart';
 
 import 'selected_item_page.dart';
 import '../../../main.dart';
@@ -29,6 +32,7 @@ class _FavouritePageState extends ConsumerState<FavouritePage> {
     ref.read(deleteController).deleteFav(id,index);
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +40,7 @@ class _FavouritePageState extends ConsumerState<FavouritePage> {
         children: [
           ref.watch(streamItemFav).when(
               data: (data) {
-                return Expanded(
+                return data["Fav"].isNotEmpty? Expanded(
                   child:ListView.separated(
                     itemCount: data["Fav"].length,
                     itemBuilder: (BuildContext context, int index) {
@@ -97,6 +101,24 @@ class _FavouritePageState extends ConsumerState<FavouritePage> {
                       height: w*0.02,
                     );
                   },
+                  )
+                ):Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: h*0.6,
+                          width: w*0.6,
+                          // color: Colors.red,
+                          child: Column(
+                            children: [
+                              Lottie.asset(lottieConst.noFav),
+                              Text("No Favourites",style: TextStyle(fontWeight: FontWeight.w900,fontSize: w*0.05),)
+                            ],
+                          )),
+
+                    ],
                   ),
                 );
               },
@@ -106,8 +128,7 @@ class _FavouritePageState extends ConsumerState<FavouritePage> {
               loading: () {
                 return Center(child: CircularProgressIndicator());
               },
-          ),
-
+          )
         ],
       ),
     );
