@@ -10,13 +10,13 @@ import 'package:food_app/commons/lottie.dart';
 import 'package:food_app/feature/payment/screen/payment_page.dart';
 import 'package:food_app/feature/streamCategoryApp/repository/categoryApp_repository.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
-import 'package:food_app/model/booking_model.dart';
+import 'package:food_app/model/booking_address_model.dart';
 import 'package:food_app/model/user_model.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../commons/icons.dart';
 import '../../../model/cart_model.dart';
-import '../../../navigations/screen/booking_user.dart';
+import '../../booking/screen/booking_user.dart';
 import '../../auth/repository/auth_repository.dart';
 import '../controller/categoryApp_controller.dart';
 import '../../../main.dart';
@@ -56,6 +56,38 @@ class _CartPageState extends ConsumerState<CartPage> {
                           currentUserModel!.cart=data["cart"];
                           totalPrize();
                     });
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: w*0.05,
+                        ),
+                        Center(
+                          child: Container(
+                              height: h*0.04,
+                              width: w*0.1,
+                              color: Colors.white,
+                              child: Lottie.asset(lottieConst.delete,fit: BoxFit.fitHeight,)),
+                        ),
+                        SizedBox(
+                          width: w*0.015,
+                        ),
+
+                        Text("Deleted Success",style: TextStyle(
+                            fontSize: w*0.04,
+                            color: colors.White
+                        ),)
+                      ],
+
+                    ),backgroundColor: Colors.black.withOpacity(0.85),
+                      behavior: SnackBarBehavior.floating,
+                      showCloseIcon: true,
+                      duration: Duration(seconds: 1),
+                      padding:  EdgeInsets.only(bottom: w*0.012,top: w*0.001),
+                      // duration: Duration(seconds: 2),
+                    ));
+
                     },
                   backgroundColor: Colors.transparent,
                   foregroundColor: Colors.red,
@@ -153,7 +185,6 @@ class _CartPageState extends ConsumerState<CartPage> {
                             List? cart= currentUserModel?.cart;
                             print(currentUserModel!.cart);
                             cart![index]["ItemQty"]--;
-
                             FirebaseFirestore.instance.collection("Users").doc(userId).update(currentUserModel!.copyWith(cart: cart).toMap());
                             print(currentUserModel!.cart);
                             totalPrize();
@@ -182,20 +213,23 @@ class _CartPageState extends ConsumerState<CartPage> {
         // separatorBuilder: (BuildContext context, int index) { return SizedBox(height: h*0.03,); },
 
       ):
-      Center(
-        child: Container(
-          height:h*0.5,
-            width: w*1,
-             //color: Colors.red,
-            child: Column(
-              children: [
-                Lottie.asset(lottieConst.cartLottie),
-                Text("You Haven't Added Any Item",style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: w*0.04
-                ),),
-              ],
-            )),
+      Container(
+          width: w*1,
+          height: h*0.5,
+          // color: Colors.red,
+          child: Column(
+            children: [
+              Container(
+                height: h*0.35,
+                  width: w*0.8,
+                  child: Lottie.asset(lottieConst.emptyGif)),
+              Text("You Haven't Added Any Item",style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: w*0.05
+              ),),
+            ],
+          ),
+
       );
 
     },

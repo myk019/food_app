@@ -291,7 +291,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return  Container(
-                    height: h*1,
+                    height: h*0.5,
                     width: w*0.5,
                     margin: EdgeInsets.all(w*0.03),
                     decoration: BoxDecoration(
@@ -320,9 +320,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                               child: Container(
                                 // margin: EdgeInsets.only(top: w*0.03,left: w*0.025),
                                 height: h*0.15,
-                                width: w*0.35,
+                                width: w*0.39,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(image: NetworkImage(data[index].ItemImage),fit: BoxFit.cover,),
+                                  borderRadius: BorderRadius.circular(w*0.03)
+                                ),
                                 // color: Colors.green,
-                                child: Image(image: NetworkImage(data[index].ItemImage),fit: BoxFit.cover,),
+
                               ),
                             ),
                           ),

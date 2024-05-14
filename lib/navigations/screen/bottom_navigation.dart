@@ -31,9 +31,6 @@ class NavigationPage extends StatefulWidget {
 
 class _NavigationPageState extends State<NavigationPage> {
 
-
-
-
   double xOffset=0;
   double yOffset=0;
   double scaleFactor=1;
@@ -123,6 +120,7 @@ class _NavigationPageState extends State<NavigationPage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: colors.Background,
+          surfaceTintColor: colors.Background,
           elevation: 0,
           leading: GestureDetector(
             onTap: () {
@@ -138,8 +136,6 @@ class _NavigationPageState extends State<NavigationPage> {
                 setState(() {
 
                 });
-
-
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 8,bottom: 4),
@@ -148,7 +144,6 @@ class _NavigationPageState extends State<NavigationPage> {
                   width: w*0.07,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(w*0.03),
-
                     border: Border.all(  color: colors.lightgrey,
                     )
                   ),

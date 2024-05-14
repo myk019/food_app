@@ -27,6 +27,7 @@ googleFunction(context){
 userUpdateCo(UserModel userModel){
     _authrepository.userUpdate(userModel);
 }
+
 // currentUserModelUpdate(){
 //     _authrepository.currentUserModelUpdate();
 // }

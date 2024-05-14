@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
 
 import '../../commons/icons.dart';
 import '../../main.dart';
+import '../../navigations/screen/payment_methode.dart';
 
 class DeliveryMethod extends StatefulWidget {
   const DeliveryMethod({super.key});
@@ -286,27 +288,32 @@ class _DeliveryMethodState extends State<DeliveryMethod> {
       ),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: w*0.02),
-        child: Container(
-          height: h*0.065,
-          width: w*0.93,
-          decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  stops: [0.3,0.7],
-                  colors:[
-                    Color(0xffF9881F),
-                    Color(0xffFF774C)
-                  ]),
-              borderRadius: BorderRadius.circular(w*0.06)
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(context,CupertinoPageRoute(builder: (context) => paymentMethod(),));
+          },
+          child: Container(
+            height: h*0.065,
+            width: w*0.93,
+            decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    stops: [0.3,0.7],
+                    colors:[
+                      Color(0xffF9881F),
+                      Color(0xffFF774C)
+                    ]),
+                borderRadius: BorderRadius.circular(w*0.06)
+            ),
+            child: Center(
+                child: Text("Proceed to Payment",
+                  style: TextStyle(
+                      fontSize: w*0.045,
+                      fontWeight: FontWeight.w600,
+                      color: colors.White
+                  ),)),
           ),
-          child: Center(
-              child: Text("Proceed to Payment",
-                style: TextStyle(
-                    fontSize: w*0.045,
-                    fontWeight: FontWeight.w600,
-                    color: colors.White
-                ),)),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

@@ -9,6 +9,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
+import 'package:food_app/feature/booking/controller/booking_controller.dart';
+import 'package:food_app/navigations/screen/payment_methode.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -16,16 +18,18 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 // import 'package:luna_demo/commons/color%20constansts.dart';
 // import 'package:luna_demo/features/bookings/controller/booking_controller.dart';
 // import 'package:luna_demo/features/bookings/screens/paymentMethods.dart';
-// import 'package:luna_demo/model/booking_model.dart';
+// import 'package:luna_demo/model/booking_address_model.dart';
 
 // import '../../../commons/image Constants.dart';
 // import '../../../commons/widgets.dart';
-import '../../../main.dart';
+import '../../../../main.dart';
 import 'package:http/http.dart' as http;
 
-import '../../commons/icons.dart';
-import '../../model/booking_model.dart';
-import '../../model/itemApp_model.dart';
+import '../../../auth/screen/delivery_method.dart';
+import '../../../auth/screen/orders_page.dart';
+import '../../../commons/icons.dart';
+import '../../../model/booking_address_model.dart';
+import '../../../model/itemApp_model.dart';
 
 
 class deliveryAddress extends ConsumerStatefulWidget {
@@ -48,17 +52,23 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
   TextEditingController pincodecontroller=TextEditingController();
   TextEditingController towncitycontroller=TextEditingController();
 
-  // add(){
-  //   //  =BookingModel(productName:"", price: "", qty: "", buyerName: namecontroller.text, buyerAddress: addresscontroller.text, buyerPhoneNumer: numbercontroller.text, buyerId: "", paymentMethod: "");
-  //   BookingModel bookingModel =widget.bookingdata.copyWith(buyerName: namecontroller.text.trim(),
-  //       state: state,buyerhouseno:housecontroller.text.trim(),buyerarea:areacontroller.text.trim(),
-  //       buyerlandmark:landmarkcontroller.text.trim(),pincode:pincodecontroller.text.trim(),
-  //       buyercity:towncitycontroller.text.trim(),buyerPhoneNumer: numbercontroller.text.trim());
-  //   // ref.watch(bookingContollerProvider).AddBooking(bookingModel);
-  //
-  //   Navigator.push(context, CupertinoPageRoute(builder: (context) =>paymentMethod(bookingModel1: bookingModel,) ,));
-  //
-  // }
+  addBookingUser(){
+    //  =BookingModel(productName:"", price: "", qty: "", buyerName: namecontroller.text, buyerAddress: addresscontroller.text, buyerPhoneNumer: numbercontroller.text, buyerId: "", paymentMethod: "");
+    // BookingModel bookingModel =widget.bookingdata.copyWith(buyerName: namecontroller.text.trim(),
+    //     state: state,buyerhouseno:housecontroller.text.trim(),buyerarea:areacontroller.text.trim(),
+    //     buyerlandmark:landmarkcontroller.text.trim(),pincode:pincodecontroller.text.trim(),
+    //     buyercity:towncitycontroller.text.trim(),buyerPhoneNumer: numbercontroller.text.trim());
+    // ref.watch(bookingContollerProvider).AddBooking(bookingModel);
+    BookingAddressModel bookingAddressModels=BookingAddressModel(BName: namecontroller.text, BState: numbercontroller.text,
+        BAddress:housecontroller.text , BPlace: areacontroller.text,
+        BArea: areacontroller.text, BLandmark: landmarkcontroller.text,
+        BPincode: pincodecontroller.text, BTown: towncitycontroller.text);
+
+    ref.watch(BookingAddressController).addBookingC(bookingAddressModels);
+
+    Navigator.push(context, CupertinoPageRoute(builder: (context) =>DeliveryMethod() ,));
+
+  }
 
   final formKey=GlobalKey<FormState>();
   String phoneNumber='';
@@ -254,7 +264,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                       ),),
                       SizedBox(height: h*0.02,),
                       SizedBox(
-                        height: w*0.31,
+                        height: w*0.38,
                         width: w*1,
                         child: ListView.builder(
                           itemCount: widget.pickedItem.length,
@@ -264,9 +274,8 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
                               margin: EdgeInsets.all( w*0.02),
-                              height: w*0.25,
+                              height: w*0.3,
                               width: w*0.25,
-
                               child: Column(
                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
@@ -279,7 +288,16 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                                         image: DecorationImage(image: NetworkImage(widget.pickedItem[index]["ItemImage"]),fit: BoxFit.cover),
                                     ),
                                   ),
-                                   Text(widget.pickedItem[index]["ItemName"]),
+                                   Padding(
+                                     padding:  EdgeInsets.only(left: w*0.01,right:  w*0.01),
+                                     child: Text("${widget.pickedItem[index]["ItemName"]}",style: TextStyle(
+                                       overflow: TextOverflow.ellipsis
+                                     ),),
+                                   ),
+                                   Padding(
+                                     padding:  EdgeInsets.only(left: w*0.01,right:  w*0.01),
+                                     child: Text("Qty: ${widget.pickedItem[index]["ItemQty"].toString()}"),
+                                   ),
                                    // Text(widget.pickedItem[index]["ItemPrice"].toString())
                                 ],
                               ),
@@ -663,7 +681,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                       return;
                     }
                     if(formKey.currentState!.validate()){
-                      // add();
+                      addBookingUser();
                     }else{
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your valid Number")));
 

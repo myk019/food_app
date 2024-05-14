@@ -10,4 +10,5 @@ class ImageConst{
   static const bigburger="assets/images/Burger.png";
   static const card="assets/images/card.png";
   static const lottie="assets/Gifs/Animation .json";
+  static const nomeansno="assets/images/nomeansno.jpg";
 }
