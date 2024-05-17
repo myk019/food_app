@@ -463,7 +463,7 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
           GestureDetector(
             onTap: () {
               addingCart();
-              Navigator.push(context, CupertinoPageRoute(builder: (context) => HomePageUtube(),));
+              Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => HomePageUtube(),), (route) => false,);
             },
             child: Container(
               height: h*0.06,
@@ -486,7 +486,7 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
       ),
       floatingActionButton: GestureDetector(
         onTap: () {
-          Navigator.push(context, CupertinoPageRoute(builder: (context) => NavigationPage(bottomIndex: 4,),));
+          Navigator.pushAndRemoveUntil(context, CupertinoPageRoute(builder: (context) => NavigationPage(bottomIndex: 4,),),(route) => false,);
         },
         child: CircleAvatar(
           radius: w*0.08,
