@@ -12,6 +12,8 @@ import 'package:food_app/model/user_model.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/cart_page.dart';
 // import 'package:food_app/navigations/screen/your_cart_page.dart';
 import 'package:food_app/utube/homepage_utube.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../../commons/icons.dart';
 import '../../../commons/images.dart';
@@ -22,7 +24,8 @@ import '../../../main.dart';
 class SelectedItemPage extends ConsumerStatefulWidget {
   // final UserModel crntModel;
   final itemAppModel selectedItem;
-  const SelectedItemPage({super.key,required this.selectedItem});
+  final String CategoryId;
+  const SelectedItemPage({super.key,required this.selectedItem,required this.CategoryId});
 
   @override
   ConsumerState<SelectedItemPage> createState() => _SelectedItemPageState();
@@ -33,6 +36,8 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
   List itemsList = [];
   bool added = false;
   Map currentItem={};
+
+
 
   checkFun(){
     print(currentUserModel!.cart);
@@ -53,6 +58,44 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
     print(added);
   }
 
+  ///GEOLOCATION
+
+  Position ?_currentLocation;
+  late bool servicePermission=false;
+  late  LocationPermission permission;
+  String _currentAdress ="";
+  Future<Position> _getCurrentLocation() async {
+    servicePermission =await Geolocator.isLocationServiceEnabled();
+    if(!servicePermission){
+
+    }
+    permission=await Geolocator.checkPermission();
+
+    if(permission == LocationPermission.denied){
+      permission =await Geolocator.requestPermission();
+    }
+    return await Geolocator.getCurrentPosition();
+  }
+  _getAddressFromCoordinates() async{
+    try{
+      List<Placemark> placemark =await placemarkFromCoordinates(_currentLocation!.latitude, _currentLocation!.longitude);
+      Placemark place = placemark[0];
+      setState(() {
+        _currentAdress ="${place.locality},${place.country}";
+      });
+    }catch (e){
+
+    }
+  }
+
+  fetch()async{
+    _currentLocation =await _getCurrentLocation();
+    await _getAddressFromCoordinates();
+    setState((){
+
+    });
+  }
+
 
 
   addingCart() async {
@@ -67,6 +110,7 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
 
 @override
   void initState() {
+    fetch();
     checkFun();
     // TODO: implement initState
     super.initState();
@@ -153,9 +197,11 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
               style: TextStyle(color: colors.Black, fontSize: w * 0.03),
             ),
             Text(
-              "lekki phase 1, Estate",
+              _currentAdress.isNotEmpty?_currentAdress:("Location"),
+
+              // _position != null?("Current Location"+_position.toString()):("no Location data"),
               style: TextStyle(color: colors.Red, fontSize: w * 0.03),
-            )
+            ),
           ],
         ),
         centerTitle: true,
@@ -185,8 +231,9 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
               height: h * 0.25,
               width: w * 0.5,
               decoration: BoxDecoration(
-                  color: colors.White,
+                  // color: colors.White,
                   borderRadius: BorderRadius.circular(w * 0.05),
+                  image: DecorationImage(image: NetworkImage(widget.selectedItem.ItemImage),fit: BoxFit.fill),
                   boxShadow: [
                     BoxShadow(
                         color: colors.Black.withOpacity(.1),
@@ -198,7 +245,7 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
                   //   image:NetworkImage(widget.)
                   // )
               ),
-              child: Image.network(widget.selectedItem.ItemImage,fit: BoxFit.cover,)
+              // child: Image.network(widget.selectedItem.ItemImage,fit: BoxFit.cover,)
             ),
           ),
           SizedBox(
@@ -270,45 +317,56 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
           ),
           SizedBox(height: h*0.025,),
 
-          Padding(
-            padding: const EdgeInsets.only(left:20),
-            child: SizedBox(
-              height: h*0.065,
-              width: w*1,
-              child: ListView.separated(
-                physics: BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      selectedIndex=index;
-                      setState(() {
+         ref.watch(streamToppingsProvider(widget.CategoryId))
+             .when(
+           data: (data) {
+             return SizedBox(
+               height: h*0.065,
+               width: w*1,
+               child: ListView.separated(
+                 physics: BouncingScrollPhysics(),
+                 scrollDirection: Axis.horizontal,
+                 itemBuilder: (BuildContext context, int index) {
+                   return GestureDetector(
+                     onTap: () {
 
-                      });
-                    },
-                    child: Container(
-                      height: h * 0.055,
-                      width: w * 0.3,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(w * 0.07),
-                        border: Border.all(width: w*0.005,color: selectedIndex==index?colors.PrimaryColour:colors.White),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          CircleAvatar(
-                            radius: w*0.035,
-                          ),
-                          Text("Cheese")
-                        ],
-                      ),
-                    ),
-                  );
-                }, separatorBuilder: (BuildContext context, int index) { return SizedBox(width: w*0.035,); }, itemCount: 4,
+                       selectedIndex=index;
+                       setState(() {
 
-              ),
-            ),
-          ),
+                       });
+                     },
+                     child: Container(
+                       height: h * 0.055,
+                       width: w * 0.4,
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(w * 0.07),
+                         border: Border.all(width: w*0.005,color: selectedIndex==index?colors.PrimaryColour:colors.White),
+                       ),
+                       child: Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                         children: [
+                           CircleAvatar(
+                             radius: w*0.04,
+                             backgroundImage: NetworkImage(data[index].image),
+                           ),
+                           Text(data[index].name)
+                         ],
+                       ),
+                     ),
+                   );
+                 }, separatorBuilder: (BuildContext context, int index) { return SizedBox(width: w*0.035,); },
+                 itemCount: data.length,
+
+               ),
+             );
+           } ,
+           error: (err, stack) {
+             return Text(stack.toString());
+           },
+           loading: () {
+             return CircularProgressIndicator();
+           },
+         ),
           SizedBox(
             height: h*0.03,),
           added ?

@@ -207,7 +207,7 @@ class _NavigationPageState extends State<NavigationPage> {
 
                 // _position != null?("Current Location"+_position.toString()):("no Location data"),
                 style: TextStyle(color: colors.Red, fontSize: w * 0.03),
-              )
+              ),
             ],
           ),
           centerTitle: true,

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_app/core/providers/firebase_provider.dart';
 import 'package:food_app/feature/auth/repository/auth_repository.dart';
 import 'package:food_app/model/cart_model.dart';
+import 'package:food_app/model/toppings_model.dart';
 import 'package:food_app/model/user_model.dart';
 
 import '../../../model/category_model.dart';
@@ -50,6 +51,12 @@ class StreamCategoryApp{
    print("repository ----------------------- ${categoryId}");
   var data = _category.doc(categoryId).collection("Subitems").snapshots().map((event) => event.docs.map((e) => itemAppModel.fromMap(e.data())).toList());
   return data;
+ }
+ streamToppings(categoryId){
+   print("////////////////////////////////////////////////////// ${categoryId}");
+   var Toppings=_category.doc(categoryId).collection("Toppings").snapshots().map((event) => event.docs.map((e) => ToppingsModel.fromMap(e.data())).toList());
+   return Toppings;
+
  }
 
 
