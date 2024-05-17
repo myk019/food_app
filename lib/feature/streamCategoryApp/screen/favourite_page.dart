@@ -46,7 +46,7 @@ class _FavouritePageState extends ConsumerState<FavouritePage> {
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          Navigator.push(context, CupertinoPageRoute(builder: (context) => SelectedItemPage(selectedItem: itemAppModel.fromMap(data["Fav"][index]),),));
+                          Navigator.push(context, CupertinoPageRoute(builder: (context) => SelectedItemPage(selectedItem: itemAppModel.fromMap(data["Fav"][index]), CategoryId: '',),));
                           print(cart);
                         },
                         child: Container(

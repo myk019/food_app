@@ -314,7 +314,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(context,CupertinoPageRoute(builder: (context) => SelectedItemPage(selectedItem: data[index],),));
+                              Navigator.push(context,CupertinoPageRoute(builder: (context) => SelectedItemPage(selectedItem: data[index], CategoryId: categoryId,),));
                             },
                             child: Center(
                               child: Container(
@@ -394,7 +394,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             return SizedBox(
               child: InkWell(
                 onTap: () {
-                   Navigator.push(context, CupertinoPageRoute(builder: (context) => SelectedItemPage(selectedItem: data[index]),));
+                   Navigator.push(context, CupertinoPageRoute(builder: (context) => SelectedItemPage(selectedItem: data[index], CategoryId: categoryId,),));
                 },
                 child: Container(
                   height: w*0.4,
