@@ -52,23 +52,17 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
   TextEditingController pincodecontroller=TextEditingController();
   TextEditingController towncitycontroller=TextEditingController();
 
-  addBookingUser(){
-    //  =BookingModel(productName:"", price: "", qty: "", buyerName: namecontroller.text, buyerAddress: addresscontroller.text, buyerPhoneNumer: numbercontroller.text, buyerId: "", paymentMethod: "");
-    // BookingModel bookingModel =widget.bookingdata.copyWith(buyerName: namecontroller.text.trim(),
-    //     state: state,buyerhouseno:housecontroller.text.trim(),buyerarea:areacontroller.text.trim(),
-    //     buyerlandmark:landmarkcontroller.text.trim(),pincode:pincodecontroller.text.trim(),
-    //     buyercity:towncitycontroller.text.trim(),buyerPhoneNumer: numbercontroller.text.trim());
-    // ref.watch(bookingContollerProvider).AddBooking(bookingModel);
-    BookingAddressModel bookingAddressModels=BookingAddressModel(BName: namecontroller.text, BState: numbercontroller.text,
-        BAddress:housecontroller.text , BPlace: areacontroller.text,
-        BArea: areacontroller.text, BLandmark: landmarkcontroller.text,
-        BPincode: pincodecontroller.text, BTown: towncitycontroller.text);
-
-    ref.watch(BookingAddressController).addBookingC(bookingAddressModels);
-
-    Navigator.push(context, CupertinoPageRoute(builder: (context) =>DeliveryMethod() ,));
-
-  }
+  // add(){
+  //   //  =BookingModel(productName:"", price: "", qty: "", buyerName: namecontroller.text, buyerAddress: addresscontroller.text, buyerPhoneNumer: numbercontroller.text, buyerId: "", paymentMethod: "");
+  //   BookingModel bookingModel =widget.bookingdata.copyWith(buyerName: namecontroller.text.trim(),
+  //       state: state,buyerhouseno:housecontroller.text.trim(),buyerarea:areacontroller.text.trim(),
+  //       buyerlandmark:landmarkcontroller.text.trim(),pincode:pincodecontroller.text.trim(),
+  //       buyercity:towncitycontroller.text.trim(),buyerPhoneNumer: numbercontroller.text.trim());
+  //   // ref.watch(bookingContollerProvider).AddBooking(bookingModel);
+  //
+  //   Navigator.push(context, CupertinoPageRoute(builder: (context) =>paymentMethod(bookingModel1: bookingModel,) ,));
+  //
+  // }
 
   final formKey=GlobalKey<FormState>();
   String phoneNumber='';
@@ -262,9 +256,9 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                       SizedBox(height: h*0.02,),
                       Text("Your Orders",style: TextStyle(fontSize: w*0.05,fontWeight: FontWeight.w600
                       ),),
-                      // SizedBox(height: h*0.02,),
+                      SizedBox(height: h*0.02,),
                       SizedBox(
-                        height: w*0.4,
+                        height: w*0.38,
                         width: w*1,
                         child: ListView.builder(
                           itemCount: widget.pickedItem.length,
@@ -275,40 +269,29 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                             return Container(
                               margin: EdgeInsets.all( w*0.02),
                               height: w*0.3,
-                              width: w*0.32,
+                              width: w*0.25,
                               child: Column(
                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   SizedBox(height: h*0.01,),
                                   Container(
                                     height: w*0.15,
-                                    width: w*0.2,
+                                    width: w*0.15,
                                     decoration: BoxDecoration(
                                       borderRadius:BorderRadius.circular(w*0.03) ,
                                         image: DecorationImage(image: NetworkImage(widget.pickedItem[index]["ItemImage"]),fit: BoxFit.cover),
                                     ),
                                   ),
-                                   Column(
-                                     mainAxisAlignment: MainAxisAlignment.start,
-                                     crossAxisAlignment: CrossAxisAlignment.start,
-                                     children: [
-                                       Padding(
-                                         padding:  EdgeInsets.only(left: w*0.01,right:  w*0.01),
-                                         child: Text("${widget.pickedItem[index]["ItemName"]}",style: TextStyle(
-                                           overflow: TextOverflow.ellipsis
-                                         ),),
-                                       ),
-                                       Padding(
-                                         padding:  EdgeInsets.only(left: w*0.01,right:  w*0.01),
-                                         child: Text("Qty: ${widget.pickedItem[index]["ItemQty"].toString()}"),
-                                       ),
-                                       Padding(
-                                         padding:  EdgeInsets.only(left: w*0.01,right:  w*0.01),
-                                         child: Text("Price: ${widget.pickedItem[index]["ItemPrice"].toString()}"),
-                                       ),
-                                     ],
+                                   Padding(
+                                     padding:  EdgeInsets.only(left: w*0.01,right:  w*0.01),
+                                     child: Text("${widget.pickedItem[index]["ItemName"]}",style: TextStyle(
+                                       overflow: TextOverflow.ellipsis
+                                     ),),
                                    ),
-
+                                   Padding(
+                                     padding:  EdgeInsets.only(left: w*0.01,right:  w*0.01),
+                                     child: Text("Qty: ${widget.pickedItem[index]["ItemQty"].toString()}"),
+                                   ),
                                    // Text(widget.pickedItem[index]["ItemPrice"].toString())
                                 ],
                               ),
