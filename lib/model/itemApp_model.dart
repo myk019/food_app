@@ -4,10 +4,10 @@ class itemAppModel{
   String ItemDescription;
   int ItemPrice;
   String itemId;
-  String CategoryId;
+  String categoryId;
 
   itemAppModel({required this.ItemName,required this.ItemDescription,required this.ItemImage,
-    required this.ItemPrice,required this.itemId,required this.CategoryId});
+    required this.ItemPrice,required this.itemId,required this.categoryId});
 
   Map<String,dynamic> toMap() {
     return {
@@ -16,7 +16,7 @@ class itemAppModel{
       "ItemDescription": this.ItemDescription,
       "ItemPrice": this.ItemPrice,
       "ItemId":this.itemId,
-      "CategoryId":this.CategoryId
+      "categoryId":this.categoryId
     };
   }
   factory itemAppModel.fromMap(Map<String,dynamic>map){
@@ -26,7 +26,7 @@ class itemAppModel{
         ItemImage: map["ItemImage"]??"",
         ItemPrice: map["ItemPrice"]??0,
         itemId: map["ItemId"]??"",
-      CategoryId: map["CategoryId"]??""
+      categoryId: map["categoryId"]??""
     );
   }
 
@@ -36,7 +36,7 @@ class itemAppModel{
     String? ItemDescription,
     int? ItemPrice,
     String? itemId,
-    String?CategoryId
+    String?categoryId
   })
   {
     return itemAppModel(
@@ -45,7 +45,7 @@ class itemAppModel{
         ItemImage: ItemImage??this.ItemImage,
         ItemPrice: ItemPrice??this.ItemPrice,
         itemId: itemId??this.itemId,
-      CategoryId: CategoryId??this.CategoryId
+      categoryId: categoryId??this.categoryId
     );
 
   }

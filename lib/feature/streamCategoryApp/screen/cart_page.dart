@@ -40,174 +40,179 @@ class _CartPageState extends ConsumerState<CartPage> {
         physics: BouncingScrollPhysics(),
         itemCount: data.length,
         itemBuilder: (BuildContext context, int index) {
-          return  Slidable(
-            endActionPane: ActionPane(
-              motion: BehindMotion(),
-              children: [
-                SlidableAction(
-                  onPressed: (context) {
-                    print("2222222222222222222222222222222222222222222222222222222222222222222222222222222222");
-                    print(data[index]);
-                    FirebaseFirestore.instance.collection("Users").doc(userId).update(
-                        {
-                          "cart":FieldValue.arrayRemove([data[index]])
-                        }).then((value) async {
-                          var data = await FirebaseFirestore.instance.collection("Users").doc(userId).get();
-                          currentUserModel!.cart=data["cart"];
-                          totalPrize();
-                    });
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: w*0.05,
-                        ),
-                        Center(
-                          child: Container(
-                              height: h*0.04,
-                              width: w*0.1,
-                              color: Colors.white,
-                              child: Lottie.asset(lottieConst.delete,fit: BoxFit.fitHeight,)),
-                        ),
-                        SizedBox(
-                          width: w*0.015,
-                        ),
+          return  Column(
+            children: [
+              Slidable(
+                endActionPane: ActionPane(
+                  motion: BehindMotion(),
+                  children: [
+                    SlidableAction(
+                      onPressed: (context) {
+                        print("2222222222222222222222222222222222222222222222222222222222222222222222222222222222");
+                        print(data[index]);
+                        FirebaseFirestore.instance.collection("Users").doc(userId).update(
+                            {
+                              "cart":FieldValue.arrayRemove([data[index]])
+                            }).then((value) async {
+                              var data = await FirebaseFirestore.instance.collection("Users").doc(userId).get();
+                              currentUserModel!.cart=data["cart"];
+                              totalPrize();
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: w*0.05,
+                            ),
+                            Center(
+                              child: Container(
+                                  height: h*0.04,
+                                  width: w*0.1,
+                                  color: Colors.white,
+                                  child: Lottie.asset(lottieConst.delete,fit: BoxFit.fitHeight,)),
+                            ),
+                            SizedBox(
+                              width: w*0.015,
+                            ),
 
-                        Text("Deleted Success",style: TextStyle(
-                            fontSize: w*0.04,
-                            color: colors.White
-                        ),)
-                      ],
+                            Text("Deleted Success",style: TextStyle(
+                                fontSize: w*0.04,
+                                color: colors.White
+                            ),)
+                          ],
 
-                    ),backgroundColor: Colors.black.withOpacity(0.85),
-                      behavior: SnackBarBehavior.floating,
-                      showCloseIcon: true,
-                      duration: Duration(seconds: 1),
-                      padding:  EdgeInsets.only(bottom: w*0.012,top: w*0.001),
-                      // duration: Duration(seconds: 2),
-                    ));
+                        ),backgroundColor: Colors.black.withOpacity(0.85),
+                          behavior: SnackBarBehavior.floating,
+                          showCloseIcon: true,
+                          duration: Duration(seconds: 1),
+                          padding:  EdgeInsets.only(bottom: w*0.012,top: w*0.001),
+                          // duration: Duration(seconds: 2),
+                        ));
 
-                    },
-                  backgroundColor: Colors.transparent,
-                  foregroundColor: Colors.red,
-                  icon: Icons.delete,
-                  label: "Delete",
+                        },
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.red,
+                      icon: Icons.delete,
+                      label: "Delete",
 
-                )
+                    )
 
-              ],
-            ),
-            //  child: Text(data[index]['ItemName']),
+                  ],
+                ),
+                //  child: Text(data[index]['ItemName']),
 
-            child: Container(
-              height: h*0.18,
-              width: w*1,
-              margin: EdgeInsets.all(w*0.04),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(w*0.03),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    spreadRadius: 2,
-                    offset: Offset(0, 4),
-                    color: colors.PrimaryColour.withOpacity(0.15),
-                    blurRadius: 4
-                  )
-                ]
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    height: h*0.11,
-                    width: w*0.25,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(w*0.03),
-                        color: Colors.red,
-                        image: DecorationImage(image: NetworkImage(data[index]["ItemImage"]),fit: BoxFit.cover)
-                      // image: DecorationImage(image: image)
-                    ),
+                child: Container(
+                  height: h*0.18,
+                  width: w*1,
+                  margin: EdgeInsets.all(w*0.04),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(w*0.03),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        spreadRadius: 2,
+                        offset: Offset(0, 4),
+                        color: colors.PrimaryColour.withOpacity(0.15),
+                        blurRadius: 4
+                      )
+                    ]
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(data[index]["ItemName"],style: TextStyle(
-                          color: colors.Black
-                      ),),
-                      Text("${data[index]["ItemDescriptionofslect"]}"),
-                      Text(data[index]["ItemPrice"].toString())
+                      Container(
+                        height: h*0.11,
+                        width: w*0.25,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(w*0.03),
+                            color: Colors.red,
+                            image: DecorationImage(image: NetworkImage(data[index]["ItemImage"]),fit: BoxFit.cover)
+                          // image: DecorationImage(image: image)
+                        ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(data[index]["ItemName"],style: TextStyle(
+                              color: colors.Black
+                          ),),
+                          Text("${data[index]["ItemDescriptionofslect"]}"),
+                          Text(data[index]["ItemPrice"].toString())
+                        ],
+                      ),
+                      SizedBox(
+                        height: h*0.04,
+                        width: w*0.2,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () async{
+                                //var data = await FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).get();
+                                // int currentQty = cart[index]['ItemQty'];
+                                // cart[index]['ItemQty'] = currentQty+1;
+                                // ref.watch(streamCategoryAppController.notifier).totalPrice();
+                                List? cart= currentUserModel?.cart;
+                                print(cart);
+                                cart![index]["ItemQty"]++;
+                                FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).update(currentUserModel!.copyWith(cart: cart).toMap());
+                                print(currentUserModel!.cart);
+                                totalPrize();
+                                setState(() {
+
+                                });
+                              },
+                              child: Container(
+                                height: h*0.07,
+                                width: w*0.07,
+                                decoration: BoxDecoration(
+                                    color: colors.PrimaryColour,
+                                    shape: BoxShape.circle
+                                ),
+                                child: Icon(Icons.add,color: Colors.white,),
+                              ),
+                            ),
+                            Text( data[index]["ItemQty"].toString() ),
+
+
+                            data[index]['ItemQty']<=1 ? SizedBox() : GestureDetector(
+                              onTap: () async {
+
+                                //var data = await FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).get();
+                                // int currentQty = cart[index]['ItemQty'];
+                                // cart[index]['ItemQty'] = currentQty+1;
+                                // ref.watch(streamCategoryAppController.notifier).totalPrice();
+                                List? cart= currentUserModel?.cart;
+                                print(currentUserModel!.cart);
+                                cart![index]["ItemQty"]--;
+                                FirebaseFirestore.instance.collection("Users").doc(userId).update(currentUserModel!.copyWith(cart: cart).toMap());
+                                print(currentUserModel!.cart);
+                                totalPrize();
+                                setState(() {
+
+                                });
+                              },
+                              child: Container(
+                                height: h*0.07,
+                                width: w*0.07,
+                                decoration: BoxDecoration(
+                                    color: colors.PrimaryColour,
+                                    shape: BoxShape.circle
+                                ),
+                                child: Icon(Icons.remove,color: Colors.white,),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
-                  SizedBox(
-                    height: h*0.04,
-                    width: w*0.2,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () async{
-                            //var data = await FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).get();
-                            // int currentQty = cart[index]['ItemQty'];
-                            // cart[index]['ItemQty'] = currentQty+1;
-                            // ref.watch(streamCategoryAppController.notifier).totalPrice();
-                            List? cart= currentUserModel?.cart;
-                            print(cart);
-                            cart![index]["ItemQty"]++;
-                            FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).update(currentUserModel!.copyWith(cart: cart).toMap());
-                            print(currentUserModel!.cart);
-                            totalPrize();
-                            setState(() {
-
-                            });
-                          },
-                          child: Container(
-                            height: h*0.07,
-                            width: w*0.07,
-                            decoration: BoxDecoration(
-                                color: colors.PrimaryColour,
-                                shape: BoxShape.circle
-                            ),
-                            child: Icon(Icons.add,color: Colors.white,),
-                          ),
-                        ),
-                        Text( data[index]["ItemQty"].toString() ),
-
-
-                        data[index]['ItemQty']<=1 ? SizedBox() : GestureDetector(
-                          onTap: () async {
-
-                            //var data = await FirebaseFirestore.instance.collection("Users").doc(currentUserModel?.id).get();
-                            // int currentQty = cart[index]['ItemQty'];
-                            // cart[index]['ItemQty'] = currentQty+1;
-                            // ref.watch(streamCategoryAppController.notifier).totalPrice();
-                            List? cart= currentUserModel?.cart;
-                            print(currentUserModel!.cart);
-                            cart![index]["ItemQty"]--;
-                            FirebaseFirestore.instance.collection("Users").doc(userId).update(currentUserModel!.copyWith(cart: cart).toMap());
-                            print(currentUserModel!.cart);
-                            totalPrize();
-                            setState(() {
-
-                            });
-                          },
-                          child: Container(
-                            height: h*0.07,
-                            width: w*0.07,
-                            decoration: BoxDecoration(
-                                color: colors.PrimaryColour,
-                                shape: BoxShape.circle
-                            ),
-                            child: Icon(Icons.remove,color: Colors.white,),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                ),
               ),
-            ),
+              // index==data.length-1 ? SizedBox(height: h*0.3,) : SizedBox()
+            ],
           );
         },
         // separatorBuilder: (BuildContext context, int index) { return SizedBox(height: h*0.03,); },
@@ -273,25 +278,22 @@ class _CartPageState extends ConsumerState<CartPage> {
     // final funcTotalPr = ref.watch(totalPriceProvider.notifier).state;
     return Scaffold(
       backgroundColor: colors.Background,
-      body: SingleChildScrollView(
-        physics: currentUserModel!.cart.isEmpty?NeverScrollableScrollPhysics():BouncingScrollPhysics(),
-        child: Padding(
-          padding:  EdgeInsets.all(w*0.03),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Your cart",style: TextStyle(fontSize: w*0.05,fontWeight: FontWeight.w600
-              ),),
-              SizedBox(height: h*0.02,),
-              Container(
-                width: w*1,
-                height: h*0.85,
-                child: cartCard(),
-              )
-            ],
+      body: Padding(
+        padding:  EdgeInsets.all(w*0.03),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Your cart",style: TextStyle(fontSize: w*0.05,fontWeight: FontWeight.w600
+            ),),
+            SizedBox(height: h*0.02,),
+            Container(
+              width: w*1,
+              height: h*0.58,
+              child: cartCard(),
+            )
+          ],
 
-          ),
         ),
       ),
       floatingActionButton: Container(
