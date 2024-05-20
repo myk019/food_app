@@ -2,26 +2,35 @@ class BookingAddressModel {
   String BName;
   String BState;
   String BAddress;
-  String BPlace;
   String BArea;
   String BLandmark;
-  String BPincode;
+  int BPincode;
   String BTown;
+  int BPhone;
+  String BuyerId;
+  String BookingId;
+  List AllProducts;
+  double TotalPrice;
 
 
   BookingAddressModel({required this.BName, required this.BState, required this.BAddress,
-    required this.BPlace, required this.BArea,required this.BLandmark, required this.BPincode, required this.BTown});
+    required this.BuyerId,required this.BookingId,required this.AllProducts,required this.TotalPrice,
+     required this.BArea,required this.BLandmark, required this.BPincode, required this.BTown,required this.BPhone});
 
   Map<String, dynamic> toMap() {
     return {
       "BName": this.BName,
       "BState": this.BState,
       "BAddress": this.BAddress,
-      "BPlace": this.BPlace,
       "BArea":this.BArea,
       "BLandmark":this.BLandmark,
     "BPincode":this.BPincode,
-    "BTown":this.BTown
+    "BTown":this.BTown,
+      "BPhone":this.BPhone,
+      "BuyerId":this.BuyerId,
+      "BookingId":this.BookingId,
+      "AllProducts":this.AllProducts,
+      "TotalPrice":this.TotalPrice,
 
     };
   }
@@ -31,11 +40,16 @@ class BookingAddressModel {
       BName: map["Bname"] ?? "",
       BState: map["Bstate"] ?? "",
       BAddress: map["Baddress"] ?? "",
-      BPlace: map["Bplace"] ?? "",
       BArea: map["BArea"] ?? "",
       BLandmark: map["BLandmark"] ?? "",
       BPincode: map["BPincode"] ?? "",
       BTown: map["BTown"] ?? "",
+      BPhone: map["BPhone"]??"",
+      BuyerId:map["Buyerid"]?? '',
+      BookingId: map["Bookingid"]??'',
+      AllProducts: map["AllProducts"]??[],
+      TotalPrice: map["TotalPrice"]??"",
+
 
     );
   }
@@ -44,22 +58,31 @@ class BookingAddressModel {
     String? BName,
     String? BState,
     String? BAddress,
-    String? BPlace,
+    String? BookingId,
+    String? BuyerId,
     String? BArea,
     String? BLandmark,
-    String? BPincode,
-    String? BTown
+    int? BPincode,
+    String? BTown,
+    int? BPhone,
+    List? AllProducts,
+    double? TotalPrice,
 
   }) {
     return BookingAddressModel(
       BName: BName ?? this.BName,
       BState: BState ?? this.BState,
       BAddress: BAddress ?? this.BAddress,
-      BPlace: BPlace ?? this.BPlace,
+      BuyerId: BuyerId??this.BuyerId,
       BArea: BArea ??this.BArea,
       BLandmark: BLandmark ?? this.BLandmark,
       BPincode: BPincode??this.BPincode,
-      BTown: BTown?? this.BTown
+      BTown: BTown?? this.BTown,
+        BPhone: BPhone?? this.BPhone,
+      BookingId: BookingId??this.BookingId,
+      AllProducts: AllProducts??this.AllProducts,
+      TotalPrice: TotalPrice??this.TotalPrice,
+
     );
   }
 }

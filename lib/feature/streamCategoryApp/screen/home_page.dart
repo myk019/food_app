@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
@@ -225,7 +226,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                               bottom: Radius.circular(w * 0.19)),
                           border: Border.all(
                             // color: colors.Green
-                               color: selectedIndex == index ? colors.PrimaryColour : colors.lightgrey
+                               color: selectedIndex == index ? colors.PrimaryColour : Colors.grey.shade400
                           )
                       ),
                       child: Stack(
@@ -558,136 +559,149 @@ class _HomePageState extends ConsumerState<HomePage> {
         padding: EdgeInsets.all(w * 0.03),
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              StreamBuilder<QuerySnapshot<Map<String,dynamic>>>(
-                stream: FirebaseFirestore.instance.collection("Banner").snapshots(),
-                builder: (context, snapshot) {
+          child: AnimationLimiter(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: AnimationConfiguration.toStaggeredList(
+              duration: const Duration(milliseconds: 375),
+                childAnimationBuilder: (widget) => SlideAnimation(
+                 horizontalOffset: 50.0,
+                child: FadeInAnimation(
+             child: widget,
+               ),
+            ),
+    children:
+              [
+
+                StreamBuilder<QuerySnapshot<Map<String,dynamic>>>(
+                  stream: FirebaseFirestore.instance.collection("Banner").snapshots(),
+                  builder: (context, snapshot) {
 
 
-                  if(!snapshot.hasData){
+                    if(!snapshot.hasData){
 
-                    return CircularProgressIndicator();
+                      return CircularProgressIndicator();
 
-                  }
-                  var data=snapshot.data!.docs;
+                    }
+                    var data=snapshot.data!.docs;
 
-                  return Column(
-                    children: [
-                      CarouselSlider.builder(
-                        itemCount: data.length,
-                        options: CarouselOptions(
-                          autoPlay: true,
-                          viewportFraction: 0.8,
-                          enlargeCenterPage: true,
-                          autoPlayAnimationDuration: Duration(
-                            // milliseconds: 500,
-                              seconds: 2
+                    return Column(
+                      children: [
+                        CarouselSlider.builder(
+                          itemCount: data.length,
+                          options: CarouselOptions(
+                            autoPlay: true,
+                            viewportFraction: 0.8,
+                            enlargeCenterPage: true,
+                            autoPlayAnimationDuration: Duration(
+                              // milliseconds: 500,
+                                seconds: 2
+                            ),
+                            onPageChanged: (index, reason) {
+                              currentIndex=index;
+                              setState(() {
+
+                              });
+                            },
                           ),
-                          onPageChanged: (index, reason) {
-                            currentIndex=index;
-                            setState(() {
-
-                            });
+                          itemBuilder:(context, index, realIndex) {
+                            return Container(
+                              margin: EdgeInsets.only(right: w*0.01),
+                              height: h*0.4,
+                              width: w*1,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(w*0.03),
+                                 image: DecorationImage(image: NetworkImage(data[index]["image"]),fit: BoxFit.fill),
+                                // color: Colors.red,
+                                // boxShadow: [
+                                //   BoxShadow(
+                                //       color: Colors.black.withOpacity(0.15),
+                                //       blurRadius:2,
+                                //       spreadRadius: 2,
+                                //       offset: Offset(
+                                //           0,4
+                                //       )
+                                //   ),
+                                // ],
+                              ),
+                            );
                           },
                         ),
-                        itemBuilder:(context, index, realIndex) {
-                          return Container(
-                            margin: EdgeInsets.only(right: w*0.01),
-                            height: h*0.4,
-                            width: w*1,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(w*0.03),
-                               image: DecorationImage(image: NetworkImage(data[index]["image"]),fit: BoxFit.fill),
-                              // color: Colors.red,
-                              // boxShadow: [
-                              //   BoxShadow(
-                              //       color: Colors.black.withOpacity(0.15),
-                              //       blurRadius:2,
-                              //       spreadRadius: 2,
-                              //       offset: Offset(
-                              //           0,4
-                              //       )
-                              //   ),
-                              // ],
+                        SizedBox(height: h*0.01),
+                        Center(
+                          child: AnimatedSmoothIndicator(
+                            activeIndex: currentIndex,
+                            count: data.length,
+                            effect: JumpingDotEffect(
+                              dotColor: Colors.grey,
+                              activeDotColor: colors.PrimaryColour,
+                              dotHeight: w*0.02,
+                              dotWidth: w*0.02,
                             ),
-                          );
-                        },
-                      ),
-                      SizedBox(height: h*0.01),
-                      Center(
-                        child: AnimatedSmoothIndicator(
-                          activeIndex: currentIndex,
-                          count: data.length,
-                          effect: JumpingDotEffect(
-                            dotColor: Colors.grey,
-                            activeDotColor: colors.PrimaryColour,
-                            dotHeight: w*0.02,
-                            dotWidth: w*0.02,
                           ),
                         ),
-                      ),
-                    ],
-                  );
-                }
-              ),
-              SizedBox(height: h*0.02),
-              Text(
-                "ENJOY DELICIOUS FOOD",
-                style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w900),
-              ),
-              SizedBox(
-                height: w * 0.03,
-              ),
-              SizedBox(
-                height: h * 0.17,
-                width: w * 1,
-                child: streamCategoryFunc()
-              ),
-              SizedBox(
-                height: h* 0.01,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Popular restaurants",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w800, fontSize: w * 0.037),
-                  ),
-                  GestureDetector(
-                    onTap:() {
-                      view=!view;
-                      setState(() {
-                      });
-                      print("--------------------------------------------");
-                      print(view);
-                    },
-                    child: Text(
-                      "View all ",
-                      style: TextStyle(color: colors.Red, fontSize: w * 0.03),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: h * 0.01,
-              ),
-              SizedBox(
-                  height: view?h*0.34: h * 0.64,
+                      ],
+                    );
+                  }
+                ),
+                SizedBox(height: h*0.02),
+                Text(
+                  "ENJOY DELICIOUS FOOD",
+                  style: TextStyle(fontSize: w * 0.04, fontWeight: FontWeight.w900),
+                ),
+                SizedBox(
+                  height: w * 0.03,
+                ),
+                SizedBox(
+                  height: h * 0.17,
                   width: w * 1,
-                  // color: Colors.red,
-                  child:streamItems()
-              ),
-              SizedBox(
-                height: h * 0.04,
-              ),
-            ],
+                  child: streamCategoryFunc()
+                ),
+                SizedBox(
+                  height: h* 0.01,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Popular restaurants",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w800, fontSize: w * 0.037),
+                    ),
+                    GestureDetector(
+                      onTap:() {
+                        view=!view;
+                        setState(() {
+                        });
+                        print("--------------------------------------------");
+                        print(view);
+                      },
+                      child: Text(
+                        "View all ",
+                        style: TextStyle(color: colors.Red, fontSize: w * 0.03),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: h * 0.01,
+                ),
+                SizedBox(
+                    height: view?h*0.34: h * 0.64,
+                    width: w * 1,
+                    // color: Colors.red,
+                    child:streamItems()
+                ),
+                SizedBox(
+                  height: h * 0.04,
+                ),
+              ],
+            ),
           ),
         ),
       ),
+      )
     );
   }
 }

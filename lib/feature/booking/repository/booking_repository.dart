@@ -14,7 +14,9 @@ class BookingDetails{
   CollectionReference get _booking=> _firestore.collection("BookingDetails");
 
   addBookingP(BookingAddressModel bookingAddressModel){
-    _booking.add(bookingAddressModel.toMap());
+    _booking.add(bookingAddressModel.toMap()).then((value) {
+      value.update(bookingAddressModel.copyWith(BookingId: value.id).toMap(),);
+    });
   }
 
 

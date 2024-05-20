@@ -6,7 +6,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
-import 'package:food_app/feature/auth/screen/edit_profile.dart';
 import 'package:food_app/model/category_model.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
 import 'package:food_app/model/itemApp_model.dart';
@@ -42,7 +41,7 @@ class _NavigationPageState extends State<NavigationPage> {
 
   List pages=[
     HomePage(),
-    FavouritePage(a: cart ,),
+    FavouritePage(a: cart),
     SearchPage(),
     NotificationPage(),
     CartPage()
@@ -103,8 +102,8 @@ class _NavigationPageState extends State<NavigationPage> {
     await _getAddressFromCoordinates();
     setState((){
 
-        });
-    }
+    });
+  }
   @override
   void initState() {
     selectIndex=widget.bottomIndex;
@@ -144,9 +143,9 @@ class _NavigationPageState extends State<NavigationPage> {
                   height: h*0.07,
                   width: w*0.07,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(w*0.03),
-                    border: Border.all(  color: colors.lightgrey,
-                    )
+                      borderRadius: BorderRadius.circular(w*0.03),
+                      border: Border.all(  color: colors.lightgrey,
+                      )
                   ),
 
                   child: Center(
@@ -217,15 +216,10 @@ class _NavigationPageState extends State<NavigationPage> {
               height: w * 0.12,
               width: w * 0.12,
               // color: colors.Red,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(context, CupertinoPageRoute(builder: (context) => EditProfile(),));
-                },
-                child: CircleAvatar(
-                  radius: w * 0.02,
-                  backgroundColor: colors.White,
-                  backgroundImage: NetworkImage(userImg)  ,
-                ),
+              child: CircleAvatar(
+                radius: w * 0.02,
+                backgroundColor: colors.White,
+                backgroundImage: NetworkImage(userImg)  ,
               ),
             ),
             SizedBox(

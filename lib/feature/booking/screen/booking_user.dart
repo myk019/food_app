@@ -9,6 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_app/commons/colours.dart';
+import 'package:food_app/feature/auth/repository/auth_repository.dart';
 import 'package:food_app/feature/booking/controller/booking_controller.dart';
 import 'package:food_app/navigations/screen/payment_methode.dart';
 import 'package:geocoding/geocoding.dart';
@@ -34,7 +35,8 @@ import '../../../model/itemApp_model.dart';
 
 class deliveryAddress extends ConsumerStatefulWidget {
   final List pickedItem;
-  deliveryAddress({super.key,required this.pickedItem});
+  final double price;
+  deliveryAddress({super.key,required this.pickedItem,required this.price});
   // final BookingModel bookingdata;
 
 
@@ -46,23 +48,31 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
 
   TextEditingController namecontroller=TextEditingController();
   TextEditingController numbercontroller=TextEditingController();
-  TextEditingController housecontroller=TextEditingController();
+  TextEditingController addresscontroller=TextEditingController();
   TextEditingController areacontroller=TextEditingController();
   TextEditingController landmarkcontroller=TextEditingController();
   TextEditingController pincodecontroller=TextEditingController();
   TextEditingController towncitycontroller=TextEditingController();
+  // TextEditingController stateController=TextEditingController();
+  TextEditingController placecontroller=TextEditingController();
 
-  // add(){
-  //   //  =BookingModel(productName:"", price: "", qty: "", buyerName: namecontroller.text, buyerAddress: addresscontroller.text, buyerPhoneNumer: numbercontroller.text, buyerId: "", paymentMethod: "");
-  //   BookingModel bookingModel =widget.bookingdata.copyWith(buyerName: namecontroller.text.trim(),
-  //       state: state,buyerhouseno:housecontroller.text.trim(),buyerarea:areacontroller.text.trim(),
-  //       buyerlandmark:landmarkcontroller.text.trim(),pincode:pincodecontroller.text.trim(),
-  //       buyercity:towncitycontroller.text.trim(),buyerPhoneNumer: numbercontroller.text.trim());
-  //   // ref.watch(bookingContollerProvider).AddBooking(bookingModel);
-  //
-  //   Navigator.push(context, CupertinoPageRoute(builder: (context) =>paymentMethod(bookingModel1: bookingModel,) ,));
-  //
-  // }
+  addBookingUser(){
+    //  =BookingModel(productName:"", price: "", qty: "", buyerName: namecontroller.text, buyerAddress: addresscontroller.text, buyerPhoneNumer: numbercontroller.text, buyerId: "", paymentMethod: "");
+    // BookingModel bookingModel =widget.bookingdata.copyWith(buyerName: namecontroller.text.trim(),
+    //     state: state,buyerhouseno:housecontroller.text.trim(),buyerarea:areacontroller.text.trim(),
+    //     buyerlandmark:landmarkcontroller.text.trim(),pincode:pincodecontroller.text.trim(),
+    //     buyercity:towncitycontroller.text.trim(),buyerPhoneNumer: numbercontroller.text.trim());
+    // ref.watch(bookingContollerProvider).AddBooking(bookingModel);
+    BookingAddressModel bookingAddressModels=BookingAddressModel(BName: namecontroller.text, BState: state.toString(),
+        BAddress:addresscontroller.text ,TotalPrice:widget.price,
+        BArea: areacontroller.text, BLandmark: landmarkcontroller.text,AllProducts: currentUserModel!.cart,
+        BPincode: int.parse(pincodecontroller.text), BTown: towncitycontroller.text, BPhone: int.parse(numbercontroller.text), BuyerId: currentUserModel!.id.toString(), BookingId: '', );
+
+    ref.watch(BookingAddressController).addBookingC(bookingAddressModels);
+
+    Navigator.push(context, CupertinoPageRoute(builder: (context) =>DeliveryMethod() ,));
+
+  }
 
   final formKey=GlobalKey<FormState>();
   String phoneNumber='';
@@ -350,6 +360,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                         child:  Padding(
                           padding: EdgeInsets.all(w * 0.04),
                           child: DropdownButton(
+                            underline:SizedBox() ,
                             hint: Text(
                               "State",
                               style: TextStyle(
@@ -360,6 +371,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                             dropdownColor: colors.White,
                             icon: Icon(Icons.arrow_drop_down),
                             isExpanded: true,
+
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: w*0.035,
@@ -423,7 +435,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                         textInputAction: TextInputAction.newline,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.multiline,
-                        controller: housecontroller,
+                        controller: addresscontroller,
                         cursorColor: colors.PrimaryColour,
                         maxLength: 50,
                         style: TextStyle(
@@ -650,7 +662,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Select Your State")));
                       return;
                     }
-                    if(housecontroller.text.isEmpty){
+                    if(addresscontroller.text.isEmpty){
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your House no/flat")));
                       return;
                     }
@@ -678,7 +690,6 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
                       addBookingUser();
                     }else{
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Enter Your valid Number")));
-
                     }
                   },
                   child: Container(
