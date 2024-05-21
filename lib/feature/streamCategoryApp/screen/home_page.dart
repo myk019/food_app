@@ -12,6 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/commons/images.dart';
+import 'package:food_app/commons/setSearchParam.dart';
 import 'package:food_app/feature/auth/repository/auth_repository.dart';
 import 'package:food_app/feature/streamCategoryApp/controller/categoryApp_controller.dart';
 import 'package:food_app/firebase_options.dart';
@@ -271,7 +272,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         );
       },
       error: (err, stack) => Text("Please"),
-      loading: () => CircularProgressIndicator(),
+      loading: () => Center(child: CircularProgressIndicator()),
     );
   }
 
@@ -281,6 +282,29 @@ class _HomePageState extends ConsumerState<HomePage> {
        print("screen ----------------------- ${categoryId}");
       return  Column(
         children: [
+          // ElevatedButton(onPressed: ()async{
+          //   var data = await FirebaseFirestore.instance.collection("Categories").get();
+          //
+          //       // .collectionGroup('Subitems').get();
+          //   print(data.docs.length);
+          //   for(var docs in data.docs){
+          //     // print(docs['ItemName']);
+          //
+          //     FirebaseFirestore.instance.collection("Categories").doc(docs['id']).update(
+          //
+          //         // .collection('Subitems').doc(docs['ItemId'])
+          //
+          //       {
+          //         'search':setSearchParam(
+          //             docs['category']
+          //
+          //
+          //         )
+          //       }
+          //     );
+          //
+          //   }
+          // }, child: Text("se")),
           view==true? Expanded(
             child: Container(
               height: h*1,
@@ -487,7 +511,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     },
           error: (error, stackTrace) => Center(child: Text(error.toString())),
-        loading: () => CircularProgressIndicator());
+        loading: () => Center(child: CircularProgressIndicator()));
   }
 
 
@@ -581,7 +605,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
                     if(!snapshot.hasData){
 
-                      return CircularProgressIndicator();
+                      return Center(child: CircularProgressIndicator());
 
                     }
                     var data=snapshot.data!.docs;

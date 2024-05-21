@@ -7,6 +7,7 @@ class lottieConst{
   static const noFav="assets/Gifs/noItem.json";
   static const delete="assets/Gifs/delete2.json";
   static const emptyGif="assets/Gifs/empty cart gif.json";
+  static const emptySearch="assets/Gifs/search.json";
 
 
 

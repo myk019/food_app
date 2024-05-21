@@ -1,5 +1,6 @@
 import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:awesome_bottom_bar/widgets/inspired/inspired.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,7 +11,7 @@ import 'package:food_app/model/category_model.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/home_page.dart';
 import 'package:food_app/model/itemApp_model.dart';
 // import 'package:food_app/navigations/screen/your_cart_page.dart';
-import 'package:food_app/on_body/screen/search_page.dart';
+import 'package:food_app/feature/streamCategoryApp/screen/search_page.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -30,6 +31,9 @@ class NavigationPage extends StatefulWidget {
 
 
 class _NavigationPageState extends State<NavigationPage> {
+
+
+
 
   double xOffset=0;
   double yOffset=0;
