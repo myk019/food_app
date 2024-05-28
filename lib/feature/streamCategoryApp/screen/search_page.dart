@@ -119,7 +119,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                 print(error.toString());
                     return Text(error.toString());
                   }, loading: () {
-                    return Center(child: CircularProgressIndicator());
+                    return Center(child: Lottie.asset(lottieConst.loading));
                   },),
               // SizedBox(height: h*0.02,)
             ],

@@ -12,6 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_app/commons/colours.dart';
 import 'package:food_app/commons/icons.dart';
 import 'package:food_app/commons/images.dart';
+import 'package:food_app/commons/lottie.dart';
 import 'package:food_app/commons/setSearchParam.dart';
 import 'package:food_app/feature/auth/repository/auth_repository.dart';
 import 'package:food_app/feature/streamCategoryApp/controller/categoryApp_controller.dart';
@@ -20,6 +21,7 @@ import 'package:food_app/model/category_model.dart';
 import 'package:food_app/model/itemApp_model.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/favourite_page.dart';
 import 'package:food_app/feature/streamCategoryApp/screen/selected_item_page.dart';
+import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../main.dart';
@@ -362,6 +364,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                           Text(data[index].ItemDescription,style: TextStyle(
                               fontSize: w*0.026
                           ),),
+                          Text(
+                            "₹ ${data[index].ItemPrice.toString()}",style: TextStyle(fontSize: w*0.035,fontWeight: FontWeight.w600),),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -440,63 +444,69 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ),
                       ),
                       SizedBox(width:w*0.02),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(data[index].ItemName,
-                            style: TextStyle(
-                                fontSize: w*0.035,
-                                fontWeight: FontWeight.w700
-                            ),),
-                          // SizedBox(height: w*0.05,),
-                          Text(data[index].ItemDescription,
-                            style: TextStyle(
-                                fontSize: w*0.03,
-                                fontWeight: FontWeight.w400
-                            ),),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Row(
-                                children: [
-                                  SvgPicture.asset(IconConst.star),
-                                  SizedBox(width: w*0.01,),
-                                  Text("4+")
-                                ],
-                              ),
-                              SizedBox(width: w*0.23,),
-                              InkWell(
-                                  onTap: () {
-                                    if(fav.contains(data[index].itemId)){
-                                      fav.remove(data[index].itemId);
-                                      print("---------------------dcrtfvbgynhum--------------------jik,opl.[;/");
-                                      print(favourite);
-                                      print("---------------------dcrtfvbgynhum--------------------jik,opl.[;/");
-                                      print(data[index].itemId);
+                      SizedBox(
+                        width: w*0.55,
+                        // color: Colors.blue,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(data[index].ItemName,
+                              style: TextStyle(
+                                  fontSize: w*0.035,
+                                  fontWeight: FontWeight.w700
+                              ),),
+                            // SizedBox(height: w*0.05,),
+                            Text(data[index].ItemDescription,
+                              style: TextStyle(
+                                  fontSize: w*0.03,
+                                  fontWeight: FontWeight.w400
+                              ),),
+                            Text(
+                              "₹ ${data[index].ItemPrice.toString()}",style: TextStyle(fontSize: w*0.035,fontWeight: FontWeight.w600),),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(IconConst.star),
+                                    SizedBox(width: w*0.01,),
+                                    Text("4+")
+                                  ],
+                                ),
+                                SizedBox(width: w*0.23,),
+                                InkWell(
+                                    onTap: () {
+                                      if(fav.contains(data[index].itemId)){
+                                        fav.remove(data[index].itemId);
+                                        print("---------------------dcrtfvbgynhum--------------------jik,opl.[;/");
+                                        print(favourite);
+                                        print("---------------------dcrtfvbgynhum--------------------jik,opl.[;/");
+                                        print(data[index].itemId);
 
-                                      favourite.removeWhere((element) => element["ItemId"]==data[index].itemId);
-                                      FirebaseFirestore.instance.collection("Users").doc(currentUserModel!.id).update({
-                                        "Fav":favourite
-                                      });
+                                        favourite.removeWhere((element) => element["ItemId"]==data[index].itemId);
+                                        FirebaseFirestore.instance.collection("Users").doc(currentUserModel!.id).update({
+                                          "Fav":favourite
+                                        });
+                                        setState(() {
+
+                                        });
+                                      }else{
+                                        fav.add(data[index].itemId);
+                                        favourite.add(data[index].toMap());
+                                        FirebaseFirestore.instance.collection("Users").doc(currentUserModel!.id).update({
+                                          "Fav":FieldValue.arrayUnion(favourite)
+                                        });
+                                      }
                                       setState(() {
-
                                       });
-                                    }else{
-                                      fav.add(data[index].itemId);
-                                      favourite.add(data[index].toMap());
-                                      FirebaseFirestore.instance.collection("Users").doc(currentUserModel!.id).update({
-                                        "Fav":FieldValue.arrayUnion(favourite)
-                                      });
-                                    }
-                                    setState(() {
-                                    });
-                                    // Navigator.push(context, MaterialPageRoute(builder: (context) => FavouritePage(),));
-                                  },
-                                  child:SvgPicture.asset(fav.contains(data[index].itemId) ? IconConst.heart : IconConst.heart_outLine,height: w*0.05,width: w*0.05,)),
-                            ],
-                          ),
-                        ],
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => FavouritePage(),));
+                                    },
+                                    child:SvgPicture.asset(fav.contains(data[index].itemId) ? IconConst.heart : IconConst.heart_outLine,height: w*0.05,width: w*0.05,)),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
 
                     ],
@@ -511,7 +521,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     },
           error: (error, stackTrace) => Center(child: Text(error.toString())),
-        loading: () => Center(child: CircularProgressIndicator()));
+        loading: () => Center(child: Lottie.asset(lottieConst.loading)));
   }
 
 
