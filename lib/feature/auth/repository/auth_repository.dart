@@ -120,6 +120,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/commons/setSearchParam.dart';
 import 'package:food_app/core/providers/firebase_provider.dart';
 import 'package:food_app/feature/auth/screen/create_account.dart';
 import 'package:food_app/feature/auth/screen/login_account.dart';
@@ -183,7 +184,7 @@ class Authrepository {
       print("=================================================================");
       print(userId);
 
-      UserModel userModel = UserModel(name: userName, email: userEmail!, password: '', image: userImg, id: user.uid, cart: [], status: false, fav: [], bookedItems: []);
+      UserModel userModel = UserModel(name: userName, email: userEmail!, password: '', image: userImg, id: user.uid, cart: [], status: false, fav: [], bookedItems: [],search: []);
 
       Navigator.push(context, CupertinoPageRoute(builder: (context) => CreatePage(google: true,userModel: userModel,),));
     }
@@ -217,7 +218,7 @@ class Authrepository {
 
 
 
-      currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id:userId!, status: false, fav: [], bookedItems: []);
+      currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id:userId!, status: false, fav: [], bookedItems: [],search: []);
       print(currentUserModel);
       // currentUserModel=UserModel(name: userName, email: userEmail!, password: "", image: userImg, cart: [], id: data.docs.first.id, status: false, fav: []);
 
@@ -285,14 +286,14 @@ class Authrepository {
   // }
 
 
-  newUserDetails(context,name, email, password,image,id, cart,status,fav, bookedItems) async {
+  newUserDetails(context,name, email, password,image,id, cart,status,fav, bookedItems, search) async {
 
     QuerySnapshot data=await _authuser.where("email",isEqualTo: email).get();
     if(data.docs.isNotEmpty){
       showSnackBar(context, "user exist");
       return;
     }
-    UserModel userModel = UserModel(name: name, email: email, password: password, image: image, id: id, cart: [], status: false, fav: [],bookedItems:[] );
+    UserModel userModel = UserModel(name: name, email: email, password: password, image: image, id: id, cart: [], status: false, fav: [],bookedItems:[] ,search:[setSearchParam(name),setSearchParam(email),setSearchParam(id)]);
     _authuser.doc(id).set(userModel.toMap()).then((value) {
       currentUserModel = userModel;
       Navigator.push(context, CupertinoDialogRoute(builder: (context) => const LoginPage(), context: context));

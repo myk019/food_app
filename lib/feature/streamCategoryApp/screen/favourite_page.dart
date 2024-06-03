@@ -19,7 +19,6 @@ import '../../../main.dart';
 
 class FavouritePage extends ConsumerStatefulWidget {
   final List a;
-
   const FavouritePage({super.key, required this.a});
 
   @override
@@ -37,6 +36,7 @@ class _FavouritePageState extends ConsumerState<FavouritePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: colors.Background,
       body: Column(
         children: [
           ref.watch(streamItemFav).when(
@@ -44,6 +44,7 @@ class _FavouritePageState extends ConsumerState<FavouritePage> {
               return data["Fav"].isNotEmpty? Expanded(
                   child:AnimationLimiter(
                     child: ListView.separated(
+                      physics: BouncingScrollPhysics(),
                       itemCount: data["Fav"].length,
                       itemBuilder: (BuildContext context, int index) {
                         return AnimationConfiguration.staggeredList(
@@ -58,26 +59,27 @@ class _FavouritePageState extends ConsumerState<FavouritePage> {
                             print(cart);
                           },
                           child: Container(
-                            height: h * 0.18,
+                            height: h * 0.13,
                             width: w * 1,
+                            margin: EdgeInsets.all(w*0.025),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(w * 0.03),
                               color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: colors.PrimaryColour.withOpacity(0.15),
+                                      offset: Offset(0, 4),
+                                      blurRadius:4,
+                                      spreadRadius: 2
+                                  )
+                                ]
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Container(
-                                  height: h * 0.11,
-                                  width: w * 0.25,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(w * 0.03),
-                                      color: Colors.red,
-                                      image: DecorationImage(
-                                          image: NetworkImage(data["Fav"][index]["ItemImage"]),
-                                          fit: BoxFit.cover)
-                                    // image: DecorationImage(image: image)
-                                  ),
+                                CircleAvatar(
+                                  backgroundImage: NetworkImage(data["Fav"][index]["ItemImage"]),
+                                  radius: w*0.12,
                                 ),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +89,13 @@ class _FavouritePageState extends ConsumerState<FavouritePage> {
                                       data["Fav"][index]["ItemName"],
                                       style: TextStyle(color: colors.Black),
                                     ),
-                                    Text(data["Fav"][index]["ItemDescription"]),
+                                    Container(
+                                      width: w*0.6,
+
+                                      child: Text(data["Fav"][index]["ItemDescription"],style: TextStyle(
+                                        overflow: TextOverflow.ellipsis
+                                      ),),
+                                    ),
                                     Text(data["Fav"][index]["ItemPrice"].toString())
                                   ],
                                 ),

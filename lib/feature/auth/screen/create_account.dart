@@ -40,7 +40,8 @@ class _CreatePageState extends ConsumerState<CreatePage> {
         cart: [],
         status: false,
         fav: [],
-        bookedItems: []
+        bookedItems: [],
+      search: []
     );
   }
 

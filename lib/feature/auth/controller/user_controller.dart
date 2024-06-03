@@ -12,8 +12,8 @@ class UserController{
 
 
 
-  userFunction({required context,required name,required email,required password,required image,required id,required cart,required status,required fav,required bookedItems}){
-    _authrepository.newUserDetails(context,name, email, password,image,id,cart,status,fav,bookedItems);
+  userFunction({required context,required name,required email,required password,required image,required id,required cart,required status,required fav,required bookedItems ,required search}){
+    _authrepository.newUserDetails(context,name, email, password,image,id,cart,status,fav,bookedItems,search);
 }
 
 

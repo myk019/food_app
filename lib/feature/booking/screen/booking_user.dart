@@ -66,7 +66,7 @@ class _deliveryAddressState extends ConsumerState<deliveryAddress> {
     BookingAddressModel bookingAddressModels=BookingAddressModel(BName: namecontroller.text, BState: state.toString(),
         BAddress:addresscontroller.text ,TotalPrice:widget.price,
         BArea: areacontroller.text, BLandmark: landmarkcontroller.text,AllProducts: currentUserModel!.cart,
-        BPincode: int.parse(pincodecontroller.text), BTown: towncitycontroller.text, BPhone: int.parse(numbercontroller.text), BuyerId: currentUserModel!.id.toString(), BookingId: '', );
+        BPincode: int.parse(pincodecontroller.text), BTown: towncitycontroller.text, BPhone: int.parse(numbercontroller.text), BuyerId: currentUserModel!.id.toString(), BookingId: '', userId: '', );
 
     ref.watch(BookingAddressController).addBookingC(bookingAddressModels);
 
