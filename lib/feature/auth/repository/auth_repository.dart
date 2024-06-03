@@ -293,7 +293,7 @@ class Authrepository {
       showSnackBar(context, "user exist");
       return;
     }
-    UserModel userModel = UserModel(name: name, email: email, password: password, image: image, id: id, cart: [], status: false, fav: [],bookedItems:[] ,search:[setSearchParam(name),setSearchParam(email),setSearchParam(id)]);
+    UserModel userModel = UserModel(name: name, email: email, password: password, image: image, id: id, cart: [], status: false, fav: [],bookedItems:[] ,search:setSearchParam("$name $email $id"));
     _authuser.doc(id).set(userModel.toMap()).then((value) {
       currentUserModel = userModel;
       Navigator.push(context, CupertinoDialogRoute(builder: (context) => const LoginPage(), context: context));
