@@ -219,7 +219,7 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
             child: CircleAvatar(
               radius: w * 0.02,
               backgroundColor: colors.White,
-              child: SvgPicture.asset(IconConst.googleIcon),
+              backgroundImage: NetworkImage(userImg)  ,
             ),
           ),
           SizedBox(
@@ -531,7 +531,7 @@ class _SelectedItemPageState extends ConsumerState<SelectedItemPage> {
                       gradient: LinearGradient(
                           colors: [
                             colors.PrimaryColour,
-                            colors.Red.withOpacity(0.9)
+                            colors.PrimaryColour.withOpacity(0.9)
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,

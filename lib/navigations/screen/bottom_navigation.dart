@@ -246,7 +246,7 @@ class _NavigationPageState extends State<NavigationPage> {
             BottomBarInspiredInside(
               items: items,
               backgroundColor: colors.White,
-              color: colors.PrimaryColour,
+              color: colors.PrimaryColour.withOpacity(0.5),
               colorSelected: colors.White,
               indexSelected: selectIndex,
               onTap: (int index) => setState(() {

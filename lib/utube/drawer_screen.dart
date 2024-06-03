@@ -58,7 +58,20 @@ class _DrawerScreenState extends State<DrawerScreen> {
       child: Container(
         height: h*1,
        width: w*1,
-       color: colors.Green.withOpacity(0.25),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [
+                colors.PrimaryColour.withOpacity(0.3),
+                colors.PrimaryColour.withOpacity(0.4),
+                colors.PrimaryColour.withOpacity(0.5),
+                colors.PrimaryColour.withOpacity(0.6),
+                colors.PrimaryColour.withOpacity(0.7),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [0.1,0.3,0.4,0.7,0.8]
+              ),
+        ),
         padding: EdgeInsets.only(top:w*0.14,left: w*0.05,bottom: w*0.05),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

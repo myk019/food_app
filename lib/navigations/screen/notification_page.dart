@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../commons/colours.dart';
+
 class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});
 
@@ -11,6 +13,7 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colors.Background,
 
     );
   }

@@ -24,6 +24,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colors.Background,
       body: Container(
         height: h*0.8,
         // color: Colors.red,
