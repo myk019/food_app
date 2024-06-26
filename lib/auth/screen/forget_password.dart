@@ -7,14 +7,14 @@ import 'package:food_app/commons/colours.dart';
 import '../../commons/icons.dart';
 import '../../main.dart';
 
-class ForgetPAssword extends StatefulWidget {
-  const ForgetPAssword({super.key});
+class ForgetPassword extends StatefulWidget {
+  const ForgetPassword({super.key});
 
   @override
-  State<ForgetPAssword> createState() => _ForgetPAsswordState();
+  State<ForgetPassword> createState() => _ForgetPasswordState();
 }
 
-class _ForgetPAsswordState extends State<ForgetPAssword> {
+class _ForgetPasswordState extends State<ForgetPassword> {
 
   TextEditingController emailController=TextEditingController();
 
